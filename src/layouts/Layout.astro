@@ -1,11 +1,13 @@
 ---
 import '../styles/global.css';
+import { site } from '../data/site';
 
 interface Props {
 	title?: string;
+	description?: string;
 }
 
-const { title = 'Astro + daisyUI' } = Astro.props;
+const { title = `${site.name} — ${site.role}`, description = site.subheadline } = Astro.props;
 ---
 
 <html lang="it">
@@ -15,6 +17,7 @@ const { title = 'Astro + daisyUI' } = Astro.props;
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
 		<title>{title}</title>
 	</head>
 	<body>

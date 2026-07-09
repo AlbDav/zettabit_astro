@@ -1,0 +1,35 @@
+---
+import { site, skills } from '../data/site';
+
+const initials = site.name
+	.split(' ')
+	.map((n) => n[0])
+	.join('');
+---
+
+<section id="chi-sono" class="py-20 px-4 md:px-8 max-w-6xl mx-auto">
+	<div class="grid md:grid-cols-3 gap-10 items-start">
+		<div class="flex flex-col items-center md:items-start gap-4">
+			<div class="avatar avatar-placeholder">
+				<div class="bg-neutral text-neutral-content w-24 rounded-full">
+					<span class="text-3xl">{initials}</span>
+				</div>
+			</div>
+			<div class="text-center md:text-left">
+				<p class="font-semibold">{site.name}</p>
+				<p class="text-sm text-base-content/70">{site.role}</p>
+			</div>
+		</div>
+		<div class="md:col-span-2 flex flex-col gap-6">
+			<h2 class="text-3xl md:text-4xl font-bold">Chi sono</h2>
+			<p class="text-base-content/70 leading-relaxed">
+				Sono un freelance che unisce sviluppo web e video editing per aiutare persone e aziende a comunicare online in
+				modo chiaro ed efficace. Mi occupo dell'intero processo, dalla progettazione del sito alla realizzazione dei
+				contenuti video, con attenzione ai dettagli e ai risultati.
+			</p>
+			<div class="flex flex-wrap gap-2">
+				{skills.map((skill) => <span class="badge badge-outline">{skill}</span>)}
+			</div>
+		</div>
+	</div>
+</section>

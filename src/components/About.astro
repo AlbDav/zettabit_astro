@@ -1,18 +1,15 @@
 ---
+import { Image } from 'astro:assets';
 import { site, skills } from '../data/site';
-
-const initials = site.name
-	.split(' ')
-	.map((n) => n[0])
-	.join('');
+import profilePhoto from '../assets/images/profile.jpg';
 ---
 
 <section id="chi-sono" class="py-20 px-4 md:px-8 max-w-6xl mx-auto">
 	<div class="grid md:grid-cols-3 gap-10 items-start">
 		<div class="flex flex-col items-center md:items-start gap-4">
-			<div class="avatar avatar-placeholder">
-				<div class="bg-neutral text-neutral-content w-24 rounded-full">
-					<span class="text-3xl">{initials}</span>
+			<div class="avatar">
+				<div class="w-28 rounded-full ring ring-primary/30 ring-offset-base-100 ring-offset-2">
+					<Image src={profilePhoto} alt={site.name} width={224} height={224} class="object-cover" />
 				</div>
 			</div>
 			<div class="text-center md:text-left">

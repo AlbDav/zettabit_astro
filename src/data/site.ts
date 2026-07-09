@@ -1,10 +1,11 @@
 export const site = {
-	name: 'Nome Cognome',
+	siteName: 'Zettabit',
 	role: 'Sviluppatore Web & Video Editor',
-	headline: 'Siti web che convertono. Video che raccontano.',
+	headline: 'Dal sito web ai video promo: migliora la tua presenza online.',
 	subheadline:
 		"Aiuto professionisti e aziende a costruire una presenza online efficace, tra sviluppo web su misura e montaggio video curato nei dettagli.",
-	email: 'nome@esempio.it',
+	name: 'Davide Albano',
+	email: 'thezettabit@gmail.com',
 	social: {
 		linkedin: '#',
 		instagram: '#',
@@ -24,6 +25,21 @@ export const services = [
 		description:
 			"Montaggio, color grading e motion graphics per contenuti che catturano l'attenzione.",
 		features: ['Montaggio narrativo', 'Color grading', 'Sottotitoli e grafiche'],
+	},
+];
+
+export const process = [
+	{
+		title: 'Scoperta',
+		description: 'Analizziamo insieme obiettivi, pubblico e contenuti per definire la strategia giusta.',
+	},
+	{
+		title: 'Sviluppo o produzione',
+		description: 'Costruisco il sito o monto i contenuti video, con aggiornamenti costanti durante il lavoro.',
+	},
+	{
+		title: 'Consegna e supporto',
+		description: 'Rilascio il progetto finito e resto disponibile per modifiche e assistenza successiva.',
 	},
 ];
 

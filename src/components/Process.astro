@@ -1,12 +1,16 @@
 ---
-import { process } from '../data/site';
+import { defaultLang, getContent, useTranslations } from '../i18n/utils';
+
+const lang = Astro.currentLocale ?? defaultLang;
+const t = useTranslations(lang);
+const { process } = getContent(lang);
 ---
 
-<section id="come-lavoro" class="py-20 px-4 md:px-8 bg-base-200">
+<section id="process" class="py-20 px-4 md:px-8 bg-base-200">
 	<div class="max-w-4xl mx-auto">
 		<div class="text-center mb-12">
-			<h2 class="text-3xl md:text-4xl font-bold">Come lavoro</h2>
-			<p class="text-base-content/70 mt-2">Un processo semplice e trasparente, dalla prima chiacchierata alla consegna.</p>
+			<h2 class="text-3xl md:text-4xl font-bold">{t('process.title')}</h2>
+			<p class="text-base-content/70 mt-2">{t('process.subtitle')}</p>
 		</div>
 		<ul class="steps steps-vertical lg:steps-horizontal w-full">
 			{

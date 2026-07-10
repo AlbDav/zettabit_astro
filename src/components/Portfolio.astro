@@ -1,12 +1,16 @@
 ---
-import { projects } from '../data/site';
+import { defaultLang, getContent, useTranslations } from '../i18n/utils';
+
+const lang = Astro.currentLocale ?? defaultLang;
+const t = useTranslations(lang);
+const { projects } = getContent(lang);
 ---
 
 <section id="portfolio" class="py-20 px-4 md:px-8 bg-base-200">
 	<div class="max-w-6xl mx-auto">
 		<div class="text-center mb-12">
-			<h2 class="text-3xl md:text-4xl font-bold">Portfolio</h2>
-			<p class="text-base-content/70 mt-2">Una selezione di progetti recenti.</p>
+			<h2 class="text-3xl md:text-4xl font-bold">{t('portfolio.title')}</h2>
+			<p class="text-base-content/70 mt-2">{t('portfolio.subtitle')}</p>
 		</div>
 		<div class="grid md:grid-cols-3 gap-6">
 			{

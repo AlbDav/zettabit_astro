@@ -1,16 +1,20 @@
 ---
 import '../styles/global.css';
 import { site } from '../data/site';
+import { defaultLang, getContent, languages } from '../i18n/utils';
 
 interface Props {
 	title?: string;
 	description?: string;
 }
 
-const { title = `${site.name} — ${site.role}`, description = site.subheadline } = Astro.props;
+const lang = Astro.currentLocale ?? defaultLang;
+const content = getContent(lang);
+
+const { title = `${site.name} — ${content.role}`, description = content.subheadline } = Astro.props;
 ---
 
-<html lang="it">
+<html lang={lang}>
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -19,8 +23,28 @@ const { title = `${site.name} — ${site.role}`, description = site.subheadline 
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		<title>{title}</title>
+		<link rel="alternate" hreflang="en" href="/" />
+		<link rel="alternate" hreflang="it" href="/it/" />
+		<link rel="alternate" hreflang="x-default" href="/" />
 	</head>
 	<body>
 		<slot />
+		<script is:inline define:vars={{ currentLocale: lang, supported: Object.keys(languages) }}>
+			(function () {
+				try {
+					var stored = localStorage.getItem('preferredLang');
+					if (!stored) {
+						var browserLang = ((navigator.language || 'en').split('-')[0] || 'en').toLowerCase();
+						var target = supported.indexOf(browserLang) !== -1 ? browserLang : 'en';
+						if (target !== currentLocale) {
+							var path = target === 'en' ? '/' : '/' + target + '/';
+							window.location.replace(path);
+							return;
+						}
+					}
+					localStorage.setItem('preferredLang', currentLocale);
+				} catch (e) {}
+			})();
+		</script>
 	</body>
 </html>

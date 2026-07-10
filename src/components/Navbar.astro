@@ -1,5 +1,9 @@
 ---
 import { site } from '../data/site';
+import { defaultLang, getLocalizedPath, languages, useTranslations } from '../i18n/utils';
+
+const lang = Astro.currentLocale ?? defaultLang;
+const t = useTranslations(lang);
 ---
 
 <div class="navbar bg-base-100/80 backdrop-blur sticky top-0 z-50 border-b border-base-200 px-4 md:px-8">
@@ -8,26 +12,76 @@ import { site } from '../data/site';
 	</div>
 	<div class="navbar-center hidden lg:flex">
 		<ul class="menu menu-horizontal gap-1">
-			<li><a href="#servizi">Servizi</a></li>
-			<li><a href="#come-lavoro">Come lavoro</a></li>
-			<li><a href="#chi-sono">Chi sono</a></li>
-			<li><a href="#contatti">Contatti</a></li>
+			<li><a href="#services">{t('nav.services')}</a></li>
+			<li><a href="#process">{t('nav.process')}</a></li>
+			<li><a href="#about">{t('nav.about')}</a></li>
+			<li><a href="#contact">{t('nav.contact')}</a></li>
 		</ul>
 	</div>
 	<div class="navbar-end gap-2">
-		<a href="#contatti" class="btn btn-primary btn-sm hidden sm:inline-flex">Contattami</a>
+		<div class="hidden sm:flex items-center gap-1">
+			{
+				Object.entries(languages).map(([code, label]) => (
+					<a
+						href={getLocalizedPath(code)}
+						data-lang-link
+						class={`btn btn-ghost btn-xs ${code === lang ? 'btn-active' : ''}`}
+						aria-current={code === lang ? 'true' : undefined}
+						title={label}
+					>
+						{code.toUpperCase()}
+					</a>
+				))
+			}
+		</div>
+		<a href="#contact" class="btn btn-primary btn-sm hidden sm:inline-flex">{t('nav.cta')}</a>
 		<div class="dropdown dropdown-end lg:hidden">
-			<div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label="Apri menu">
+			<div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label={t('menu.open')}>
 				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
 				</svg>
 			</div>
 			<ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow">
-				<li><a href="#servizi">Servizi</a></li>
-				<li><a href="#come-lavoro">Come lavoro</a></li>
-				<li><a href="#chi-sono">Chi sono</a></li>
-				<li><a href="#contatti">Contatti</a></li>
+				<li><a href="#services">{t('nav.services')}</a></li>
+				<li><a href="#process">{t('nav.process')}</a></li>
+				<li><a href="#about">{t('nav.about')}</a></li>
+				<li><a href="#contact">{t('nav.contact')}</a></li>
+				<li class="mt-2 border-t border-base-200 pt-2">
+					<div class="flex gap-3">
+						{
+							Object.entries(languages).map(([code, label]) => (
+								<a
+									href={getLocalizedPath(code)}
+									data-lang-link
+									class={code === lang ? 'font-semibold' : 'text-base-content/60'}
+									title={label}
+								>
+									{code.toUpperCase()}
+								</a>
+							))
+						}
+					</div>
+				</li>
 			</ul>
 		</div>
 	</div>
 </div>
+
+<script>
+	document.querySelectorAll<HTMLAnchorElement>('[data-lang-link]').forEach((link) => {
+		link.addEventListener('click', (event) => {
+			event.preventDefault();
+			const target = link.getAttribute('href') ?? '/';
+
+			let currentSection = '';
+			const scrollMarker = window.scrollY + window.innerHeight * 0.3;
+			document.querySelectorAll<HTMLElement>('section[id]').forEach((section) => {
+				if (section.offsetTop <= scrollMarker) {
+					currentSection = section.id;
+				}
+			});
+
+			window.location.href = currentSection ? `${target}#${currentSection}` : target;
+		});
+	});
+</script>

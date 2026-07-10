@@ -1,11 +1,15 @@
 ---
-import { services } from '../data/site';
+import { defaultLang, getContent, useTranslations } from '../i18n/utils';
+
+const lang = Astro.currentLocale ?? defaultLang;
+const t = useTranslations(lang);
+const { services } = getContent(lang);
 ---
 
-<section id="servizi" class="py-20 px-4 md:px-8 max-w-6xl mx-auto">
+<section id="services" class="py-20 px-4 md:px-8 max-w-6xl mx-auto">
 	<div class="text-center mb-12">
-		<h2 class="text-3xl md:text-4xl font-bold">Servizi</h2>
-		<p class="text-base-content/70 mt-2">Due competenze, un solo obiettivo: far crescere il tuo progetto e la tua visibilità.</p>
+		<h2 class="text-3xl md:text-4xl font-bold">{t('services.title')}</h2>
+		<p class="text-base-content/70 mt-2">{t('services.subtitle')}</p>
 	</div>
 	<div class="grid md:grid-cols-2 gap-6">
 		{

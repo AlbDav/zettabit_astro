@@ -1,9 +1,12 @@
 ---
 import { site } from '../data/site';
+import { defaultLang, useTranslations } from '../i18n/utils';
 
+const lang = Astro.currentLocale ?? defaultLang;
+const t = useTranslations(lang);
 const year = new Date().getFullYear();
 ---
 
 <footer class="footer footer-center p-8 bg-base-100 text-base-content border-t border-base-200">
-	<p class="text-sm text-base-content/60">© {year} {site.siteName}. Tutti i diritti riservati.</p>
+	<p class="text-sm text-base-content/60">© {year} {site.siteName}. {t('footer.rights')}</p>
 </footer>

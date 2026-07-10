@@ -8,7 +8,10 @@ const t = useTranslations(lang);
 
 <div class="navbar bg-base-100/80 backdrop-blur sticky top-0 z-50 border-b border-base-200 px-4 md:px-8">
 	<div class="navbar-start">
-		<a href="#home" class="text-xl font-bold">{site.siteName}</a>
+		<a href="#home" class="flex items-center gap-2 text-xl font-bold">
+			<img src="/favicon.svg" alt="" width="28" height="28" class="h-7 w-7 rounded-md" />
+			{site.siteName}
+		</a>
 	</div>
 	<div class="navbar-center hidden lg:flex">
 		<ul class="menu menu-horizontal gap-1">

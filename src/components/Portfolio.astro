@@ -6,16 +6,16 @@ const t = useTranslations(lang);
 const { projects } = getContent(lang);
 ---
 
-<section id="portfolio" class="py-20 px-4 md:px-8 bg-base-200">
+<section id="portfolio" class="min-h-screen flex flex-col justify-center py-20 px-4 md:px-8 bg-base-200">
 	<div class="max-w-6xl mx-auto">
-		<div class="text-center mb-12">
+		<div class="text-center mb-12" data-animate style="--d: 0">
 			<h2 class="text-3xl md:text-4xl font-bold">{t('portfolio.title')}</h2>
 			<p class="text-base-content/70 mt-2">{t('portfolio.subtitle')}</p>
 		</div>
 		<div class="grid md:grid-cols-3 gap-6">
 			{
-				projects.map((project) => (
-					<div class="card bg-base-100 shadow-sm">
+				projects.map((project, i) => (
+					<div class="card bg-base-100 shadow-sm" data-animate style={`--d: ${i + 1}`}>
 						<figure class="h-40 bg-gradient-to-br from-primary to-secondary" />
 						<div class="card-body">
 							<div class="badge badge-ghost">{project.category}</div>

@@ -16,8 +16,62 @@
   transform: none;
 }
 
+/* Sequential reveal for "How I work" step markers: the li itself stays put (no
+   fade/slide of its own), and only its circle (::after) and connector line
+   (::before) animate independently, each with an explicit delay computed in
+   Process.astro so the sequence is circle -> line -> next circle -> next line. */
+[data-animate="step"] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* opacity stays at 1 throughout: a circle/line at scale(0) has no pixels to
+   render, so hiding it never requires transparency (which is what let the
+   line bleed through a fading circle before). */
+[data-animate="step"]::after {
+  opacity: 1;
+  transform: scale(0.35);
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: var(--circle-delay, 0ms);
+}
+
+[data-animate="step"].in-view::after {
+  transform: scale(1);
+}
+
+[data-animate="step"]::before {
+  opacity: 1;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.3s ease-out;
+  transition-delay: var(--line-delay, 0ms);
+}
+
+[data-animate="step"].in-view::before {
+  transform: scaleY(1);
+}
+
+@media (min-width: 1024px) {
+  [data-animate="step"]::before {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  [data-animate="step"].in-view::before {
+    transform: scaleX(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-animate] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  [data-animate="step"]::after,
+  [data-animate="step"]::before {
     opacity: 1;
     transform: none;
     transition: none;

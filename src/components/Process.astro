@@ -4,6 +4,21 @@ import { defaultLang, getContent, useTranslations } from '../i18n/utils';
 const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
 const { process } = getContent(lang);
+
+const CIRCLE_MS = 400;
+const LINE_MS = 300;
+
+let cursor = 0;
+const timings = process.map((_, i) => {
+	let lineDelay = 0;
+	if (i > 0) {
+		lineDelay = cursor;
+		cursor += LINE_MS;
+	}
+	const circleDelay = cursor;
+	cursor += CIRCLE_MS;
+	return { circleDelay, lineDelay };
+});
 ---
 
 <section id="process" class="min-h-screen flex flex-col justify-center py-20 px-4 md:px-8 bg-base-200">
@@ -15,8 +30,12 @@ const { process } = getContent(lang);
 		<ul class="steps steps-vertical lg:steps-horizontal w-full">
 			{
 				process.map((step, i) => (
-					<li class="step step-primary" data-animate style={`--d: ${i + 1}`}>
-						<div class="text-left lg:text-center pt-2 pb-4">
+					<li
+						class="step step-primary"
+						data-animate="step"
+						style={`--circle-delay: ${timings[i].circleDelay}ms; --line-delay: ${timings[i].lineDelay}ms`}
+					>
+						<div class="text-left lg:text-center pt-2 pb-4" data-animate style={`transition-delay: ${timings[i].circleDelay}ms`}>
 							<p class="font-semibold">{step.title}</p>
 							<p class="text-sm text-base-content/70 mt-1 max-w-xs lg:mx-auto">{step.description}</p>
 						</div>

@@ -1,23 +1,73 @@
 ---
 import '../styles/global.css';
+import { site } from '../data/site';
+import { defaultLang, getContent, languages } from '../i18n/utils';
 
 interface Props {
 	title?: string;
+	description?: string;
 }
 
-const { title = 'Astro + daisyUI' } = Astro.props;
+const lang = Astro.currentLocale ?? defaultLang;
+const content = getContent(lang);
+
+const { title = `${site.name} — ${content.role}`, description = content.subheadline } = Astro.props;
 ---
 
-<html lang="it">
+<html lang={lang}>
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
 		<title>{title}</title>
+		<link rel="alternate" hreflang="en" href="/" />
+		<link rel="alternate" hreflang="it" href="/it/" />
+		<link rel="alternate" hreflang="x-default" href="/" />
 	</head>
 	<body>
 		<slot />
+		<script is:inline define:vars={{ currentLocale: lang, supported: Object.keys(languages) }}>
+			(function () {
+				try {
+					var stored = localStorage.getItem('preferredLang');
+					if (!stored) {
+						var browserLang = ((navigator.language || 'en').split('-')[0] || 'en').toLowerCase();
+						var target = supported.indexOf(browserLang) !== -1 ? browserLang : 'en';
+						if (target !== currentLocale) {
+							var path = target === 'en' ? '/' : '/' + target + '/';
+							window.location.replace(path);
+							return;
+						}
+					}
+					localStorage.setItem('preferredLang', currentLocale);
+				} catch (e) {}
+			})();
+		</script>
+		<script is:inline>
+			(function () {
+				var els = document.querySelectorAll('[data-animate]');
+				if (!els.length) return;
+				var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+				if (prefersReduced || !('IntersectionObserver' in window)) {
+					els.forEach(function (el) { el.classList.add('in-view'); });
+					return;
+				}
+				var observer = new IntersectionObserver(
+					function (entries) {
+						entries.forEach(function (entry) {
+							if (entry.isIntersecting) {
+								entry.target.classList.add('in-view');
+								observer.unobserve(entry.target);
+							}
+						});
+					},
+					{ threshold: 0.15, rootMargin: '0px 0px -10% 0px' }
+				);
+				els.forEach(function (el) { observer.observe(el); });
+			})();
+		</script>
 	</body>
 </html>

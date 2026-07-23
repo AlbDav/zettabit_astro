@@ -1,12 +1,67 @@
 ---
 import { site } from '../data/site';
-import { defaultLang, useTranslations } from '../i18n/utils';
+import SocialLinks from './SocialLinks.astro';
+import {
+	defaultLang,
+	getContent,
+	getLocalizedPath,
+	getLocalizedPortfolioPath,
+	useTranslations,
+} from '../i18n/utils';
 
 const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
+const { services } = getContent(lang);
+const homePath = getLocalizedPath(lang);
 const year = new Date().getFullYear();
+
+const exploreLinks = [
+	{ href: `${homePath}#services`, label: t('nav.services') },
+	{ href: `${homePath}#process`, label: t('nav.process') },
+	{ href: `${homePath}#about`, label: t('nav.about') },
+	{ href: `${homePath}#contact`, label: t('nav.contact') },
+];
 ---
 
-<footer class="footer footer-center p-8 bg-base-100 text-base-content border-t border-base-200">
-	<p class="text-sm text-base-content/60">© {year} {site.siteName}. {t('footer.rights')}</p>
+<footer class="bg-base-300 text-base-content border-t border-base-content/10">
+	<div class="max-w-6xl mx-auto px-4 md:px-8 py-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+		<div class="flex flex-col gap-3">
+			<a href={`${homePath}#home`} class="flex items-center gap-2 text-xl font-bold">
+				<img src="/favicon.svg" alt="" width="28" height="28" class="h-7 w-7 rounded-md" />
+				{site.siteName}
+			</a>
+			<p class="text-sm text-base-content/60 max-w-xs">{t('footer.tagline')}</p>
+		</div>
+
+		<nav class="flex flex-col gap-2">
+			<h3 class="footer-title opacity-100 text-base-content/50">{t('footer.explore')}</h3>
+			{exploreLinks.map((link) => (
+				<a href={link.href} class="link link-hover text-sm text-base-content/70">{link.label}</a>
+			))}
+		</nav>
+
+		<nav class="flex flex-col gap-2">
+			<h3 class="footer-title opacity-100 text-base-content/50">{t('portfolio.title')}</h3>
+			{services.map((service) => (
+				<a
+					href={getLocalizedPortfolioPath(lang, service.slug)}
+					class="link link-hover text-sm text-base-content/70"
+				>
+					{service.title}
+				</a>
+			))}
+		</nav>
+
+		<div class="flex flex-col gap-3">
+			<h3 class="footer-title opacity-100 text-base-content/50">{t('footer.connect')}</h3>
+			<a href={`mailto:${site.email}`} class="link link-hover text-sm text-base-content/70">{site.email}</a>
+			<SocialLinks class="-ml-2" />
+		</div>
+	</div>
+
+	<div class="border-t border-base-content/10">
+		<div class="max-w-6xl mx-auto px-4 md:px-8 py-5 text-center sm:text-left">
+			<p class="text-xs text-base-content/50">© {year} {site.siteName}. {t('footer.rights')}</p>
+		</div>
+	</div>
 </footer>

@@ -1,11 +1,11 @@
 export const site = {
 	siteName: 'Zettabit',
 	name: 'Davide Albano',
-	email: 'thezettabit@gmail.com',
+	email: 'davidealbano@zettabit.it',
 	social: {
-		linkedin: '#',
-		instagram: '#',
-		github: '#',
+		linkedin: 'https://www.linkedin.com/in/davide-albano/',
+		instagram: 'https://www.instagram.com/zettabit.studio',
+		github: 'https://github.com/AlbDav/',
 	},
 };
 
@@ -14,7 +14,7 @@ export const skills = [
 	'JavaScript',
 	'Astro',
 	'React',
-	'Adobe Premiere Pro',
-	'After Effects',
+	'Vue',
+	'DaVinci Resolve',
 	'SEO',
 ];

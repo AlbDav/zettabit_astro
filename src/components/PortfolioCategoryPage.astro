@@ -1,0 +1,76 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from './Navbar.astro';
+import Footer from './Footer.astro';
+import { defaultLang, getContent, useTranslations } from '../i18n/utils';
+
+interface Props {
+	slug: 'web-development' | 'video-editing';
+}
+
+const { slug } = Astro.props;
+const lang = Astro.currentLocale ?? defaultLang;
+const t = useTranslations(lang);
+const { services } = getContent(lang);
+const service = services.find((s) => s.slug === slug)!;
+---
+
+<Layout title={`${service.title} — ${t('portfolio.title')}`} description={service.description}>
+	<Navbar />
+
+	<h1 class="sr-only">{service.title} — {t('portfolio.title')}</h1>
+
+	{
+		service.sections.map((section, i) => (
+			<section
+				id={section.slug}
+				class={`min-h-screen flex flex-col justify-center scroll-mt-20 py-20 px-4 md:px-8 ${
+					i % 2 === 1 ? 'bg-base-200' : ''
+				}`}
+			>
+				<div class="max-w-5xl mx-auto w-full flex flex-col gap-10">
+					<div class="flex flex-col gap-3" data-animate style="--d: 0">
+						<span class="font-mono text-sm text-primary">0{i + 1}</span>
+						<h2 class="text-3xl md:text-4xl font-bold">{section.title}</h2>
+						<p class="text-base-content/70 max-w-2xl">{section.description}</p>
+					</div>
+
+					{service.type === 'web' ? (
+						<div class="flex flex-col gap-8" data-animate style="--d: 1">
+							<div class="relative h-72 sm:h-96 md:h-[30rem]">
+								{/* Desktop screenshot */}
+								<div class="skeleton absolute left-0 top-0 h-52 sm:h-72 md:h-96 w-full sm:w-4/5 rounded-box border border-base-content/10" />
+								{/* Tablet screenshot */}
+								<div class="skeleton absolute right-0 bottom-10 hidden sm:block h-48 md:h-64 w-48 md:w-64 rounded-box border-4 border-base-100" />
+								{/* Phone screenshot */}
+								<div class="skeleton absolute right-4 sm:right-28 -bottom-2 h-48 sm:h-60 w-28 sm:w-32 rounded-box border-4 border-base-100" />
+							</div>
+							<div>
+								<button class="btn btn-outline btn-accent" disabled>
+									{t('portfolio.viewDemo')}
+								</button>
+							</div>
+						</div>
+					) : (
+						<div class="flex flex-col gap-4" data-animate style="--d: 1">
+							{/* Featured player (the one currently playing) */}
+							<div class="skeleton aspect-video w-full rounded-box border border-base-content/10" />
+							{/* Other videos, smaller */}
+							<div class="carousel carousel-center w-full gap-3 pb-2">
+								{Array.from({ length: 4 }).map(() => (
+									<div class="carousel-item">
+										<div class="skeleton aspect-video w-40 sm:w-56 rounded-lg border border-base-content/10" />
+									</div>
+								))}
+							</div>
+						</div>
+					)}
+
+					<p class="text-xs text-base-content/40">{t('portfolio.comingSoon')}</p>
+				</div>
+			</section>
+		))
+	}
+
+	<Footer />
+</Layout>

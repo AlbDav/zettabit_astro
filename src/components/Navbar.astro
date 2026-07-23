@@ -1,24 +1,45 @@
 ---
 import { site } from '../data/site';
-import { defaultLang, getLocalizedPath, languages, useTranslations } from '../i18n/utils';
+import {
+	defaultLang,
+	getContent,
+	getLocalizedPath,
+	getLocalizedPortfolioHub,
+	getLocalizedPortfolioPath,
+	languages,
+	useTranslations,
+} from '../i18n/utils';
 
 const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
+const homePath = getLocalizedPath(lang);
+const { services } = getContent(lang);
 ---
 
 <div class="navbar bg-base-100/80 backdrop-blur sticky top-0 z-50 border-b border-base-200 px-4 md:px-8">
 	<div class="navbar-start">
-		<a href="#home" class="flex items-center gap-2 text-xl font-bold">
+		<a href={`${homePath}#home`} class="flex items-center gap-2 text-xl font-bold">
 			<img src="/favicon.svg" alt="" width="28" height="28" class="h-7 w-7 rounded-md" />
 			{site.siteName}
 		</a>
 	</div>
 	<div class="navbar-center hidden lg:flex">
 		<ul class="menu menu-horizontal gap-1">
-			<li><a href="#services">{t('nav.services')}</a></li>
-			<li><a href="#process">{t('nav.process')}</a></li>
-			<li><a href="#about">{t('nav.about')}</a></li>
-			<li><a href="#contact">{t('nav.contact')}</a></li>
+			<li><a href={`${homePath}#services`}>{t('nav.services')}</a></li>
+			<li><a href={`${homePath}#process`}>{t('nav.process')}</a></li>
+			<li>
+					<details>
+						<summary>{t('nav.portfolio')}</summary>
+						<ul class="bg-base-200 rounded-box p-2 shadow-lg border border-base-content/10 z-50 min-w-max">
+							<li><a href={getLocalizedPortfolioHub(lang)}>{t('portfolio.overview')}</a></li>
+							{services.map((service) => (
+								<li><a href={getLocalizedPortfolioPath(lang, service.slug)}>{service.title}</a></li>
+							))}
+						</ul>
+					</details>
+				</li>
+			<li><a href={`${homePath}#about`}>{t('nav.about')}</a></li>
+			<li><a href={`${homePath}#contact`}>{t('nav.contact')}</a></li>
 		</ul>
 	</div>
 	<div class="navbar-end gap-2">
@@ -37,7 +58,7 @@ const t = useTranslations(lang);
 				))
 			}
 		</div>
-		<a href="#contact" class="btn btn-primary btn-sm hidden sm:inline-flex">{t('nav.cta')}</a>
+		<a href={`${homePath}#contact`} class="btn btn-primary btn-sm hidden sm:inline-flex">{t('nav.cta')}</a>
 		<div class="dropdown dropdown-end lg:hidden">
 			<div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label={t('menu.open')}>
 				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -45,10 +66,21 @@ const t = useTranslations(lang);
 				</svg>
 			</div>
 			<ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow">
-				<li><a href="#services">{t('nav.services')}</a></li>
-				<li><a href="#process">{t('nav.process')}</a></li>
-				<li><a href="#about">{t('nav.about')}</a></li>
-				<li><a href="#contact">{t('nav.contact')}</a></li>
+				<li><a href={`${homePath}#services`}>{t('nav.services')}</a></li>
+				<li><a href={`${homePath}#process`}>{t('nav.process')}</a></li>
+				<li>
+					<details>
+						<summary>{t('nav.portfolio')}</summary>
+						<ul class="bg-base-200 rounded-box p-2 shadow-lg border border-base-content/10 z-50 min-w-max">
+							<li><a href={getLocalizedPortfolioHub(lang)}>{t('portfolio.overview')}</a></li>
+							{services.map((service) => (
+								<li><a href={getLocalizedPortfolioPath(lang, service.slug)}>{service.title}</a></li>
+							))}
+						</ul>
+					</details>
+				</li>
+				<li><a href={`${homePath}#about`}>{t('nav.about')}</a></li>
+				<li><a href={`${homePath}#contact`}>{t('nav.contact')}</a></li>
 				<li class="mt-2 border-t border-base-200 pt-2">
 					<div class="flex gap-3">
 						{

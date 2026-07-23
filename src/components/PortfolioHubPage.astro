@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from './Navbar.astro';
+import Footer from './Footer.astro';
+import {
+	defaultLang,
+	getContent,
+	getLocalizedPortfolioPath,
+	useTranslations,
+} from '../i18n/utils';
+
+const lang = Astro.currentLocale ?? defaultLang;
+const t = useTranslations(lang);
+const { services } = getContent(lang);
+---
+
+<Layout title={`${t('portfolio.title')} — ${t('nav.services')}`} description={t('portfolio.hubSubtitle')}>
+	<Navbar />
+
+	<section class="min-h-screen py-20 md:py-28 px-4 md:px-8">
+		<div class="max-w-4xl mx-auto">
+			<header class="flex flex-col gap-4 mb-16" data-animate style="--d: 0">
+				<h1 class="text-4xl md:text-5xl font-bold">{t('portfolio.title')}</h1>
+				<p class="text-base-content/70 max-w-xl text-lg">{t('portfolio.hubSubtitle')}</p>
+			</header>
+
+			<div class="flex flex-col gap-16">
+				{
+					services.map((service, s) => {
+						const areaPath = getLocalizedPortfolioPath(lang, service.slug);
+						return (
+							<div data-animate style={`--d: ${s + 1}`}>
+								<div class="flex items-baseline justify-between gap-4 border-b border-base-content/15 pb-4">
+									<div class="flex flex-col gap-1">
+										<h2 class="text-2xl font-bold">{service.title}</h2>
+										<p class="text-sm text-base-content/60">{service.tagline}</p>
+									</div>
+									<a href={areaPath} class="shrink-0 link link-hover text-sm text-accent whitespace-nowrap">
+										{t('portfolio.viewAll')} →
+									</a>
+								</div>
+
+								<ul class="mt-2">
+									{service.sections.map((project, i) => (
+										<li>
+											<a
+												href={`${areaPath}#${project.slug}`}
+												class="group flex items-center gap-4 py-4 px-3 -mx-3 rounded-lg border-b border-base-content/5 hover:bg-base-200 transition-colors"
+											>
+												<span class="font-mono text-xs text-primary pt-1">0{i + 1}</span>
+												<div class="flex flex-col gap-0.5 min-w-0">
+													<h3 class="font-semibold group-hover:text-accent transition-colors">
+														{project.title}
+													</h3>
+													<p class="text-sm text-base-content/60">{project.description}</p>
+												</div>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													class="ml-auto h-5 w-5 shrink-0 text-base-content/40 group-hover:text-accent group-hover:translate-x-1 transition-all"
+													fill="none"
+													viewBox="0 0 24 24"
+													stroke="currentColor"
+													stroke-width="2"
+												>
+													<path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+												</svg>
+											</a>
+										</li>
+									))}
+								</ul>
+							</div>
+						);
+					})
+				}
+			</div>
+		</div>
+	</section>
+
+	<Footer />
+</Layout>

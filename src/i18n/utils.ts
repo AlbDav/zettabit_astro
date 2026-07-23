@@ -36,3 +36,11 @@ export function getContent(lang: string) {
 export function getLocalizedPath(lang: string): string {
 	return lang === defaultLang ? '/' : `/${lang}/`;
 }
+
+export function getLocalizedPortfolioHub(lang: string): string {
+	return `${getLocalizedPath(lang)}portfolio/`;
+}
+
+export function getLocalizedPortfolioPath(lang: string, slug: string): string {
+	return `${getLocalizedPortfolioHub(lang)}${slug}/`;
+}

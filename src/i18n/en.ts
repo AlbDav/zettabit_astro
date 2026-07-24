@@ -14,18 +14,15 @@ export const en = {
 		'hero.cta.contact': 'Tell me about your project',
 		'services.title': 'What I do',
 		'services.subtitle': 'Two crafts, one goal: help your project grow and get noticed.',
-		'why.title': 'Why one person instead of two',
+		'why.title': 'Web and video, handled together',
 		'why.p1':
 			"A business's site and its videos tell the same story, and when two different suppliers handle them you can tell: colours that don't match, a tone that shifts, timelines that stretch because each is waiting on the other.",
-		'why.p2': 'I do both. One point of contact, one quote, one visual language.',
+		'why.p2': 'Handled together instead: one point of contact, one quote, one visual language.',
 		'process.title': 'How I work',
 		'process.subtitle': 'A simple, transparent process — from the first message to launch day.',
 		'about.title': 'About me',
 		'about.bio':
 			"I'm Davide, a freelancer who blends web development and video editing to help people and businesses communicate online with clarity. I handle the whole journey — from designing the site to producing the video — with an eye for detail and real results.",
-		// [DA CONFERMARE — a concrete detail: what led you to combine web dev and video editing.
-		// Left starting with '[' so it stays hidden until written.]
-		'about.bioDetail': '[DA CONFERMARE il dettaglio biografico]',
 		'about.certTitle': 'Certifications',
 		'about.techToggle': 'Tech stack',
 		'about.location': 'Based in Rome — working with clients across Italy and remotely.',
@@ -54,7 +51,7 @@ export const en = {
 				'Web development and video editing by one person in Rome. Fast sites and video people actually finish — for professionals and small businesses across Italy.',
 		},
 		role: 'Web Developer & Video Editor',
-		headline: 'A site that loads fast. Video people actually finish. One person behind both.',
+		headline: 'A site that loads fast. Video people actually finish. Web and video, together.',
 		subheadline:
 			'Web development and video editing for professionals and small businesses. From the first line of code to the final cut — no handoffs.',
 		services: [
@@ -117,25 +114,21 @@ export const en = {
 				],
 			},
 		],
-		// [DA CONFERMARE le durate reali e il numero di revisioni ([N])]
 		process: [
 			{
 				title: 'Understanding the project',
-				meta: 'about a week',
 				description:
-					'We go through your goals, audience and content. You get a written proposal with timeline, cost and what I need from you. You can still walk away, at no cost.',
+					'We go through your goals, audience and content. You get a written proposal with scope, cost and what’s needed from you. You can still walk away, at no cost.',
 			},
 			{
 				title: 'Build or edit',
-				meta: '2 to 6 weeks',
 				description:
-					'I work on the project and show you progress every week, so nothing is a surprise at the end. [N] rounds of revisions included.',
+					'The project takes shape with progress shared regularly, so nothing is a surprise at the end.',
 			},
 			{
 				title: 'Delivery and support',
-				meta: '30 days included',
 				description:
-					'I hand everything over and show you how to run it. I stay available for a month for adjustments, then you decide whether to continue with support.',
+					'Everything is handed over with a walkthrough on how to run it, plus a month of support for adjustments — then it’s up to you whether to continue.',
 			},
 		],
 		form: {
@@ -154,7 +147,6 @@ export const en = {
 						{ value: 'website', label: 'A website' },
 						{ value: 'video', label: 'Video' },
 						{ value: 'both', label: 'Both' },
-						{ value: 'unsure', label: 'Not sure yet' },
 					],
 				},
 				projectType: {
@@ -164,27 +156,23 @@ export const en = {
 						{ value: 'new', label: 'Brand new site' },
 						{ value: 'redesign', label: 'Redesign of an existing site' },
 						{ value: 'landing', label: 'Just a landing page' },
+						{ value: 'other', label: 'Something else' },
 					],
 				},
 				videoScope: {
-					title: 'Do you need filming too, or just editing?',
+					title: 'What kind of video?',
 					field: 'video-scope',
 					options: [
-						{ value: 'filming-editing', label: 'Filming and editing' },
-						{ value: 'editing', label: 'Editing only, I have the footage' },
-						{ value: 'unsure', label: 'Not sure yet' },
+						{ value: 'editing', label: 'Editing' },
+						{ value: 'color', label: 'Colour grading' },
+						{ value: 'motion', label: 'Motion graphics' },
+						{ value: 'other', label: 'Something else' },
 					],
 				},
-				// [DA CONFERMARE i range di budget — placeholder € [X] / € [Y]]
 				budget: {
 					title: 'Rough budget',
 					field: 'budget',
-					options: [
-						{ value: 'under', label: 'Under € [X]' },
-						{ value: 'mid', label: '€ [X]–[Y]' },
-						{ value: 'over', label: 'Over € [Y]' },
-						{ value: 'na', label: "I'd rather not say" },
-					],
+					na: "I'd rather not say",
 				},
 				details: {
 					title: 'A few details',
@@ -202,9 +190,7 @@ export const en = {
 				email: 'Please enter a valid email address.',
 				consent: 'Please accept the privacy policy to send.',
 			},
-			// [DA CONFERMARE il tempo di risposta — placeholder [X]]
 			successTitle: 'Got it.',
-			successBody: "I'll get back to you within [X].",
 			sendErrorBefore: 'Something went wrong. You can email me directly at ',
 			sendErrorAfter: '.',
 		},

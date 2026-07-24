@@ -1,5 +1,5 @@
 ---
-import { site, availability } from '../data/site';
+import { site } from '../data/site';
 import SocialLinks from './SocialLinks.astro';
 import {
 	defaultLang,
@@ -14,8 +14,7 @@ const t = useTranslations(lang);
 const { services } = getContent(lang);
 const homePath = getLocalizedPath(lang);
 const year = new Date().getFullYear();
-const badge = availability[lang === 'it' ? 'it' : 'en'];
-const vat = site.vat || '[DA CONFERMARE]';
+const vat = site.vat;
 ---
 
 <footer class="bg-base-300 text-base-content border-t border-base-content/10">
@@ -27,7 +26,6 @@ const vat = site.vat || '[DA CONFERMARE]';
 			</a>
 			<p class="text-sm text-base-content/70 max-w-xs">{t('footer.tagline')}</p>
 			<p class="text-sm text-base-content/70">{t('footer.location')}</p>
-			<span class="badge badge-primary badge-outline badge-sm w-fit">{badge}</span>
 		</div>
 
 		<nav class="flex flex-col gap-2" aria-label={t('nav.services')}>

@@ -2,8 +2,7 @@ export const site = {
 	siteName: 'Zettabit',
 	name: 'Davide Albano',
 	email: 'davide.albano@zettabit.it',
-	// [DA CONFERMARE la P.IVA — mostrata nel footer quando compilata]
-	vat: '',
+	vat: '18654361007',
 	social: {
 		linkedin: 'https://www.linkedin.com/in/davide-albano/',
 		instagram: 'https://www.instagram.com/zettabit.studio',
@@ -11,16 +10,15 @@ export const site = {
 	},
 };
 
-// Availability badge (P3.1). [DA CONFERMARE il mese e il numero di progetti]
-export const availability = {
-	it: 'Disponibile da [MESE] — [N] progetti alla volta',
-	en: 'Available from [MONTH] — [N] projects at a time',
-};
-
-// Price floor (P3.4). [DA CONFERMARE la cifra [X] — non inventare]
-export const priceFloor = {
-	it: 'Progetti a partire da € [X] — il preventivo esatto arriva dopo la prima call.',
-	en: 'Projects start at € [X] — you get an exact quote after the first call.',
+// Contact-form budget slider — easy to edit here. If the visitor picks "Both"
+// (website + video), min and max are summed automatically. `step` sets the
+// granularity; `locale`/`currency` format the displayed amount.
+export const budgetRange = {
+	min: 180,
+	max: 5000,
+	step: 20,
+	currency: 'EUR',
+	locale: 'it-IT',
 };
 
 // Proof (P3.5) — these are DATA-driven, not flag-driven: each section shows up on

@@ -1,21 +1,16 @@
 ---
 import ContactForm from './ContactForm.astro';
-import { priceFloor } from '../data/site';
 import { defaultLang, useTranslations } from '../i18n/utils';
 
 const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
-const priceLine = priceFloor[lang === 'it' ? 'it' : 'en'];
 ---
 
-<section id="contact" class="min-h-screen flex flex-col justify-center py-20 px-4 md:px-8 bg-base-200">
+<section id="contact" class="min-h-screen flex flex-col justify-center py-20 px-4 md:px-8">
 	<div class="max-w-3xl mx-auto w-full flex flex-col items-center gap-8">
 		<div class="text-center flex flex-col items-center gap-4">
 			<h2 class="text-3xl md:text-4xl font-bold" data-animate style="--d: 0">{t('contact.title')}</h2>
 			<p class="text-base-content/70" data-animate style="--d: 1">{t('contact.subtitle')}</p>
-			<p class="price-floor text-sm text-base-content/70 border border-base-content/10 rounded-full px-4 py-1.5" data-animate style="--d: 2">
-				{priceLine}
-			</p>
 		</div>
 		<div class="w-full" data-animate style="--d: 2">
 			<ContactForm />

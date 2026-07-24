@@ -14,18 +14,15 @@ export const it = {
 		'hero.cta.contact': 'Raccontami il progetto',
 		'services.title': 'Cosa faccio',
 		'services.subtitle': 'Due mestieri, un obiettivo: far crescere il tuo progetto e farlo notare.',
-		'why.title': 'Perché una persona sola e non due',
+		'why.title': 'Web e video, gestiti insieme',
 		'why.p1':
-			'Il sito e i video di un’attività raccontano la stessa cosa, e quando li curano due fornitori diversi si vede: colori che non combaciano, tono che cambia, tempi che si allungano perché ognuno aspetta l’altro.',
-		'why.p2': 'Io li faccio entrambi. Un interlocutore, un preventivo, una linea visiva sola.',
+			'Il sito e i video di un’attività raccontano la stessa storia, e quando li seguono due fornitori diversi si vede: colori che non combaciano, tono che cambia, tempi che si allungano perché ognuno aspetta l’altro.',
+		'why.p2': 'Seguiti insieme, invece: un solo interlocutore, un preventivo, una linea visiva sola.',
 		'process.title': 'Come lavoro',
 		'process.subtitle': 'Un processo semplice e trasparente, dal primo messaggio al giorno del lancio.',
 		'about.title': 'Chi sono',
 		'about.bio':
 			"Sono Davide, un freelance che unisce sviluppo web e video editing per aiutare persone e aziende a comunicare online in modo chiaro. Seguo l'intero percorso, dalla progettazione del sito alla realizzazione del video, con attenzione ai dettagli e ai risultati concreti.",
-		// [DA CONFERMARE — un dettaglio concreto: cosa ti ha portato a unire i due mestieri.
-		// Lasciato con la '[' iniziale così resta nascosto finché non lo scrivi.]
-		'about.bioDetail': '[DA CONFERMARE il dettaglio biografico]',
 		'about.certTitle': 'Certificazioni',
 		'about.techToggle': 'Stack tecnico',
 		'about.location': 'Roma — lavoro con clienti in tutta Italia e da remoto.',
@@ -54,7 +51,7 @@ export const it = {
 				'Sviluppo web e video editing a Roma, una persona sola. Siti che caricano veloci e video che si guardano fino in fondo, per professionisti e piccole imprese.',
 		},
 		role: 'Sviluppatore Web & Video Editor',
-		headline: 'Un sito che carica veloce. Video che si guardano fino in fondo. Una persona sola.',
+		headline: 'Un sito che carica veloce. Video che si guardano fino in fondo. Web e video, insieme.',
 		subheadline:
 			'Sviluppo web e video editing per professionisti e piccole imprese. Dalla prima riga di codice all’ultimo taglio, senza passaggi di mano.',
 		services: [
@@ -117,25 +114,21 @@ export const it = {
 				],
 			},
 		],
-		// [DA CONFERMARE le durate reali e il numero di revisioni ([N])]
 		process: [
 			{
 				title: 'Capiamo il progetto',
-				meta: 'circa 1 settimana',
 				description:
-					'Parliamo di obiettivi, pubblico e contenuti. Ti mando una proposta scritta con tempi, costo e cosa serve da parte tua. Da qui puoi ancora dire di no, senza costi.',
+					'Si parte da obiettivi, pubblico e contenuti. Ricevi una proposta scritta con ambito, costo e cosa serve da parte tua. Da qui puoi ancora dire di no, senza costi.',
 			},
 			{
 				title: 'Sviluppo o montaggio',
-				meta: '2-6 settimane',
 				description:
-					'Lavoro sul progetto e ti mostro l’avanzamento ogni settimana, così non ci sono sorprese alla fine. [N] giri di revisioni inclusi.',
+					'Il progetto prende forma con aggiornamenti costanti, così non ci sono sorprese alla fine.',
 			},
 			{
 				title: 'Consegna e supporto',
-				meta: '30 giorni inclusi',
 				description:
-					'Ti consegno tutto e ti spiego come gestirlo. Resto disponibile un mese per gli aggiustamenti, poi decidi tu se continuare con l’assistenza.',
+					'Alla consegna ricevi tutto e una spiegazione su come gestirlo, più un mese di supporto per gli aggiustamenti — poi decidi tu se continuare.',
 			},
 		],
 		form: {
@@ -154,7 +147,6 @@ export const it = {
 						{ value: 'website', label: 'Un sito web' },
 						{ value: 'video', label: 'Video' },
 						{ value: 'both', label: 'Entrambi' },
-						{ value: 'unsure', label: 'Non lo so ancora' },
 					],
 				},
 				projectType: {
@@ -164,27 +156,23 @@ export const it = {
 						{ value: 'new', label: 'Sito nuovo da zero' },
 						{ value: 'redesign', label: 'Rifacimento di un sito esistente' },
 						{ value: 'landing', label: 'Solo una landing page' },
+						{ value: 'other', label: 'Altro' },
 					],
 				},
 				videoScope: {
-					title: 'Serve anche la ripresa o solo il montaggio?',
+					title: 'Che tipo di video?',
 					field: 'video-scope',
 					options: [
-						{ value: 'filming-editing', label: 'Ripresa e montaggio' },
-						{ value: 'editing', label: "Solo montaggio, il girato ce l'ho" },
-						{ value: 'unsure', label: 'Non lo so ancora' },
+						{ value: 'editing', label: 'Montaggio' },
+						{ value: 'color', label: 'Color grading' },
+						{ value: 'motion', label: 'Motion graphics' },
+						{ value: 'other', label: 'Altro' },
 					],
 				},
-				// [DA CONFERMARE i range di budget — placeholder € [X] / € [Y]]
 				budget: {
 					title: 'Budget indicativo',
 					field: 'budget',
-					options: [
-						{ value: 'under', label: 'Meno di € [X]' },
-						{ value: 'mid', label: '€ [X]–[Y]' },
-						{ value: 'over', label: 'Oltre € [Y]' },
-						{ value: 'na', label: 'Preferisco non dirlo' },
-					],
+					na: 'Preferisco non dirlo',
 				},
 				details: {
 					title: 'Ancora un paio di dettagli',
@@ -202,23 +190,18 @@ export const it = {
 				email: 'Inserisci un indirizzo email valido.',
 				consent: 'Accetta la privacy policy per inviare.',
 			},
-			// [DA CONFERMARE il tempo di risposta — placeholder [X]]
 			successTitle: 'Ricevuto.',
-			successBody: 'Ti rispondo entro [X].',
 			sendErrorBefore: 'Qualcosa è andato storto. Puoi scrivermi direttamente a ',
 			sendErrorAfter: '.',
 		},
-		// [DA CONFERMARE le risposte; le domande sono definitive, le risposte placeholder.
-		// Compilale, poi metti faqReady = true in src/data/site.ts per pubblicare + emettere lo schema.]
 		faq: [
-			{ q: 'Quanto costa un sito?', a: '[DA COMPILARE]' },
-			{ q: 'Quanto tempo serve per realizzarlo?', a: '[DA COMPILARE]' },
-			{ q: 'I testi li scrivo io o li scrivi tu?', a: '[DA COMPILARE]' },
-			{ q: 'Giri anche i video o fai solo montaggio?', a: '[DA COMPILARE]' },
-			{ q: 'Posso aggiornare il sito in autonomia?', a: '[DA COMPILARE]' },
-			{ q: 'Ti occupi anche di dominio e hosting?', a: '[DA COMPILARE]' },
-			{ q: 'Lavori solo su Roma o anche da remoto?', a: '[DA COMPILARE]' },
-			{ q: 'Cosa succede se il risultato non mi convince?', a: '[DA COMPILARE]' },
+			{ q: 'Quanto costa un sito?', a: 'Il prezzo di un sito dipende dalle tue necessità, con una tariffa base che parte da 180€.' },
+			{ q: 'Quanto tempo serve per realizzarlo?', a: 'Le tempistiche per il rilascio di un sito dipendono dalla complessità del sito stesso e possono variare da qualche giorno a un mese. Se sceglierai di lavorare con me, ci accorderemo su questo dettaglio prima di iniziare.' },
+			{ q: 'Giri anche i video o fai solo montaggio?', a: 'Per il momento monto soltanto, ma sto valutando anche l\'opzione di girare (inizialmente solo nella zona di Roma e dintorni).' },
+			{ q: 'Posso aggiornare il sito in autonomia?', a: 'C\'è la possibilità di avere l\'integrazione di Sanity, che ti permetterebbe di aggiornare il contenuto del tuo sito dopo il lancio.' },
+			{ q: 'Ti occupi anche di dominio e hosting?', a: 'Posso guidarti passo passo nella creazione delle utenze e nella gestione del tuo dominio.' },
+			{ q: 'Lavori solo su Roma o anche da remoto?', a: 'Per i siti web e il montaggio video lavoro anche da remoto. Il servizio di riprese video (disponibile a breve) interesserà inizialmente solo le zone di Roma e dintorni.' },
+			{ q: 'Cosa succede se il risultato non mi convince?', a: 'Ti mostrerò risultati intermedi prima della consegna, in modo tale da poter aggiustare il tiro man mano che procedo con lo sviluppo o il montaggio.' },
 		],
 	},
 };

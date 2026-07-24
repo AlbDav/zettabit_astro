@@ -8,7 +8,6 @@ const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
 const content = getContent(lang);
 
-const bioDetail = t('about.bioDetail');
 const hasCerts = certifications.length > 0;
 ---
 
@@ -29,7 +28,6 @@ const hasCerts = certifications.length > 0;
 		<div class="md:col-span-2 flex flex-col gap-6" data-animate style="--d: 1">
 			<h2 class="text-3xl md:text-4xl font-bold">{t('about.title')}</h2>
 			<p class="text-base-content/70 leading-relaxed">{t('about.bio')}</p>
-			<p class="text-base-content/70 leading-relaxed">{bioDetail}</p>
 
 			{hasCerts && (
 				<div class="flex flex-col gap-3">

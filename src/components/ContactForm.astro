@@ -1,5 +1,5 @@
 ---
-import { site } from '../data/site';
+import { site, budgetRange } from '../data/site';
 import { defaultLang, getContent, getLocalizedPath, useTranslations } from '../i18n/utils';
 
 const lang = Astro.currentLocale ?? defaultLang;
@@ -42,10 +42,10 @@ const cfg = JSON.stringify({
 		<label>Don’t fill this out if you’re human: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
 	</p>
 
-	<!-- Progress (JS only): honest "Passo X di Y" -->
+	<!-- Progress (JS only, hidden on the first step so nothing looks "already started") -->
 	<div class="msf-progress mb-6 flex items-center gap-3" data-progress-wrap>
 		<div class="h-1.5 flex-1 rounded-full bg-base-content/10 overflow-hidden">
-			<div class="msf-progress-bar h-full bg-primary transition-all duration-300" style="width: 33%" data-progress-bar></div>
+			<div class="msf-progress-bar h-full bg-primary transition-all duration-300" style="width: 0%" data-progress-bar></div>
 		</div>
 		<span class="text-sm text-base-content/70 whitespace-nowrap" data-progress-label>{progressInitial}</span>
 	</div>
@@ -57,7 +57,7 @@ const cfg = JSON.stringify({
 	<div class="msf-step" data-step="need">
 		<fieldset>
 			<legend class="text-xl md:text-2xl font-bold mb-4" tabindex="-1" data-step-title>{s.need.title}</legend>
-			<div class="grid grid-cols-2 gap-3" role="radiogroup">
+			<div class="grid grid-cols-1 sm:grid-cols-3 gap-3" role="radiogroup">
 				{s.need.options.map((o) => (
 					<label class="msf-card">
 						<input type="radio" name={s.need.field} value={o.value} class="peer sr-only" />
@@ -74,7 +74,7 @@ const cfg = JSON.stringify({
 		<div class="flex flex-col gap-8">
 			<fieldset data-when="web">
 				<legend class="text-xl md:text-2xl font-bold mb-4" tabindex="-1" data-step-title>{s.projectType.title}</legend>
-				<div class="grid gap-3" role="radiogroup">
+				<div class="grid grid-cols-1 sm:grid-cols-2 gap-3" role="radiogroup">
 					{s.projectType.options.map((o) => (
 						<label class="msf-card">
 							<input type="radio" name={s.projectType.field} value={o.value} class="peer sr-only" />
@@ -86,7 +86,7 @@ const cfg = JSON.stringify({
 
 			<fieldset data-when="video">
 				<legend class="text-xl md:text-2xl font-bold mb-4" tabindex="-1" data-step-title>{s.videoScope.title}</legend>
-				<div class="grid gap-3" role="radiogroup">
+				<div class="grid grid-cols-1 sm:grid-cols-2 gap-3" role="radiogroup">
 					{s.videoScope.options.map((o) => (
 						<label class="msf-card">
 							<input type="radio" name={s.videoScope.field} value={o.value} class="peer sr-only" />
@@ -97,15 +97,35 @@ const cfg = JSON.stringify({
 			</fieldset>
 
 			<fieldset>
-				<legend class="text-lg font-semibold mb-4">{s.budget.title}</legend>
-				<div class="grid grid-cols-2 gap-3" role="radiogroup">
-					{s.budget.options.map((o) => (
-						<label class="msf-card">
-							<input type="radio" name={s.budget.field} value={o.value} class="peer sr-only" />
-							<span class="msf-card-face">{o.label}</span>
-						</label>
-					))}
+				<legend id="msf-budget-legend" class="text-lg font-semibold mb-4">{s.budget.title}</legend>
+				<div data-budget-wrap>
+					<output class="block text-3xl font-bold text-primary mb-3" data-budget-output>—</output>
+					<input
+						type="range"
+						name={s.budget.field}
+						data-budget-input
+						min={budgetRange.min}
+						max={budgetRange.max}
+						step={budgetRange.step}
+						value={Math.round((budgetRange.min + budgetRange.max) / 2)}
+						data-base-min={budgetRange.min}
+						data-base-max={budgetRange.max}
+						data-currency={budgetRange.currency}
+						data-locale={budgetRange.locale}
+						aria-labelledby="msf-budget-legend"
+						class="range range-primary range-sm w-full"
+					/>
+					<div class="flex justify-between text-xs text-base-content/70 mt-1">
+						<span data-budget-min></span>
+						<span data-budget-max></span>
+					</div>
 				</div>
+				<!-- Enabled only when "prefer not to say" is ticked; then it's the value that submits. -->
+				<input type="hidden" name={s.budget.field} value="na" data-budget-na-field disabled />
+				<label class="flex items-center gap-2 text-sm mt-4">
+					<input type="checkbox" data-budget-na class="checkbox checkbox-sm" />
+					{s.budget.na}
+				</label>
 			</fieldset>
 		</div>
 	</div>
@@ -176,7 +196,6 @@ const cfg = JSON.stringify({
 			</svg>
 		</div>
 		<p class="text-2xl font-bold">{form.successTitle}</p>
-		<p class="text-base-content/70">{form.successBody}</p>
 	</div>
 	<p class="msf-senderror hidden text-error" data-senderror hidden>
 		{form.sendErrorBefore}<a class="link" data-email-user={emailUser} data-email-domain={emailDomain}></a>{form.sendErrorAfter}
@@ -186,19 +205,18 @@ const cfg = JSON.stringify({
 <script>
 	type StepId = 'need' | 'qualify' | 'details';
 
-	const forms = document.querySelectorAll<HTMLFormElement>('form.msf');
-	forms.forEach(initForm);
+	document.querySelectorAll<HTMLFormElement>('form.msf').forEach(initForm);
 
 	function initForm(form: HTMLFormElement) {
 		const steps = Array.from(form.querySelectorAll<HTMLElement>('.msf-step'));
 		const live = form.querySelector<HTMLElement>('[data-live]');
+		const progressWrap = form.querySelector<HTMLElement>('[data-progress-wrap]');
 		const progressLabel = form.querySelector<HTMLElement>('[data-progress-label]');
 		const progressBar = form.querySelector<HTMLElement>('[data-progress-bar]');
 		const backBtn = form.querySelector<HTMLButtonElement>('[data-back]');
 		const nextBtn = form.querySelector<HTMLButtonElement>('[data-next]');
 		const submitBtn = form.querySelector<HTMLButtonElement>('[data-submit]');
 
-		// Read i18n strings that JS needs from the JSON payload on the form.
 		const cfg = JSON.parse(form.dataset.cfg || '{}');
 
 		// Assemble obfuscated emails across the form and its sibling result box.
@@ -212,44 +230,80 @@ const cfg = JSON.stringify({
 			if (!a.textContent?.trim() || a.querySelector('noscript')) a.textContent = addr;
 		}
 
-		// Enable JS multi-step mode.
 		form.dataset.js = 'true';
 
-		let sequence: StepId[] = ['need', 'qualify', 'details'];
+		// Fixed 3-step flow.
+		const sequence: StepId[] = ['need', 'qualify', 'details'];
 		let index = 0;
 
 		function needValue() {
-			return (
-				form.querySelector<HTMLInputElement>('input[name="need"]:checked')?.value ?? ''
-			);
+			return form.querySelector<HTMLInputElement>('input[name="need"]:checked')?.value ?? '';
 		}
 
-		function computeSequence(): StepId[] {
-			const need = needValue();
-			const seq: StepId[] = ['need'];
-			if (need && need !== 'unsure') seq.push('qualify');
-			seq.push('details');
-			return seq;
+		// ── Budget slider ────────────────────────────────────────────────────
+		const budgetInput = form.querySelector<HTMLInputElement>('[data-budget-input]');
+		const budgetOutput = form.querySelector<HTMLElement>('[data-budget-output]');
+		const budgetMinLabel = form.querySelector<HTMLElement>('[data-budget-min]');
+		const budgetMaxLabel = form.querySelector<HTMLElement>('[data-budget-max]');
+		const budgetWrap = form.querySelector<HTMLElement>('[data-budget-wrap]');
+		const budgetNa = form.querySelector<HTMLInputElement>('[data-budget-na]');
+		const budgetNaField = form.querySelector<HTMLInputElement>('[data-budget-na-field]');
+		const fmt = budgetInput
+			? new Intl.NumberFormat(budgetInput.dataset.locale || 'it-IT', {
+					style: 'currency',
+					currency: budgetInput.dataset.currency || 'EUR',
+					maximumFractionDigits: 0,
+				})
+			: null;
+
+		function renderBudget() {
+			if (!budgetInput || !fmt) return;
+			const v = Number(budgetInput.value);
+			const label = fmt.format(v);
+			if (budgetOutput) budgetOutput.textContent = label;
+			budgetInput.setAttribute('aria-valuetext', label);
 		}
 
+		function updateBudgetScale() {
+			if (!budgetInput || !fmt) return;
+			const factor = needValue() === 'both' ? 2 : 1;
+			const min = Number(budgetInput.dataset.baseMin) * factor;
+			const max = Number(budgetInput.dataset.baseMax) * factor;
+			const prevMin = Number(budgetInput.min);
+			budgetInput.min = String(min);
+			budgetInput.max = String(max);
+			// Keep the slider proportionally positioned when the scale changes.
+			if (Number(budgetInput.value) < min || Number(budgetInput.value) === prevMin) {
+				budgetInput.value = String(min);
+			}
+			if (Number(budgetInput.value) > max) budgetInput.value = String(max);
+			if (budgetMinLabel) budgetMinLabel.textContent = fmt.format(min);
+			if (budgetMaxLabel) budgetMaxLabel.textContent = fmt.format(max);
+			renderBudget();
+		}
+
+		budgetInput?.addEventListener('input', renderBudget);
+		budgetNa?.addEventListener('change', () => {
+			const off = budgetNa.checked;
+			if (budgetInput) budgetInput.disabled = off;
+			if (budgetNaField) budgetNaField.disabled = !off;
+			if (budgetWrap) budgetWrap.style.opacity = off ? '0.4' : '';
+		});
+		updateBudgetScale();
+
+		// ── Steps ────────────────────────────────────────────────────────────
 		function updateConditionalGroups() {
 			const need = needValue();
 			const showWeb = need === 'website' || need === 'both';
 			const showVideo = need === 'video' || need === 'both';
-			form.querySelectorAll<HTMLElement>('[data-when="web"]').forEach((el) => {
-				el.hidden = !showWeb;
-			});
-			form.querySelectorAll<HTMLElement>('[data-when="video"]').forEach((el) => {
-				el.hidden = !showVideo;
-			});
+			form.querySelectorAll<HTMLElement>('[data-when="web"]').forEach((el) => (el.hidden = !showWeb));
+			form.querySelectorAll<HTMLElement>('[data-when="video"]').forEach((el) => (el.hidden = !showVideo));
+			updateBudgetScale();
 		}
 
 		function render(focus: boolean) {
 			const current = sequence[index];
-			steps.forEach((step) => {
-				const active = step.dataset.step === current;
-				step.toggleAttribute('data-active', active);
-			});
+			steps.forEach((step) => step.toggleAttribute('data-active', step.dataset.step === current));
 			if (current === 'qualify') updateConditionalGroups();
 
 			if (backBtn) backBtn.hidden = index === 0;
@@ -257,19 +311,21 @@ const cfg = JSON.stringify({
 			if (nextBtn) nextBtn.hidden = last;
 			if (submitBtn) submitBtn.hidden = !last;
 
+			// Progress: hidden on step 1 so nothing looks started; bar reflects position.
+			if (progressWrap) progressWrap.style.display = index === 0 ? 'none' : 'flex';
 			const label = cfg.progress
 				.replace('{current}', String(index + 1))
 				.replace('{total}', String(sequence.length));
 			if (progressLabel) progressLabel.textContent = label;
-			if (progressBar) progressBar.style.width = `${((index + 1) / sequence.length) * 100}%`;
-			if (live) live.textContent = label;
+			if (progressBar) progressBar.style.width = `${(index / (sequence.length - 1)) * 100}%`;
+			if (live && index > 0) live.textContent = label;
 
 			if (focus) {
 				const activeStep = steps.find((st) => st.dataset.step === current);
 				const title = activeStep
 					? Array.from(activeStep.querySelectorAll<HTMLElement>('[data-step-title]')).find(
 							(el) => el.offsetParent !== null
-					  )
+						)
 					: null;
 				title?.focus();
 			}
@@ -281,9 +337,7 @@ const cfg = JSON.stringify({
 				err.hidden = true;
 				err.textContent = '';
 			}
-			form
-				.querySelectorAll<HTMLElement>(`[name="${field}"]`)
-				.forEach((el) => el.removeAttribute('aria-invalid'));
+			form.querySelectorAll<HTMLElement>(`[name="${field}"]`).forEach((el) => el.removeAttribute('aria-invalid'));
 		}
 
 		function showError(field: string, message: string) {
@@ -334,7 +388,6 @@ const cfg = JSON.stringify({
 
 		nextBtn?.addEventListener('click', () => {
 			if (!validateStep()) return;
-			if (index === 0) sequence = computeSequence();
 			index = Math.min(index + 1, sequence.length - 1);
 			render(true);
 		});

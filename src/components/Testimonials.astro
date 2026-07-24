@@ -1,0 +1,45 @@
+---
+import { testimonials, stats } from '../data/site';
+import { defaultLang } from '../i18n/utils';
+
+const lang = Astro.currentLocale ?? defaultLang;
+
+// Proof section (P3.5). Purely data-driven: each part appears on its own once it has
+// a real entry. Never seeded with fake data — that's the point of leaving it empty.
+const hasTestimonials = testimonials.length > 0;
+const hasStats = stats.length > 0;
+const show = hasTestimonials || hasStats;
+---
+
+{
+	show && (
+		<section id="proof" class="py-20 px-4 md:px-8 max-w-5xl mx-auto flex flex-col gap-12">
+			{hasStats && (
+				<div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+					{stats.map((stat, i) => (
+						<p class="text-lg font-semibold" data-animate style={`--d: ${i}`}>
+							{stat[lang === 'it' ? 'it' : 'en']}
+						</p>
+					))}
+				</div>
+			)}
+			{hasTestimonials && (
+				<div class="grid md:grid-cols-2 gap-6">
+					{testimonials.map((item, i) => (
+						<figure
+							class="rounded-box border border-base-content/10 bg-base-200 p-6 flex flex-col gap-4"
+							data-animate
+							style={`--d: ${i}`}
+						>
+							<blockquote class="text-base-content/80 leading-relaxed">“{item.quote}”</blockquote>
+							<figcaption class="text-sm text-base-content/70">
+								<span class="font-semibold text-base-content/80">{item.author}</span>
+								{item.role && <span> · {item.role}</span>}
+							</figcaption>
+						</figure>
+					))}
+				</div>
+			)}
+		</section>
+	)
+}

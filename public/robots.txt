@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zettabit.it/sitemap.xml

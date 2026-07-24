@@ -77,3 +77,76 @@
     transition: none;
   }
 }
+
+/* ── Multi-step contact form ──────────────────────────────────────────────
+   Progressive enhancement: with no JS every step is visible and the form
+   submits in one go. The [data-js] flag is set by the script, which then
+   drives the step-by-step view, the progress bar and the nav buttons. */
+.msf-progress,
+.msf-nav {
+  display: none;
+}
+.msf[data-js='true'] .msf-progress {
+  display: flex;
+}
+.msf[data-js='true'] .msf-nav {
+  display: flex;
+}
+.msf[data-js='true'] .msf-fallback-submit {
+  display: none;
+}
+.msf[data-js='true'] .msf-step:not([data-active]) {
+  display: none;
+}
+
+/* Choice cards are real radio inputs (visually hidden) with a styled label. */
+.msf-card {
+  display: block;
+  cursor: pointer;
+}
+.msf-card-face {
+  @apply flex min-h-14 items-center justify-center rounded-box border border-base-content/10 bg-base-100 px-4 py-3 text-center font-medium transition-colors;
+}
+.msf-card:hover input:not(:checked) + .msf-card-face {
+  @apply border-base-content/30;
+}
+.msf-card input:checked + .msf-card-face {
+  @apply border-primary bg-primary/10 text-primary;
+}
+.msf-card input:focus-visible + .msf-card-face {
+  @apply ring-2 ring-primary ring-offset-2 ring-offset-base-200;
+}
+
+/* ── Accessibility (P6.2) ─────────────────────────────────────────────────── */
+
+/* Skip link: first focusable element, hidden until it receives keyboard focus. */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0.5rem;
+  z-index: 100;
+  transform: translateY(-150%);
+  transition: transform 0.15s ease-out;
+  @apply bg-primary text-primary-content px-4 py-2 rounded-box font-medium shadow-lg;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Visible keyboard focus everywhere, without showing rings on mouse click. */
+:focus-visible {
+  @apply outline-2 outline-offset-2 outline-primary;
+}
+
+/* Respect reduced-motion on every animation/transition, not just the reveals. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

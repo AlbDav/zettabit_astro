@@ -3,46 +3,64 @@ export const it = {
 		'nav.services': 'Servizi',
 		'nav.process': 'Come lavoro',
 		'nav.portfolio': 'Portfolio',
+		'nav.overview': 'Panoramica',
 		'nav.about': 'Chi sono',
 		'nav.contact': 'Contatti',
 		'nav.cta': 'Inizia un progetto',
 		'menu.open': 'Apri menu',
+		'a11y.skip': 'Salta al contenuto',
 		'hero.badge': 'Disponibile per nuovi progetti',
-		'hero.cta.process': 'Scopri come lavoro',
-		'hero.cta.contact': 'Inizia un progetto',
+		'hero.cta.process': 'Come lavoro',
+		'hero.cta.contact': 'Raccontami il progetto',
 		'services.title': 'Cosa faccio',
 		'services.subtitle': 'Due mestieri, un obiettivo: far crescere il tuo progetto e farlo notare.',
+		'why.title': 'Web e video, gestiti insieme',
+		'why.p1':
+			'Il sito e i video di un’attività raccontano la stessa storia, e quando li seguono due fornitori diversi si vede: colori che non combaciano, tono che cambia, tempi che si allungano perché ognuno aspetta l’altro.',
+		'why.p2': 'Seguiti insieme, invece: un solo interlocutore, un preventivo, una linea visiva sola.',
 		'process.title': 'Come lavoro',
 		'process.subtitle': 'Un processo semplice e trasparente, dal primo messaggio al giorno del lancio.',
 		'about.title': 'Chi sono',
 		'about.bio':
 			"Sono Davide, un freelance che unisce sviluppo web e video editing per aiutare persone e aziende a comunicare online in modo chiaro. Seguo l'intero percorso, dalla progettazione del sito alla realizzazione del video, con attenzione ai dettagli e ai risultati concreti.",
+		'about.certTitle': 'Certificazioni',
+		'about.techToggle': 'Stack tecnico',
+		'about.location': 'Roma — lavoro con clienti in tutta Italia e da remoto.',
 		'portfolio.title': 'Portfolio',
-		'portfolio.hubSubtitle': 'Sfoglia i lavori per area, o vai dritto a un progetto specifico.',
-		'portfolio.overview': 'Tutti i lavori',
-		'portfolio.viewAll': 'Vedi tutti',
-		'portfolio.cta': 'Vedi il portfolio',
-		'portfolio.viewDemo': 'Guarda la demo',
-		'portfolio.comingSoon': 'Case study in arrivo',
+		'portfolio.cta': 'Scopri di più',
+		'faq.title': 'Domande frequenti',
 		'contact.title': 'Parliamo del tuo progetto',
-		'contact.subtitle': 'Scrivimi per una consulenza gratuita o per richiedere un preventivo.',
+		'contact.subtitle':
+			'Una call di 20 minuti, senza impegno. Ne esci con un’idea chiara di cosa serve, dei tempi e di quanto costa — anche se poi decidi di non lavorare con me.',
 		'contact.linkedin': 'LinkedIn',
 		'contact.instagram': 'Instagram',
 		'contact.github': 'GitHub',
 		'footer.tagline': 'Sviluppo web e video editing per brand che vogliono distinguersi.',
-		'footer.explore': 'Esplora',
-		'footer.connect': 'Seguimi',
-		'footer.rights': 'Tutti i diritti riservati.',
+		'footer.connect': 'Contatti',
+		'footer.privacy': 'Privacy Policy',
+		'footer.cookie': 'Cookie Policy',
+		'footer.location': 'Roma, Italia',
+		'legal.back': 'Torna alla home',
 	},
 	content: {
+		// SEO per pagina (P5.3) — Roma nel title della home (P5.4); description 140–160
+		// caratteri, diverse dalle inglesi (non traduzioni letterali).
+		seo: {
+			title: 'Davide Albano — Sviluppatore web e video editor a Roma',
+			description:
+				'Sviluppo web e video editing a Roma, una persona sola. Siti che caricano veloci e video che si guardano fino in fondo, per professionisti e piccole imprese.',
+		},
 		role: 'Sviluppatore Web & Video Editor',
-		headline: 'Siti web e video che rendono il tuo brand impossibile da ignorare.',
+		headline: 'Un sito che carica veloce. Video che si guardano fino in fondo. Web e video, insieme.',
 		subheadline:
-			'Progetto siti web moderni e veloci e monto video che si fanno guardare, per far risaltare online professionisti e piccole imprese.',
+			'Sviluppo web e video editing per professionisti e piccole imprese. Dalla prima riga di codice all’ultimo taglio, senza passaggi di mano.',
 		services: [
 			{
-				slug: 'web-development',
+				slug: 'sviluppo-web',
 				type: 'web',
+				metaTitle: 'Realizzazione siti web a Roma — landing page, siti vetrina e CMS',
+				metaDescription:
+					'Realizzo siti web a Roma: landing page, siti vetrina e siti con CMS che aggiorni in autonomia. Veloci, responsive e pensati per convertire i visitatori.',
 				title: 'Sviluppo Web',
 				tagline: 'Siti veloci, curati e pensati per trasformare i visitatori in clienti.',
 				description:
@@ -62,13 +80,16 @@ export const it = {
 					{
 						slug: 'cms-sites',
 						title: 'Siti con CMS',
-						description: 'Siti su Sanity che aggiorni da solo, senza toccare il codice.',
+						description: 'Siti su Sanity che aggiorni in autonomia, senza toccare il codice.',
 					},
 				],
 			},
 			{
-				slug: 'video-editing',
+				slug: 'video',
 				type: 'video',
+				metaTitle: 'Montaggio video, color grading e motion graphics — Roma',
+				metaDescription:
+					'Montaggio, color grading e motion graphics a Roma e da remoto: dal girato grezzo a contenuti che si guardano fino in fondo, per professionisti e imprese.',
 				title: 'Video Editing',
 				tagline: 'Montaggio che trasforma il girato in contenuti che si guardano fino in fondo.',
 				description:
@@ -95,18 +116,92 @@ export const it = {
 		],
 		process: [
 			{
-				title: 'Scoperta',
-				description: 'Analizziamo insieme obiettivi, pubblico e contenuti per definire la strategia giusta.',
+				title: 'Capiamo il progetto',
+				description:
+					'Si parte da obiettivi, pubblico e contenuti. Ricevi una proposta scritta con ambito, costo e cosa serve da parte tua. Da qui puoi ancora dire di no, senza costi.',
 			},
 			{
-				title: 'Sviluppo o produzione',
+				title: 'Sviluppo o montaggio',
 				description:
-					'Costruisco il sito o monto i contenuti video, con aggiornamenti costanti durante il lavoro.',
+					'Il progetto prende forma con aggiornamenti costanti, così non ci sono sorprese alla fine.',
 			},
 			{
 				title: 'Consegna e supporto',
-				description: 'Rilascio il progetto finito e resto disponibile per modifiche e assistenza successiva.',
+				description:
+					'Alla consegna ricevi tutto e una spiegazione su come gestirlo, più un mese di supporto per gli aggiustamenti — poi decidi tu se continuare.',
 			},
+		],
+		form: {
+			totalSteps: 3,
+			progressTemplate: 'Passo {current} di {total}',
+			next: 'Avanti',
+			back: 'Indietro',
+			submit: 'Invia',
+			sending: 'Invio in corso…',
+			escapePrompt: 'Preferisci scrivermi direttamente?',
+			steps: {
+				need: {
+					title: 'Di cosa hai bisogno?',
+					field: 'need',
+					options: [
+						{ value: 'website', label: 'Un sito web' },
+						{ value: 'video', label: 'Video' },
+						{ value: 'both', label: 'Entrambi' },
+					],
+				},
+				projectType: {
+					title: 'Che tipo di progetto?',
+					field: 'project-type',
+					options: [
+						{ value: 'new', label: 'Sito nuovo da zero' },
+						{ value: 'redesign', label: 'Rifacimento di un sito esistente' },
+						{ value: 'landing', label: 'Solo una landing page' },
+						{ value: 'other', label: 'Altro' },
+					],
+				},
+				videoScope: {
+					title: 'Che tipo di video?',
+					field: 'video-scope',
+					options: [
+						{ value: 'editing', label: 'Montaggio' },
+						{ value: 'color', label: 'Color grading' },
+						{ value: 'motion', label: 'Motion graphics' },
+						{ value: 'other', label: 'Altro' },
+					],
+				},
+				budget: {
+					title: 'Budget indicativo',
+					field: 'budget',
+					na: 'Preferisco non dirlo',
+				},
+				details: {
+					title: 'Ancora un paio di dettagli',
+					name: 'Nome',
+					email: 'Email',
+					message: 'Raccontami il progetto',
+					consentBefore: 'Ho letto e accetto la ',
+					consentLink: 'privacy policy',
+					consentAfter: '.',
+				},
+			},
+			errors: {
+				choose: 'Scegli un’opzione per continuare.',
+				name: 'Inserisci il tuo nome.',
+				email: 'Inserisci un indirizzo email valido.',
+				consent: 'Accetta la privacy policy per inviare.',
+			},
+			successTitle: 'Ricevuto.',
+			sendErrorBefore: 'Qualcosa è andato storto. Puoi scrivermi direttamente a ',
+			sendErrorAfter: '.',
+		},
+		faq: [
+			{ q: 'Quanto costa un sito?', a: 'Il prezzo di un sito dipende dalle tue necessità, con una tariffa base che parte da 180€.' },
+			{ q: 'Quanto tempo serve per realizzarlo?', a: 'Le tempistiche per il rilascio di un sito dipendono dalla complessità del sito stesso e possono variare da qualche giorno a un mese. Se sceglierai di lavorare con me, ci accorderemo su questo dettaglio prima di iniziare.' },
+			{ q: 'Giri anche i video o fai solo montaggio?', a: 'Per il momento monto soltanto, ma sto valutando anche l\'opzione di girare (inizialmente solo nella zona di Roma e dintorni).' },
+			{ q: 'Posso aggiornare il sito in autonomia?', a: 'C\'è la possibilità di avere l\'integrazione di Sanity, che ti permetterebbe di aggiornare il contenuto del tuo sito dopo il lancio.' },
+			{ q: 'Ti occupi anche di dominio e hosting?', a: 'Posso guidarti passo passo nella creazione delle utenze e nella gestione del tuo dominio.' },
+			{ q: 'Lavori solo su Roma o anche da remoto?', a: 'Per i siti web e il montaggio video lavoro anche da remoto. Il servizio di riprese video (disponibile a breve) interesserà inizialmente solo le zone di Roma e dintorni.' },
+			{ q: 'Cosa succede se il risultato non mi convince?', a: 'Ti mostrerò risultati intermedi prima della consegna, in modo tale da poter aggiustare il tiro man mano che procedo con lo sviluppo o il montaggio.' },
 		],
 	},
 };

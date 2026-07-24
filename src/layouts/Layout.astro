@@ -1,44 +1,88 @@
 ---
 import '../styles/global.css';
 import { site } from '../data/site';
-import { defaultLang, getContent, languages } from '../i18n/utils';
+import { defaultLang, getContent, languages, useTranslations } from '../i18n/utils';
 
 interface Props {
 	title?: string;
 	description?: string;
+	breadcrumbs?: { name: string; url: string }[];
 }
 
 const lang = Astro.currentLocale ?? defaultLang;
 const content = getContent(lang);
+const t = useTranslations(lang);
+const { title = content.seo.title, description = content.seo.description, breadcrumbs } = Astro.props;
 
-const { title = `${site.name} — ${content.role}`, description = content.subheadline } = Astro.props;
+// Same page in the other language (P5.1): strip/add the /en prefix off the current path.
+const path = Astro.url.pathname;
+const basePath = lang === 'en' ? path.replace(/^\/en(?=\/|$)/, '') || '/' : path;
+const itHref = basePath;
+const enHref = basePath === '/' ? '/en/' : `/en${basePath}`;
+const selfHref = lang === 'en' ? enHref : itHref;
+
+const abs = (href: string) => new URL(href, Astro.site).href;
+const canonical = abs(selfHref);
+const isHome = basePath === '/';
+
+const ogLocale = lang === 'it' ? 'it_IT' : 'en_US';
+const ogLocaleAlt = lang === 'it' ? 'en_US' : 'it_IT';
+
+// Structured data (P5.5).
+const jsonLd: object[] = [];
+if (isHome) {
+	jsonLd.push({
+		'@context': 'https://schema.org',
+		'@type': 'ProfessionalService',
+		name: site.siteName,
+		url: abs(selfHref),
+		email: site.email,
+		areaServed: [
+			{ '@type': 'City', name: 'Roma' },
+			{ '@type': 'Country', name: 'Italia' },
+		],
+		address: { '@type': 'PostalAddress', addressLocality: 'Roma', addressCountry: 'IT' },
+		founder: { '@type': 'Person', name: site.name },
+		sameAs: Object.values(site.social),
+	});
+	jsonLd.push({
+		'@context': 'https://schema.org',
+		'@type': 'Person',
+		name: site.name,
+		jobTitle: content.role,
+		url: abs(selfHref),
+		address: { '@type': 'PostalAddress', addressLocality: 'Roma', addressCountry: 'IT' },
+		sameAs: Object.values(site.social),
+	});
+}
+if (breadcrumbs?.length) {
+	jsonLd.push({
+		'@context': 'https://schema.org',
+		'@type': 'BreadcrumbList',
+		itemListElement: breadcrumbs.map((b, i) => ({
+			'@type': 'ListItem',
+			position: i + 1,
+			name: b.name,
+			item: abs(b.url),
+		})),
+	});
+}
 ---
 
 <html lang={lang}>
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content={description} />
-		<title>{title}</title>
-		<link rel="alternate" hreflang="en" href="/" />
-		<link rel="alternate" hreflang="it" href="/it/" />
-		<link rel="alternate" hreflang="x-default" href="/" />
-	</head>
-	<body>
-		<slot />
-		<script is:inline define:vars={{ currentLocale: lang, supported: Object.keys(languages) }}>
+		<script is:inline define:vars={{ currentLocale: lang, supported: Object.keys(languages), alt: { it: itHref, en: enHref } }}>
+			// Render-blocking in <head>, before first paint: send visitors to this same
+			// page in their preferred language rather than painting the wrong one first.
 			(function () {
 				try {
 					var stored = localStorage.getItem('preferredLang');
 					if (!stored) {
-						var browserLang = ((navigator.language || 'en').split('-')[0] || 'en').toLowerCase();
-						var target = supported.indexOf(browserLang) !== -1 ? browserLang : 'en';
-						if (target !== currentLocale) {
-							var path = target === 'en' ? '/' : '/' + target + '/';
-							window.location.replace(path);
+						var browserLang = ((navigator.language || 'it').split('-')[0] || 'it').toLowerCase();
+						var target = supported.indexOf(browserLang) !== -1 ? browserLang : 'it';
+						if (target !== currentLocale && alt[target]) {
+							window.location.replace(alt[target]);
 							return;
 						}
 					}
@@ -46,6 +90,38 @@ const { title = `${site.name} — ${content.role}`, description = content.subhea
 				} catch (e) {}
 			})();
 		</script>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="color-scheme" content="dark" />
+		<meta name="theme-color" content="#2a303c" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<title>{title}</title>
+		<link rel="canonical" href={canonical} />
+		<link rel="alternate" hreflang="it" href={abs(itHref)} />
+		<link rel="alternate" hreflang="en" href={abs(enHref)} />
+		<link rel="alternate" hreflang="x-default" href={abs(itHref)} />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content={site.siteName} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:locale" content={ogLocale} />
+		<meta property="og:locale:alternate" content={ogLocaleAlt} />
+		{/* [DA CONFERMARE: immagine OG dedicata 1200×630 per pagina — vedi og:image gated in P5.5] */}
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+
+		{jsonLd.map((entry) => (
+			<script type="application/ld+json" set:html={JSON.stringify(entry)} />
+		))}
+	</head>
+	<body>
+		<a href="#main-content" class="skip-link">{t('a11y.skip')}</a>
+		<slot />
 		<script is:inline>
 			(function () {
 				var els = document.querySelectorAll('[data-animate]');

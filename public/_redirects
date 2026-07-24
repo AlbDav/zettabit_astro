@@ -1,0 +1,15 @@
+# 301 redirects (P5.1 / P5.2). First matching rule wins — specific before wildcards.
+
+# Italian pages moved from /it/ to the root (P5.1)
+/it/portfolio/web-development/   /servizi/sviluppo-web/   301
+/it/portfolio/video-editing/     /servizi/video/          301
+/it/portfolio/                   /                        301
+/it/privacy/                     /privacy/                301
+/it/cookie-policy/               /cookie-policy/           301
+/it/                             /                        301
+/it/*                            /:splat                  301
+
+# English category pages moved to /en/servizi/ (they used to live at the root, P5.2)
+/portfolio/web-development/       /en/servizi/sviluppo-web/   301
+/portfolio/video-editing/         /en/servizi/video/          301
+/portfolio/                       /en/                        301

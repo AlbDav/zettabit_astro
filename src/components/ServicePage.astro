@@ -2,10 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from './Navbar.astro';
 import Footer from './Footer.astro';
-import { defaultLang, getContent, useTranslations } from '../i18n/utils';
+import { defaultLang, getContent, getLocalizedPath, getLocalizedServicePath, useTranslations } from '../i18n/utils';
 
 interface Props {
-	slug: 'web-development' | 'video-editing';
+	slug: 'sviluppo-web' | 'video';
 }
 
 const { slug } = Astro.props;
@@ -13,18 +13,31 @@ const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
 const { services } = getContent(lang);
 const service = services.find((s) => s.slug === slug)!;
+
+const breadcrumbs = [
+	{ name: 'Zettabit', url: getLocalizedPath(lang) },
+	{ name: t('nav.services'), url: `${getLocalizedPath(lang)}#services` },
+	{ name: service.title, url: getLocalizedServicePath(lang, slug) },
+];
 ---
 
-<Layout title={`${service.title} — ${t('portfolio.title')}`} description={service.description}>
+<Layout title={service.metaTitle} description={service.metaDescription} breadcrumbs={breadcrumbs}>
 	<Navbar />
 
-	<h1 class="sr-only">{service.title} — {t('portfolio.title')}</h1>
+	<main id="main-content" tabindex="-1">
+	<header class="pt-28 pb-8 px-4 md:px-8">
+		<div class="max-w-5xl mx-auto w-full flex flex-col gap-4">
+			<a href={`${getLocalizedPath(lang)}#services`} class="text-sm text-accent link link-hover w-fit">← {t('nav.services')}</a>
+			<h1 class="text-4xl md:text-5xl font-bold">{service.title}</h1>
+			<p class="text-lg text-base-content/70 max-w-2xl">{service.tagline}</p>
+		</div>
+	</header>
 
 	{
 		service.sections.map((section, i) => (
 			<section
 				id={section.slug}
-				class={`min-h-screen flex flex-col justify-center scroll-mt-20 py-20 px-4 md:px-8 ${
+				class={`flex flex-col justify-center scroll-mt-20 py-16 md:py-20 px-4 md:px-8 ${
 					i % 2 === 1 ? 'bg-base-200' : ''
 				}`}
 			>
@@ -45,11 +58,6 @@ const service = services.find((s) => s.slug === slug)!;
 								{/* Phone screenshot */}
 								<div class="skeleton absolute right-4 sm:right-28 -bottom-2 h-48 sm:h-60 w-28 sm:w-32 rounded-box border-4 border-base-100" />
 							</div>
-							<div>
-								<button class="btn btn-outline btn-accent" disabled>
-									{t('portfolio.viewDemo')}
-								</button>
-							</div>
 						</div>
 					) : (
 						<div class="flex flex-col gap-4" data-animate style="--d: 1">
@@ -65,12 +73,11 @@ const service = services.find((s) => s.slug === slug)!;
 							</div>
 						</div>
 					)}
-
-					<p class="text-xs text-base-content/40">{t('portfolio.comingSoon')}</p>
 				</div>
 			</section>
 		))
 	}
+	</main>
 
 	<Footer />
 </Layout>

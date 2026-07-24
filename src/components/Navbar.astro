@@ -4,8 +4,7 @@ import {
 	defaultLang,
 	getContent,
 	getLocalizedPath,
-	getLocalizedPortfolioHub,
-	getLocalizedPortfolioPath,
+	getLocalizedServicePath,
 	languages,
 	useTranslations,
 } from '../i18n/utils';
@@ -14,9 +13,16 @@ const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
 const homePath = getLocalizedPath(lang);
 const { services } = getContent(lang);
+
+// Equivalent of the current page in a given language (P5.1), so the language
+// switcher and lang links stay on the same page instead of jumping home.
+const path = Astro.url.pathname;
+const basePath = lang === 'en' ? path.replace(/^\/en(?=\/|$)/, '') || '/' : path;
+const localeHref = (code: string) =>
+	code === 'it' ? basePath : basePath === '/' ? '/en/' : `/en${basePath}`;
 ---
 
-<div class="navbar bg-base-100/80 backdrop-blur sticky top-0 z-50 border-b border-base-200 px-4 md:px-8">
+<header class="navbar bg-base-100/80 backdrop-blur sticky top-0 z-50 border-b border-base-200 px-4 md:px-8">
 	<div class="navbar-start">
 		<a href={`${homePath}#home`} class="flex items-center gap-2 text-xl font-bold">
 			<img src="/favicon.svg" alt="" width="28" height="28" class="h-7 w-7 rounded-md" />
@@ -25,29 +31,28 @@ const { services } = getContent(lang);
 	</div>
 	<div class="navbar-center hidden lg:flex">
 		<ul class="menu menu-horizontal gap-1">
-			<li><a href={`${homePath}#services`}>{t('nav.services')}</a></li>
-			<li><a href={`${homePath}#process`}>{t('nav.process')}</a></li>
 			<li>
-					<details>
-						<summary>{t('nav.portfolio')}</summary>
-						<ul class="bg-base-200 rounded-box p-2 shadow-lg border border-base-content/10 z-50 min-w-max">
-							<li><a href={getLocalizedPortfolioHub(lang)}>{t('portfolio.overview')}</a></li>
-							{services.map((service) => (
-								<li><a href={getLocalizedPortfolioPath(lang, service.slug)}>{service.title}</a></li>
-							))}
-						</ul>
-					</details>
-				</li>
+				<details>
+					<summary>{t('nav.services')}</summary>
+					<ul class="bg-base-200 rounded-box p-2 shadow-lg border border-base-content/10 z-50 min-w-max">
+						<li><a href={`${homePath}#services`}>{t('nav.overview')}</a></li>
+						{services.map((service) => (
+							<li><a href={getLocalizedServicePath(lang, service.slug)}>{service.title}</a></li>
+						))}
+					</ul>
+				</details>
+			</li>
+			<li><a href={`${homePath}#process`}>{t('nav.process')}</a></li>
 			<li><a href={`${homePath}#about`}>{t('nav.about')}</a></li>
 			<li><a href={`${homePath}#contact`}>{t('nav.contact')}</a></li>
 		</ul>
 	</div>
 	<div class="navbar-end gap-2">
-		<div class="hidden sm:flex items-center gap-1">
+		<div class="hidden lg:flex items-center gap-1" role="group" aria-label="Lingua / Language">
 			{
 				Object.entries(languages).map(([code, label]) => (
 					<a
-						href={getLocalizedPath(code)}
+						href={localeHref(code)}
 						data-lang-link
 						class={`btn btn-ghost btn-xs ${code === lang ? 'btn-active' : ''}`}
 						aria-current={code === lang ? 'true' : undefined}
@@ -66,29 +71,29 @@ const { services } = getContent(lang);
 				</svg>
 			</div>
 			<ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow">
-				<li><a href={`${homePath}#services`}>{t('nav.services')}</a></li>
-				<li><a href={`${homePath}#process`}>{t('nav.process')}</a></li>
 				<li>
 					<details>
-						<summary>{t('nav.portfolio')}</summary>
+						<summary>{t('nav.services')}</summary>
 						<ul class="bg-base-200 rounded-box p-2 shadow-lg border border-base-content/10 z-50 min-w-max">
-							<li><a href={getLocalizedPortfolioHub(lang)}>{t('portfolio.overview')}</a></li>
+							<li><a href={`${homePath}#services`}>{t('nav.overview')}</a></li>
 							{services.map((service) => (
-								<li><a href={getLocalizedPortfolioPath(lang, service.slug)}>{service.title}</a></li>
+								<li><a href={getLocalizedServicePath(lang, service.slug)}>{service.title}</a></li>
 							))}
 						</ul>
 					</details>
 				</li>
+				<li><a href={`${homePath}#process`}>{t('nav.process')}</a></li>
 				<li><a href={`${homePath}#about`}>{t('nav.about')}</a></li>
 				<li><a href={`${homePath}#contact`}>{t('nav.contact')}</a></li>
 				<li class="mt-2 border-t border-base-200 pt-2">
-					<div class="flex gap-3">
+					<div class="flex gap-3" role="group" aria-label="Lingua / Language">
 						{
 							Object.entries(languages).map(([code, label]) => (
 								<a
-									href={getLocalizedPath(code)}
+									href={localeHref(code)}
 									data-lang-link
-									class={code === lang ? 'font-semibold' : 'text-base-content/60'}
+									class={code === lang ? 'font-semibold' : 'text-base-content/70'}
+									aria-current={code === lang ? 'true' : undefined}
 									title={label}
 								>
 									{code.toUpperCase()}
@@ -100,7 +105,7 @@ const { services } = getContent(lang);
 			</ul>
 		</div>
 	</div>
-</div>
+</header>
 
 <script>
 	document.querySelectorAll<HTMLAnchorElement>('[data-lang-link]').forEach((link) => {

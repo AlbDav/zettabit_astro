@@ -2,11 +2,11 @@ import { en } from './en';
 import { it } from './it';
 
 export const languages = {
-	en: 'English',
 	it: 'Italiano',
+	en: 'English',
 };
 
-export const defaultLang: keyof typeof languages = 'en';
+export const defaultLang: keyof typeof languages = 'it';
 
 const dictionaries = { en, it };
 
@@ -37,10 +37,7 @@ export function getLocalizedPath(lang: string): string {
 	return lang === defaultLang ? '/' : `/${lang}/`;
 }
 
-export function getLocalizedPortfolioHub(lang: string): string {
-	return `${getLocalizedPath(lang)}portfolio/`;
-}
-
-export function getLocalizedPortfolioPath(lang: string, slug: string): string {
-	return `${getLocalizedPortfolioHub(lang)}${slug}/`;
+// Service detail pages live under /servizi/ (IT root) and /en/servizi/ (P5.2).
+export function getLocalizedServicePath(lang: string, slug: string): string {
+	return `${getLocalizedPath(lang)}servizi/${slug}/`;
 }

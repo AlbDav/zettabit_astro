@@ -1,5 +1,5 @@
 ---
-import { defaultLang, getContent, getLocalizedPortfolioPath, useTranslations } from '../i18n/utils';
+import { defaultLang, getContent, getLocalizedServicePath, useTranslations } from '../i18n/utils';
 
 const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
@@ -15,7 +15,7 @@ const { services } = getContent(lang);
 		{
 			services.map((service, i) => (
 				<a
-					href={getLocalizedPortfolioPath(lang, service.slug)}
+					href={getLocalizedServicePath(lang, service.slug)}
 					class="card bg-base-200 border border-base-content/10 shadow-sm hover:border-accent transition-colors"
 					data-animate
 					style={`--d: ${i + 1}`}

@@ -1,0 +1,23 @@
+# Lighthouse CI (P7.6) — runs on every PR so a performance/a11y/SEO regression is
+# visible before merge instead of months later. Uses the built static output
+# (mobile preset, median of 3 runs). Tune thresholds in lighthouserc.json.
+name: Lighthouse CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Run Lighthouse CI
+        run: npx --yes @lhci/cli@0.14.x autorun

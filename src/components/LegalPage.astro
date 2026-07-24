@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from './Navbar.astro';
+import Footer from './Footer.astro';
+import { legal } from '../data/legal';
+import { defaultLang, getLocalizedPath, useTranslations } from '../i18n/utils';
+
+interface Props {
+	type: 'privacy' | 'cookie';
+}
+
+const { type } = Astro.props;
+const lang = Astro.currentLocale ?? defaultLang;
+const t = useTranslations(lang);
+const strings = legal[lang === 'it' ? 'it' : 'en'];
+const doc = strings[type];
+const homePath = getLocalizedPath(lang);
+---
+
+<Layout title={`${doc.title} — Zettabit`} description={doc.intro}>
+	<Navbar />
+
+	<main id="main-content" tabindex="-1" class="min-h-screen py-20 md:py-28 px-4 md:px-8">
+		<article class="max-w-2xl mx-auto flex flex-col gap-8">
+			<header class="flex flex-col gap-4">
+				<a href={`${homePath}#home`} class="text-sm text-accent link link-hover w-fit">← {t('legal.back')}</a>
+				<h1 class="text-4xl md:text-5xl font-bold">{doc.title}</h1>
+				<div role="note" class="rounded-box border border-warning/40 bg-warning/10 px-4 py-3 text-sm text-base-content/80">
+					{strings.draftNotice}
+				</div>
+				<p class="text-base-content/70">{doc.intro}</p>
+			</header>
+
+			<div class="flex flex-col gap-8">
+				{
+					doc.sections.map((section) => (
+						<section class="flex flex-col gap-2">
+							<h2 class="text-xl font-semibold">{section.heading}</h2>
+							<p class="text-base-content/70 leading-relaxed">{section.body}</p>
+						</section>
+					))
+				}
+			</div>
+
+			<p class="text-xs text-base-content/70 border-t border-base-content/10 pt-6">{strings.lastUpdated}</p>
+		</article>
+	</main>
+
+	<Footer />
+</Layout>

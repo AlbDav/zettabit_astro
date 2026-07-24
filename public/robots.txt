@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# [DA CONFERMARE alla migrazione: sostituire l'origine con https://zettabit.it]
+Sitemap: https://zettabit.netlify.app/sitemap.xml

@@ -1,0 +1,60 @@
+---
+import { defaultLang, getContent, useTranslations } from '../i18n/utils';
+
+const lang = Astro.currentLocale ?? defaultLang;
+const t = useTranslations(lang);
+const { faq } = getContent(lang);
+
+// FAQPage structured data — only emitted once every answer is real (not a
+// placeholder). This is data correctness, not a display flag: emitting
+// "[DA COMPILARE]" into schema.org would poison search results.
+const answersReady = faq.every((item) => !item.a.startsWith('['));
+const jsonLd = answersReady
+	? {
+			'@context': 'https://schema.org',
+			'@type': 'FAQPage',
+			mainEntity: faq.map((item) => ({
+				'@type': 'Question',
+				name: item.q,
+				acceptedAnswer: { '@type': 'Answer', text: item.a },
+			})),
+		}
+	: null;
+---
+
+{
+	(
+		<section id="faq" class="py-20 px-4 md:px-8 bg-base-200">
+			<div class="max-w-3xl mx-auto flex flex-col gap-8">
+				<h2 class="text-3xl md:text-4xl font-bold text-center" data-animate style="--d: 0">
+					{t('faq.title')}
+				</h2>
+				<div class="flex flex-col gap-3">
+					{faq.map((item, i) => (
+						<details
+							class="group rounded-box border border-base-content/10 bg-base-100 px-5 py-4"
+							data-animate
+							style={`--d: ${i + 1}`}
+						>
+							<summary class="flex cursor-pointer items-center justify-between gap-4 font-medium list-none">
+								{item.q}
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									class="h-5 w-5 shrink-0 text-base-content/70 transition-transform group-open:rotate-45"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+									stroke-width="2"
+								>
+									<path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14" />
+								</svg>
+							</summary>
+							<p class="mt-3 text-base-content/70 leading-relaxed">{item.a}</p>
+						</details>
+					))}
+				</div>
+			</div>
+		</section>
+	)
+}
+{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}

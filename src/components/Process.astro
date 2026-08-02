@@ -4,44 +4,35 @@ import { defaultLang, getContent, useTranslations } from '../i18n/utils';
 const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
 const { process } = getContent(lang);
-
-const CIRCLE_MS = 400;
-const LINE_MS = 300;
-
-let cursor = 0;
-const timings = process.map((_, i) => {
-	let lineDelay = 0;
-	if (i > 0) {
-		lineDelay = cursor;
-		cursor += LINE_MS;
-	}
-	const circleDelay = cursor;
-	cursor += CIRCLE_MS;
-	return { circleDelay, lineDelay };
-});
 ---
 
-<section id="process" class="min-h-screen flex flex-col justify-center py-20 px-4 md:px-8 bg-base-200">
-	<div class="max-w-4xl mx-auto">
-		<div class="text-center mb-12" data-animate style="--d: 0">
-			<h2 class="text-3xl md:text-4xl font-bold">{t('process.title')}</h2>
-			<p class="text-base-content/70 mt-2">{t('process.subtitle')}</p>
+<section id="process" class="min-h-screen flex flex-col justify-center py-16 px-4 md:px-8 md:py-24">
+	<div class="w-full max-w-6xl mx-auto">
+		<p class="font-mono text-xs uppercase tracking-[0.14em] text-primary" data-animate style="--d: 0">02 — {t('process.title')}</p>
+		<h2 class="mt-4 max-w-[26ch] font-display text-3xl font-semibold leading-[1.12] tracking-tight md:text-4xl" data-animate style="--d: 0">
+			{t('process.subtitle')}
+		</h2>
+
+		<div class="mt-10 flex items-stretch gap-4 md:mt-12 lg:block lg:gap-0">
+			<div class="w-[2px] shrink-0 self-stretch overflow-hidden rounded-full bg-base-content/10 lg:hidden">
+				<div data-animate="progress-v" class="h-full w-full origin-top bg-gradient-to-b from-primary/30 to-primary"></div>
+			</div>
+			<div class="mb-5 hidden h-[2px] overflow-hidden rounded-full bg-base-content/10 lg:block">
+				<div data-animate="progress-h" class="h-full w-full origin-left bg-gradient-to-r from-primary/30 to-primary"></div>
+			</div>
+
+			<ol class="flex min-w-0 flex-1 flex-col gap-px overflow-hidden rounded-2xl border border-base-content/10 bg-base-content/10 lg:grid lg:grid-cols-3">
+				{
+					process.map((step, i) => (
+						<li class="flex flex-col bg-base-100 p-6 md:p-8" data-animate style={`--d: ${i + 1}`}>
+							<span class="font-mono text-xs text-primary">{String(i + 1).padStart(2, '0')}</span>
+							<p class="mt-3 font-display text-lg font-semibold tracking-tight">{step.title}</p>
+							<p class="mt-2.5 text-sm leading-relaxed text-base-content/60">{step.description}</p>
+							<p class="mt-auto pt-4 text-[13.5px] text-primary">{step.note}</p>
+						</li>
+					))
+				}
+			</ol>
 		</div>
-		<ul class="steps steps-vertical lg:steps-horizontal w-full">
-			{
-				process.map((step, i) => (
-					<li
-						class="step step-primary"
-						data-animate="step"
-						style={`--circle-delay: ${timings[i].circleDelay}ms; --line-delay: ${timings[i].lineDelay}ms`}
-					>
-						<div class="text-left lg:text-center pt-2 pb-4" data-animate style={`transition-delay: ${timings[i].circleDelay}ms`}>
-							<p class="font-semibold">{step.title}</p>
-							<p class="text-sm text-base-content/70 mt-1 max-w-xs lg:mx-auto">{step.description}</p>
-						</div>
-					</li>
-				))
-			}
-		</ul>
 	</div>
 </section>

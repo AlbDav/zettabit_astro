@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 
 // Language-neutral base paths. Legal pages are intentionally excluded while they
 // are still placeholder drafts. IT = base, EN = /en + base (P5.1).
-const pages = ['/', '/servizi/sviluppo-web/', '/servizi/video/'];
+const pages = ['/'];
 
 const enOf = (p: string) => (p === '/' ? '/en/' : `/en${p}`);
 

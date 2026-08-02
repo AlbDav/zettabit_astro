@@ -1,18 +1,30 @@
 ---
 import ContactForm from './ContactForm.astro';
+import { site } from '../data/site';
 import { defaultLang, useTranslations } from '../i18n/utils';
 
 const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
 ---
 
-<section id="contact" class="min-h-screen flex flex-col justify-center py-20 px-4 md:px-8">
-	<div class="max-w-3xl mx-auto w-full flex flex-col items-center gap-8">
-		<div class="text-center flex flex-col items-center gap-4">
-			<h2 class="text-3xl md:text-4xl font-bold" data-animate style="--d: 0">{t('contact.title')}</h2>
-			<p class="text-base-content/70" data-animate style="--d: 1">{t('contact.subtitle')}</p>
+<section id="contact" class="min-h-screen flex flex-col justify-center bg-base-200 py-16 px-4 md:px-8 md:py-24">
+	<div class="mx-auto w-full max-w-6xl grid gap-10 md:grid-cols-2 md:gap-14 items-start">
+		<div data-animate style="--d: 0">
+			<p class="font-mono text-xs uppercase tracking-[0.14em] text-primary">03 — {t('nav.contact')}</p>
+			<h2 class="mt-4 max-w-[20ch] font-display text-3xl font-semibold leading-[1.12] tracking-tight md:text-4xl">
+				{t('contact.title')}
+			</h2>
+			<p class="mt-4 max-w-[46ch] text-base-content/60 leading-relaxed text-pretty">{t('contact.subtitle')}</p>
+			<div class="mt-7 flex flex-col gap-3">
+				<p class="text-[14.5px] text-base-content/50">{t('contact.emailPrompt')}</p>
+				<a href={`mailto:${site.email}`} class="w-fit font-mono text-[15px] text-primary border-b border-primary/40 pb-0.5">
+					{site.email}
+				</a>
+				<p class="mt-1 text-[13.5px] text-base-content/50">{t('contact.emailNote')}</p>
+			</div>
 		</div>
-		<div class="w-full" data-animate style="--d: 2">
+
+		<div data-animate style="--d: 1">
 			<ContactForm />
 		</div>
 	</div>

@@ -2,16 +2,19 @@ export const en = {
 	ui: {
 		'nav.services': 'Services',
 		'nav.process': 'How I work',
-		'nav.portfolio': 'Portfolio',
-		'nav.overview': 'Overview',
 		'nav.about': 'About',
 		'nav.contact': 'Contact',
-		'nav.cta': "Start a project",
+		'nav.faq': 'FAQ',
+		'nav.cta': "Let's talk",
 		'menu.open': 'Open menu',
 		'a11y.skip': 'Skip to content',
+		'hero.eyebrow': 'Davide Albano · Rome · freelance',
 		'hero.badge': 'Available for new projects',
-		'hero.cta.process': 'How I work',
-		'hero.cta.contact': 'Tell me about your project',
+		'hero.cta.process': 'What I do',
+		'hero.cta.contact': 'Book a 20-minute call',
+		'price.from': 'from',
+		'sticky.title': '20-minute call',
+		'sticky.subtitle': 'No obligation, from €{price}',
 		'services.title': 'What I do',
 		'services.subtitle': 'Two crafts, one goal: help your project grow and get noticed.',
 		'why.title': 'Web and video, handled together',
@@ -26,12 +29,12 @@ export const en = {
 		'about.certTitle': 'Certifications',
 		'about.techToggle': 'Tech stack',
 		'about.location': 'Based in Rome — working with clients across Italy and remotely.',
-		'portfolio.title': 'Portfolio',
-		'portfolio.cta': 'Learn more',
 		'faq.title': 'Frequently asked questions',
 		'contact.title': "Let's talk about your project",
 		'contact.subtitle':
 			"A 20-minute call, no strings. You'll leave with a clear idea of what's needed, how long it takes and what it costs — even if you decide not to work with me.",
+		'contact.emailPrompt': 'Prefer to just email me?',
+		'contact.emailNote': "I'll reply within one business day.",
 		'contact.linkedin': 'LinkedIn',
 		'contact.instagram': 'Instagram',
 		'contact.github': 'GitHub',
@@ -51,139 +54,82 @@ export const en = {
 				'Web development and video editing by one person in Rome. Fast sites and video people actually finish — for professionals and small businesses across Italy.',
 		},
 		role: 'Web Developer & Video Editor',
-		headline: 'A site that loads fast. Video people actually finish. Web and video, together.',
+		aboutHeadline: 'One person, and it shows — in a good way.',
+		headline: 'The site and the videos for your business, made by the same person.',
 		subheadline:
-			'Web development and video editing for professionals and small businesses. From the first line of code to the final cut — no handoffs.',
+			'Web development and video editing for professionals and small businesses. One point of contact, one quote, one visual language — from the first line of code to the final cut.',
+		heroStats: [
+			{ label: 'Website', price: 'web', caption: 'base rate, tailored quote' },
+			{ label: 'Video', price: 'video', caption: 'editing, based on length & footage' },
+			{ label: 'Before we start', value: 'Written quote', caption: 'scope and cost, no obligation' },
+			{ label: 'After delivery', value: '1 month', caption: 'of support included' },
+		],
 		services: [
 			{
-				slug: 'sviluppo-web',
-				type: 'web',
-				metaTitle: 'Web Development — Landing Pages, Brochure Sites & CMS',
-				metaDescription:
-					'Fast, responsive landing pages, brochure sites and CMS-backed websites you can update yourself — built to load quickly and turn visitors into clients.',
 				title: 'Web Development',
-				tagline: 'Sites that load fast, look sharp and turn visitors into clients.',
+				headline: 'Sites that load fast and bring in leads',
 				description:
 					'Landing pages, brochure sites and sites you can update yourself (Sanity) — fast, responsive and built to convert.',
-				features: ['Responsive design', 'On-page SEO', 'Optimized performance'],
-				sections: [
-					{
-						slug: 'landing-pages',
-						title: 'Landing pages',
-						description: 'Focused single-page sites built to turn visitors into leads.',
-					},
-					{
-						slug: 'showcase-sites',
-						title: 'Brochure sites',
-						description: 'Multi-page sites that present your brand, services and story.',
-					},
-					{
-						slug: 'cms-sites',
-						title: 'Sites you can update yourself',
-						description: 'Sanity-backed sites you can update yourself, no code required.',
-					},
-				],
+				features: ['Responsive design, mobile included', 'On-page SEO and performance', 'Optional CMS you can update yourself'],
+				ctaLabel: "Let's talk about the site →",
+				needValue: 'website',
 			},
 			{
-				slug: 'video',
-				type: 'video',
-				metaTitle: 'Video Editing, Colour Grading & Motion Graphics',
-				metaDescription:
-					'Editing, colour grading and motion graphics that turn raw footage into content people watch to the end — for small businesses and professionals.',
 				title: 'Video Editing',
-				tagline: 'Editing that turns raw footage into content people finish.',
+				headline: 'Video people watch to the end',
 				description:
-					'Editing, color grading and motion graphics for content that grabs attention.',
-				features: ['Story-driven editing', 'Color grading', 'Subtitles & graphics'],
-				sections: [
-					{
-						slug: 'editing',
-						title: 'Editing',
-						description: 'Story-driven cuts that keep viewers watching to the end.',
-					},
-					{
-						slug: 'color-grading',
-						title: 'Color grading',
-						description: 'Consistent, cinematic looks that set the right mood.',
-					},
-					{
-						slug: 'motion-graphics',
-						title: 'Motion graphics',
-						description: 'Titles, lower-thirds and animations that add polish.',
-					},
-				],
+					'Editing, color grading and motion graphics for content that holds attention from the first second.',
+				features: ['Story-driven editing', 'Color grading in DaVinci Resolve', 'Subtitles & animated graphics'],
+				ctaLabel: "Let's talk about the video →",
+				needValue: 'video',
 			},
 		],
+		combo: {
+			label: 'Web + video',
+			headline: 'Handled together, no handoffs',
+			description:
+				"Your site and your videos tell the same story. With two different suppliers it shows: colours that don't match, a tone that shifts, timelines that stretch because each is waiting on the other.",
+			features: ['One point of contact', 'One quote, not two', 'One visual language'],
+			ctaLabel: "Let's talk about your business →",
+			needValue: 'both',
+		},
 		process: [
 			{
 				title: 'Understanding the project',
 				description:
 					'We go through your goals, audience and content. You get a written proposal with scope, cost and what’s needed from you. You can still walk away, at no cost.',
+				note: 'You can still walk away here, at no cost.',
 			},
 			{
 				title: 'Build or edit',
 				description:
 					'The project takes shape with progress shared regularly, so nothing is a surprise at the end.',
+				note: 'No surprises at the end.',
 			},
 			{
 				title: 'Delivery and support',
 				description:
 					'Everything is handed over with a walkthrough on how to run it, plus a month of support for adjustments — then it’s up to you whether to continue.',
+				note: 'A month of adjustments included.',
 			},
 		],
 		form: {
-			totalSteps: 3,
-			progressTemplate: 'Step {current} of {total}',
-			next: 'Next',
-			back: 'Back',
-			submit: 'Send',
+			needTitle: 'What do you need?',
+			needField: 'need',
+			needOptions: [
+				{ value: 'website', label: 'A website' },
+				{ value: 'video', label: 'Video' },
+				{ value: 'both', label: 'Both' },
+			],
+			name: 'Name',
+			email: 'Email',
+			message: 'Tell me about the project',
+			messagePlaceholder: "A couple of lines is enough: what you need and by when.",
+			consentBefore: 'I have read and accept the ',
+			consentLink: 'privacy policy',
+			consentAfter: '.',
+			submit: 'Send the request',
 			sending: 'Sending…',
-			escapePrompt: 'Prefer to just email me?',
-			steps: {
-				need: {
-					title: 'What do you need?',
-					field: 'need',
-					options: [
-						{ value: 'website', label: 'A website' },
-						{ value: 'video', label: 'Video' },
-						{ value: 'both', label: 'Both' },
-					],
-				},
-				projectType: {
-					title: 'What kind of project?',
-					field: 'project-type',
-					options: [
-						{ value: 'new', label: 'Brand new site' },
-						{ value: 'redesign', label: 'Redesign of an existing site' },
-						{ value: 'landing', label: 'Just a landing page' },
-						{ value: 'other', label: 'Something else' },
-					],
-				},
-				videoScope: {
-					title: 'What kind of video?',
-					field: 'video-scope',
-					options: [
-						{ value: 'editing', label: 'Editing' },
-						{ value: 'color', label: 'Colour grading' },
-						{ value: 'motion', label: 'Motion graphics' },
-						{ value: 'other', label: 'Something else' },
-					],
-				},
-				budget: {
-					title: 'Rough budget',
-					field: 'budget',
-					na: "I'd rather not say",
-				},
-				details: {
-					title: 'A few details',
-					name: 'Name',
-					email: 'Email',
-					message: 'Tell me about the project',
-					consentBefore: 'I have read and accept the ',
-					consentLink: 'privacy policy',
-					consentAfter: '.',
-				},
-			},
 			errors: {
 				choose: 'Please choose an option to continue.',
 				name: 'Please enter your name.',
@@ -191,20 +137,41 @@ export const en = {
 				consent: 'Please accept the privacy policy to send.',
 			},
 			successTitle: 'Got it.',
+			successBody: "I'll get back to you within one business day with next steps. If it's urgent, just email me.",
+			resetLabel: 'Send another message',
 			sendErrorBefore: 'Something went wrong. You can email me directly at ',
 			sendErrorAfter: '.',
 		},
-		// [DA CONFERMARE le risposte; questions are final, answers are placeholders.
-		// Fill them in, then set faqReady = true in src/data/site.ts to publish + emit schema.]
+		// Mirrors it.ts faq 1:1 (same questions, translated) so both languages stay in sync.
 		faq: [
-			{ q: 'How much does a website cost?', a: '[DA COMPILARE]' },
-			{ q: 'How long does it take?', a: '[DA COMPILARE]' },
-			{ q: 'Do I write the copy, or do you?', a: '[DA COMPILARE]' },
-			{ q: 'Do you also shoot video, or only edit?', a: '[DA COMPILARE]' },
-			{ q: 'Can I update the site myself?', a: '[DA COMPILARE]' },
-			{ q: 'Do you also handle domain and hosting?', a: '[DA COMPILARE]' },
-			{ q: 'Do you only work in Rome, or remotely too?', a: '[DA COMPILARE]' },
-			{ q: "What if I'm not happy with the result?", a: '[DA COMPILARE]' },
+			{
+				q: 'How much does a website cost?',
+				a: 'The price of a website depends on your needs, with a base rate starting from €{price}.',
+			},
+			{
+				q: 'How long does it take to build?',
+				a: "Turnaround depends on how complex the site is, and can range from a few days to a month. If you decide to work with me, we'll agree on this before starting.",
+			},
+			{
+				q: 'Do you also shoot video, or only edit?',
+				a: "For now I only edit, but I'm also looking into offering filming (initially only in and around Rome).",
+			},
+			{
+				q: 'Can I update the site myself?',
+				a: "There's the option of a Sanity integration, which lets you update your site's content yourself after launch.",
+			},
+			{
+				q: 'Do you also handle domain and hosting?',
+				a: 'I can guide you step by step through setting up your accounts and managing your domain.',
+			},
+			{
+				q: 'Do you only work in Rome, or remotely too?',
+				a: 'For websites and video editing I also work remotely. The filming service (coming soon) will initially only cover Rome and the surrounding area.',
+			},
+			{
+				q: "What if I'm not happy with the result?",
+				a: "I'll show you work in progress before final delivery, so we can adjust course as I go rather than only at the end.",
+			},
 		],
 	},
 };

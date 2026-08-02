@@ -1,19 +1,22 @@
 ---
+import { pricing } from '../data/site';
 import { defaultLang, getContent, useTranslations } from '../i18n/utils';
 
 const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
 const { faq } = getContent(lang);
 
+const items = faq.map((item) => ({ ...item, a: item.a.replace('{price}', String(pricing.web)) }));
+
 // FAQPage structured data — only emitted once every answer is real (not a
 // placeholder). This is data correctness, not a display flag: emitting
 // "[DA COMPILARE]" into schema.org would poison search results.
-const answersReady = faq.every((item) => !item.a.startsWith('['));
+const answersReady = items.every((item) => !item.a.startsWith('['));
 const jsonLd = answersReady
 	? {
 			'@context': 'https://schema.org',
 			'@type': 'FAQPage',
-			mainEntity: faq.map((item) => ({
+			mainEntity: items.map((item) => ({
 				'@type': 'Question',
 				name: item.q,
 				acceptedAnswer: { '@type': 'Answer', text: item.a },
@@ -24,32 +27,20 @@ const jsonLd = answersReady
 
 {
 	(
-		<section id="faq" class="min-h-screen flex flex-col justify-center py-20 px-4 md:px-8 bg-base-200">
-			<div class="max-w-3xl mx-auto w-full flex flex-col gap-8">
-				<h2 class="text-3xl md:text-4xl font-bold text-center" data-animate style="--d: 0">
+		<section id="faq" class="min-h-screen flex flex-col justify-start pt-24 pb-16 px-4 md:px-8 md:pt-32 md:pb-24">
+			<div class="mx-auto w-full max-w-6xl" data-animate>
+				<p class="font-mono text-xs uppercase tracking-[0.14em] text-primary">04 — {t('nav.faq')}</p>
+				<h2 class="mt-4 mb-8 max-w-[26ch] font-display text-3xl font-semibold leading-[1.12] tracking-tight md:mb-10 md:text-4xl">
 					{t('faq.title')}
 				</h2>
-				<div class="flex flex-col gap-3">
-					{faq.map((item, i) => (
-						<details
-							class="group rounded-box border border-base-content/10 bg-base-100 px-5 py-4"
-							data-animate
-							style={`--d: ${i + 1}`}
-						>
-							<summary class="flex cursor-pointer items-center justify-between gap-4 font-medium list-none">
+				<div class="max-w-3xl divide-y divide-base-content/10 overflow-hidden rounded-2xl border border-base-content/10 bg-[#2a323c]">
+					{items.map((item) => (
+						<details class="group px-5 md:px-6">
+							<summary class="flex cursor-pointer items-start justify-between gap-4 py-5 font-medium text-[16.5px] list-none hover:text-primary">
 								{item.q}
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									class="h-5 w-5 shrink-0 text-base-content/70 transition-transform group-open:rotate-45"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									stroke-width="2"
-								>
-									<path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14" />
-								</svg>
+								<span class="shrink-0 font-mono text-lg leading-none text-primary transition-transform group-open:rotate-45">+</span>
 							</summary>
-							<p class="mt-3 text-base-content/70 leading-relaxed">{item.a}</p>
+							<p class="pb-6 pr-11 text-[15.5px] leading-relaxed text-base-content/60 text-pretty">{item.a}</p>
 						</details>
 					))}
 				</div>

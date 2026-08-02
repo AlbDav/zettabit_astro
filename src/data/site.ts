@@ -10,15 +10,12 @@ export const site = {
 	},
 };
 
-// Contact-form budget slider — easy to edit here. If the visitor picks "Both"
-// (website + video), min and max are summed automatically. `step` sets the
-// granularity; `locale`/`currency` format the displayed amount.
-export const budgetRange = {
-	min: 180,
-	max: 5000,
-	step: 20,
-	currency: 'EUR',
-	locale: 'it-IT',
+// Headline "da X €" prices shown in the hero stats, service cards, FAQ and
+// sticky CTA — a single source so the four never drift apart.
+export const pricing = {
+	web: 180,
+	video: 150,
+	combo: 300,
 };
 
 // Proof (P3.5) — these are DATA-driven, not flag-driven: each section shows up on

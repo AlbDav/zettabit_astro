@@ -1,28 +1,68 @@
 ---
 import { defaultLang, getContent, useTranslations } from '../i18n/utils';
+import { pricing } from '../data/site';
 
 const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
 const content = getContent(lang);
+
+const stats = content.heroStats.map((stat) => ({
+	...stat,
+	value: stat.price ? `${t('price.from')} ${pricing[stat.price as 'web' | 'video']} €` : stat.value,
+}));
 ---
 
-<section id="home" class="hero min-h-screen bg-base-200 relative overflow-hidden">
-	<div class="absolute inset-0 pointer-events-none">
+<section id="home" class="relative min-h-screen flex flex-col justify-center overflow-hidden">
+	<div aria-hidden="true" class="pointer-events-none absolute inset-0">
 		<div
 			class="absolute inset-0 opacity-40"
-			style="background-image: linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px); background-size: 44px 44px;"
+			style="background-image: radial-gradient(circle at 1px 1px, rgba(178,204,214,0.14) 1px, transparent 0); background-size: 26px 26px; mask-image: radial-gradient(120% 85% at 12% -10%, #000 0%, transparent 62%); -webkit-mask-image: radial-gradient(120% 85% at 12% -10%, #000 0%, transparent 62%);"
 		>
 		</div>
-		<div class="absolute top-0 -left-32 h-96 w-96 rounded-full bg-primary/25 blur-[100px]"></div>
-		<div class="absolute bottom-0 -right-24 h-80 w-80 rounded-full bg-secondary/25 blur-[100px]"></div>
+		<div
+			class="absolute -right-[12%] -top-[38%] h-[130%] w-[min(820px,85%)]"
+			style="background: radial-gradient(50% 50% at 50% 50%, rgba(159,232,141,0.14) 0%, rgba(159,232,141,0.045) 45%, transparent 72%);"
+		>
+		</div>
+		<div
+			class="absolute inset-x-0 bottom-0 h-[42%]"
+			style="background: linear-gradient(to bottom, rgba(32,37,46,0) 0%, rgba(32,37,46,0.35) 100%);"
+		>
+		</div>
 	</div>
-	<div class="hero-content text-center relative z-10">
-		<div class="max-w-2xl flex flex-col items-center gap-6">
-			<h1 class="text-4xl md:text-6xl font-bold leading-tight" data-animate style="--d: 1">{content.headline}</h1>
-			<p class="text-lg text-base-content/70" data-animate style="--d: 2">{content.subheadline}</p>
-			<div class="flex flex-wrap justify-center gap-3" data-animate style="--d: 3">
-				<a href="#contact" class="btn btn-primary">{t('hero.cta.contact')}</a>
-				<a href="#process" class="btn btn-outline btn-accent">{t('hero.cta.process')}</a>
+
+	<div class="relative mx-auto max-w-6xl px-4 py-14 md:px-8 md:py-24 lg:py-28">
+		<p class="font-mono text-xs uppercase tracking-[0.14em] text-primary" data-animate style="--d: 0">{t('hero.eyebrow')}</p>
+		<h1
+			class="mt-5 max-w-[16ch] font-display text-[2.15rem] font-semibold leading-[1.04] tracking-tight text-balance md:text-6xl"
+			data-animate
+			style="--d: 1"
+		>
+			{content.headline}
+		</h1>
+		<p class="mt-5 max-w-[52ch] text-[17px] leading-relaxed text-base-content/70 text-pretty md:text-lg" data-animate style="--d: 2">
+			{content.subheadline}
+		</p>
+
+		<div class="mt-8 flex flex-wrap gap-3" data-animate style="--d: 3">
+			<a href="#contact" class="btn btn-primary rounded-lg">{t('hero.cta.contact')}</a>
+			<a
+				href="#services"
+				class="btn btn-ghost rounded-lg border border-base-content/[0.18] font-medium text-base-content hover:border-primary hover:bg-primary/[0.07] hover:text-base-content"
+			>
+				{t('hero.cta.process')}
+			</a>
+		</div>
+
+		<div class="mt-11 overflow-hidden rounded-2xl border border-base-content/10 md:mt-16" data-animate style="--d: 4">
+			<div class="grid grid-cols-2 gap-px bg-base-content/10 lg:grid-cols-4">
+				{stats.map((stat) => (
+					<div class="bg-base-100 px-5 py-5">
+						<p class="font-mono text-[11px] uppercase tracking-[0.12em] text-base-content/50">{stat.label}</p>
+						<p class="mt-2 font-display text-xl font-semibold tracking-tight">{stat.value}</p>
+						<p class="mt-1.5 text-[13.5px] text-base-content/50">{stat.caption}</p>
+					</div>
+				))}
 			</div>
 		</div>
 	</div>

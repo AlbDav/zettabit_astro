@@ -1,18 +1,17 @@
 ---
 import { site } from '../data/site';
-import {
-	defaultLang,
-	getContent,
-	getLocalizedPath,
-	getLocalizedServicePath,
-	languages,
-	useTranslations,
-} from '../i18n/utils';
+import { defaultLang, getLocalizedPath, languages, useTranslations } from '../i18n/utils';
 
 const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
 const homePath = getLocalizedPath(lang);
-const { services } = getContent(lang);
+
+const navLinks = [
+	{ href: 'services', label: t('nav.services') },
+	{ href: 'process', label: t('nav.process') },
+	{ href: 'faq', label: t('nav.faq') },
+	{ href: 'about', label: t('nav.about') },
+];
 
 // Equivalent of the current page in a given language (P5.1), so the language
 // switcher and lang links stay on the same page instead of jumping home.
@@ -22,29 +21,18 @@ const localeHref = (code: string) =>
 	code === 'it' ? basePath : basePath === '/' ? '/en/' : `/en${basePath}`;
 ---
 
-<header class="navbar bg-base-100/80 backdrop-blur sticky top-0 z-50 border-b border-base-200 px-4 md:px-8">
+<header class="navbar bg-base-100/85 backdrop-blur-md sticky top-0 z-50 border-b border-base-content/10 px-4 md:px-8 h-[66px] min-h-[66px]">
 	<div class="navbar-start">
-		<a href={`${homePath}#home`} class="flex items-center gap-2 text-xl font-bold">
+		<a href={`${homePath}#home`} class="flex items-center gap-2 font-display font-semibold text-[17px] tracking-tight">
 			<img src="/favicon.svg" alt="" width="28" height="28" class="h-7 w-7 rounded-md" />
 			{site.siteName}
 		</a>
 	</div>
 	<div class="navbar-center hidden lg:flex">
-		<ul class="menu menu-horizontal gap-1">
-			<li>
-				<details>
-					<summary>{t('nav.services')}</summary>
-					<ul class="bg-base-200 rounded-box p-2 shadow-lg border border-base-content/10 z-50 min-w-max">
-						<li><a href={`${homePath}#services`}>{t('nav.overview')}</a></li>
-						{services.map((service) => (
-							<li><a href={getLocalizedServicePath(lang, service.slug)}>{service.title}</a></li>
-						))}
-					</ul>
-				</details>
-			</li>
-			<li><a href={`${homePath}#process`}>{t('nav.process')}</a></li>
-			<li><a href={`${homePath}#about`}>{t('nav.about')}</a></li>
-			<li><a href={`${homePath}#contact`}>{t('nav.contact')}</a></li>
+		<ul class="menu menu-horizontal items-center gap-1">
+			{navLinks.map((link) => (
+				<li><a href={`${homePath}#${link.href}`} class="text-[14.5px] hover:text-primary">{link.label}</a></li>
+			))}
 		</ul>
 	</div>
 	<div class="navbar-end gap-2">
@@ -63,36 +51,28 @@ const localeHref = (code: string) =>
 				))
 			}
 		</div>
-		<a href={`${homePath}#contact`} class="btn btn-primary btn-sm hidden sm:inline-flex">{t('nav.cta')}</a>
+		<a href={`${homePath}#contact`} class="btn btn-primary btn-sm rounded-lg hidden lg:inline-flex">{t('nav.cta')}</a>
 		<div class="dropdown dropdown-end lg:hidden">
 			<div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label={t('menu.open')}>
 				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
 				</svg>
 			</div>
-			<ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow">
+			<ul tabindex="0" class="menu dropdown-content bg-base-100 rounded-box z-50 mt-3 w-56 p-2 shadow-lg border border-base-content/10">
+				{navLinks.map((link) => (
+					<li><a href={`${homePath}#${link.href}`} class="text-[15px]">{link.label}</a></li>
+				))}
 				<li>
-					<details>
-						<summary>{t('nav.services')}</summary>
-						<ul class="bg-base-200 rounded-box p-2 shadow-lg border border-base-content/10 z-50 min-w-max">
-							<li><a href={`${homePath}#services`}>{t('nav.overview')}</a></li>
-							{services.map((service) => (
-								<li><a href={getLocalizedServicePath(lang, service.slug)}>{service.title}</a></li>
-							))}
-						</ul>
-					</details>
+					<a href={`${homePath}#contact`} class="btn btn-primary btn-sm rounded-lg mt-2 justify-center">{t('nav.cta')}</a>
 				</li>
-				<li><a href={`${homePath}#process`}>{t('nav.process')}</a></li>
-				<li><a href={`${homePath}#about`}>{t('nav.about')}</a></li>
-				<li><a href={`${homePath}#contact`}>{t('nav.contact')}</a></li>
-				<li class="mt-2 border-t border-base-200 pt-2">
-					<div class="flex gap-3" role="group" aria-label="Lingua / Language">
+				<li class="mt-2 border-t border-base-content/10 pt-2">
+					<div class="flex gap-3 px-2" role="group" aria-label="Lingua / Language">
 						{
 							Object.entries(languages).map(([code, label]) => (
 								<a
 									href={localeHref(code)}
 									data-lang-link
-									class={code === lang ? 'font-semibold' : 'text-base-content/70'}
+									class={`font-mono text-xs ${code === lang ? 'font-semibold text-base-content' : 'text-base-content/50'}`}
 									aria-current={code === lang ? 'true' : undefined}
 									title={label}
 								>

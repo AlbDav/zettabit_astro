@@ -6,12 +6,17 @@ export const it = {
 		'nav.overview': 'Panoramica',
 		'nav.about': 'Chi sono',
 		'nav.contact': 'Contatti',
-		'nav.cta': 'Inizia un progetto',
+		'nav.faq': 'Domande',
+		'nav.cta': 'Parliamone',
 		'menu.open': 'Apri menu',
 		'a11y.skip': 'Salta al contenuto',
+		'hero.eyebrow': 'Davide Albano · Roma · freelance',
 		'hero.badge': 'Disponibile per nuovi progetti',
-		'hero.cta.process': 'Come lavoro',
-		'hero.cta.contact': 'Raccontami il progetto',
+		'hero.cta.process': 'Cosa faccio',
+		'hero.cta.contact': 'Prenota una call di 20 minuti',
+		'price.from': 'da',
+		'sticky.title': 'Call di 20 minuti',
+		'sticky.subtitle': 'Senza impegno, da {price} €',
 		'services.title': 'Cosa faccio',
 		'services.subtitle': 'Due mestieri, un obiettivo: far crescere il tuo progetto e farlo notare.',
 		'why.title': 'Web e video, gestiti insieme',
@@ -32,6 +37,8 @@ export const it = {
 		'contact.title': 'Parliamo del tuo progetto',
 		'contact.subtitle':
 			'Una call di 20 minuti, senza impegno. Ne esci con un’idea chiara di cosa serve, dei tempi e di quanto costa — anche se poi decidi di non lavorare con me.',
+		'contact.emailPrompt': 'Preferisci scrivermi direttamente?',
+		'contact.emailNote': 'Rispondo entro un giorno lavorativo.',
 		'contact.linkedin': 'LinkedIn',
 		'contact.instagram': 'Instagram',
 		'contact.github': 'GitHub',
@@ -51,9 +58,16 @@ export const it = {
 				'Sviluppo web e video editing a Roma, una persona sola. Siti che caricano veloci e video che si guardano fino in fondo, per professionisti e piccole imprese.',
 		},
 		role: 'Sviluppatore Web & Video Editor',
-		headline: 'Un sito che carica veloce. Video che si guardano fino in fondo. Web e video, insieme.',
+		aboutHeadline: 'Una persona sola, e si vede in bene.',
+		headline: 'Il sito e i video della tua attività, fatti dalla stessa persona.',
 		subheadline:
-			'Sviluppo web e video editing per professionisti e piccole imprese. Dalla prima riga di codice all’ultimo taglio, senza passaggi di mano.',
+			'Sviluppo web e video editing per professionisti e piccole imprese. Un solo interlocutore, un preventivo, una linea visiva sola — dalla prima riga di codice all’ultimo taglio.',
+		heroStats: [
+			{ label: 'Sito', price: 'web', caption: 'tariffa base, preventivo su misura' },
+			{ label: 'Video', price: 'video', caption: 'montaggio, in base a durata e girato' },
+			{ label: 'Prima di iniziare', value: 'Preventivo scritto', caption: 'ambito e costo, senza impegno' },
+			{ label: 'Dopo la consegna', value: '1 mese', caption: 'di supporto incluso' },
+		],
 		services: [
 			{
 				slug: 'sviluppo-web',
@@ -63,9 +77,12 @@ export const it = {
 					'Realizzo siti web a Roma: landing page, siti vetrina e siti con CMS che aggiorni in autonomia. Veloci, responsive e pensati per convertire i visitatori.',
 				title: 'Sviluppo Web',
 				tagline: 'Siti veloci, curati e pensati per trasformare i visitatori in clienti.',
+				headline: 'Siti che caricano veloci e portano richieste',
 				description:
-					'Landing page, siti vetrina e siti con CMS leggeri (Sanity), veloci, responsive e pensati per convertire.',
-				features: ['Design responsive', 'SEO on-page', 'Performance ottimizzate'],
+					'Landing page, siti vetrina e siti con CMS leggero (Sanity), responsive e pensati per convertire.',
+				features: ['Design responsive, mobile incluso', 'SEO on-page e performance', 'CMS opzionale per aggiornarlo da solo'],
+				ctaLabel: 'Parliamo del sito →',
+				needValue: 'website',
 				sections: [
 					{
 						slug: 'landing-pages',
@@ -92,9 +109,12 @@ export const it = {
 					'Montaggio, color grading e motion graphics a Roma e da remoto: dal girato grezzo a contenuti che si guardano fino in fondo, per professionisti e imprese.',
 				title: 'Video Editing',
 				tagline: 'Montaggio che trasforma il girato in contenuti che si guardano fino in fondo.',
+				headline: 'Video che si guardano fino in fondo',
 				description:
-					"Montaggio, color grading e motion graphics per contenuti che catturano l'attenzione.",
-				features: ['Montaggio narrativo', 'Color grading', 'Sottotitoli e grafiche'],
+					"Montaggio, color grading e motion graphics per contenuti che tengono l'attenzione dal primo secondo.",
+				features: ['Montaggio narrativo', 'Color grading in DaVinci Resolve', 'Sottotitoli e grafiche animate'],
+				ctaLabel: 'Parliamo del video →',
+				needValue: 'video',
 				sections: [
 					{
 						slug: 'editing',
@@ -114,76 +134,52 @@ export const it = {
 				],
 			},
 		],
+		combo: {
+			label: 'Web + video',
+			headline: 'Gestiti insieme, senza passaggi di mano',
+			description:
+				'Sito e video raccontano la stessa storia. Con due fornitori diversi si vede: colori che non combaciano, tono che cambia, tempi che si allungano perché ognuno aspetta l’altro.',
+			features: ['Un solo interlocutore', 'Un preventivo, non due', 'Una linea visiva sola'],
+			ctaLabel: 'Parliamo della tua attività →',
+			needValue: 'both',
+		},
 		process: [
 			{
 				title: 'Capiamo il progetto',
 				description:
 					'Si parte da obiettivi, pubblico e contenuti. Ricevi una proposta scritta con ambito, costo e cosa serve da parte tua. Da qui puoi ancora dire di no, senza costi.',
+				note: 'Qui puoi ancora dire no, senza costi.',
 			},
 			{
 				title: 'Sviluppo o montaggio',
 				description:
 					'Il progetto prende forma con aggiornamenti costanti, così non ci sono sorprese alla fine.',
+				note: 'Nessuna sorpresa alla fine.',
 			},
 			{
 				title: 'Consegna e supporto',
 				description:
 					'Alla consegna ricevi tutto e una spiegazione su come gestirlo, più un mese di supporto per gli aggiustamenti — poi decidi tu se continuare.',
+				note: 'Un mese di aggiustamenti incluso.',
 			},
 		],
 		form: {
-			totalSteps: 3,
-			progressTemplate: 'Passo {current} di {total}',
-			next: 'Avanti',
-			back: 'Indietro',
-			submit: 'Invia',
+			needTitle: 'Di cosa hai bisogno?',
+			needField: 'need',
+			needOptions: [
+				{ value: 'website', label: 'Un sito' },
+				{ value: 'video', label: 'Video' },
+				{ value: 'both', label: 'Entrambi' },
+			],
+			name: 'Nome',
+			email: 'Email',
+			message: 'Raccontami il progetto',
+			messagePlaceholder: 'Due righe bastano: cosa ti serve e per quando.',
+			consentBefore: 'Ho letto e accetto la ',
+			consentLink: 'privacy policy',
+			consentAfter: '.',
+			submit: 'Invia la richiesta',
 			sending: 'Invio in corso…',
-			escapePrompt: 'Preferisci scrivermi direttamente?',
-			steps: {
-				need: {
-					title: 'Di cosa hai bisogno?',
-					field: 'need',
-					options: [
-						{ value: 'website', label: 'Un sito web' },
-						{ value: 'video', label: 'Video' },
-						{ value: 'both', label: 'Entrambi' },
-					],
-				},
-				projectType: {
-					title: 'Che tipo di progetto?',
-					field: 'project-type',
-					options: [
-						{ value: 'new', label: 'Sito nuovo da zero' },
-						{ value: 'redesign', label: 'Rifacimento di un sito esistente' },
-						{ value: 'landing', label: 'Solo una landing page' },
-						{ value: 'other', label: 'Altro' },
-					],
-				},
-				videoScope: {
-					title: 'Che tipo di video?',
-					field: 'video-scope',
-					options: [
-						{ value: 'editing', label: 'Montaggio' },
-						{ value: 'color', label: 'Color grading' },
-						{ value: 'motion', label: 'Motion graphics' },
-						{ value: 'other', label: 'Altro' },
-					],
-				},
-				budget: {
-					title: 'Budget indicativo',
-					field: 'budget',
-					na: 'Preferisco non dirlo',
-				},
-				details: {
-					title: 'Ancora un paio di dettagli',
-					name: 'Nome',
-					email: 'Email',
-					message: 'Raccontami il progetto',
-					consentBefore: 'Ho letto e accetto la ',
-					consentLink: 'privacy policy',
-					consentAfter: '.',
-				},
-			},
 			errors: {
 				choose: 'Scegli un’opzione per continuare.',
 				name: 'Inserisci il tuo nome.',
@@ -191,11 +187,13 @@ export const it = {
 				consent: 'Accetta la privacy policy per inviare.',
 			},
 			successTitle: 'Ricevuto.',
+			successBody: 'Ti scrivo entro un giorno lavorativo con i prossimi passi. Se serve prima, mandami una mail.',
+			resetLabel: 'Invia un altro messaggio',
 			sendErrorBefore: 'Qualcosa è andato storto. Puoi scrivermi direttamente a ',
 			sendErrorAfter: '.',
 		},
 		faq: [
-			{ q: 'Quanto costa un sito?', a: 'Il prezzo di un sito dipende dalle tue necessità, con una tariffa base che parte da 180€.' },
+			{ q: 'Quanto costa un sito?', a: 'Il prezzo di un sito dipende dalle tue necessità, con una tariffa base che parte da {price}€.' },
 			{ q: 'Quanto tempo serve per realizzarlo?', a: 'Le tempistiche per il rilascio di un sito dipendono dalla complessità del sito stesso e possono variare da qualche giorno a un mese. Se sceglierai di lavorare con me, ci accorderemo su questo dettaglio prima di iniziare.' },
 			{ q: 'Giri anche i video o fai solo montaggio?', a: 'Per il momento monto soltanto, ma sto valutando anche l\'opzione di girare (inizialmente solo nella zona di Roma e dintorni).' },
 			{ q: 'Posso aggiornare il sito in autonomia?', a: 'C\'è la possibilità di avere l\'integrazione di Sanity, che ti permetterebbe di aggiornare il contenuto del tuo sito dopo il lancio.' },

@@ -2,8 +2,6 @@ export const en = {
 	ui: {
 		'nav.services': 'Services',
 		'nav.process': 'How I work',
-		'nav.portfolio': 'Portfolio',
-		'nav.overview': 'Overview',
 		'nav.about': 'About',
 		'nav.contact': 'Contact',
 		'nav.faq': 'FAQ',
@@ -31,8 +29,6 @@ export const en = {
 		'about.certTitle': 'Certifications',
 		'about.techToggle': 'Tech stack',
 		'about.location': 'Based in Rome — working with clients across Italy and remotely.',
-		'portfolio.title': 'Portfolio',
-		'portfolio.cta': 'Learn more',
 		'faq.title': 'Frequently asked questions',
 		'contact.title': "Let's talk about your project",
 		'contact.subtitle':
@@ -70,68 +66,22 @@ export const en = {
 		],
 		services: [
 			{
-				slug: 'sviluppo-web',
-				type: 'web',
-				metaTitle: 'Web Development — Landing Pages, Brochure Sites & CMS',
-				metaDescription:
-					'Fast, responsive landing pages, brochure sites and CMS-backed websites you can update yourself — built to load quickly and turn visitors into clients.',
 				title: 'Web Development',
-				tagline: 'Sites that load fast, look sharp and turn visitors into clients.',
 				headline: 'Sites that load fast and bring in leads',
 				description:
 					'Landing pages, brochure sites and sites you can update yourself (Sanity) — fast, responsive and built to convert.',
 				features: ['Responsive design, mobile included', 'On-page SEO and performance', 'Optional CMS you can update yourself'],
 				ctaLabel: "Let's talk about the site →",
 				needValue: 'website',
-				sections: [
-					{
-						slug: 'landing-pages',
-						title: 'Landing pages',
-						description: 'Focused single-page sites built to turn visitors into leads.',
-					},
-					{
-						slug: 'showcase-sites',
-						title: 'Brochure sites',
-						description: 'Multi-page sites that present your brand, services and story.',
-					},
-					{
-						slug: 'cms-sites',
-						title: 'Sites you can update yourself',
-						description: 'Sanity-backed sites you can update yourself, no code required.',
-					},
-				],
 			},
 			{
-				slug: 'video',
-				type: 'video',
-				metaTitle: 'Video Editing, Colour Grading & Motion Graphics',
-				metaDescription:
-					'Editing, colour grading and motion graphics that turn raw footage into content people watch to the end — for small businesses and professionals.',
 				title: 'Video Editing',
-				tagline: 'Editing that turns raw footage into content people finish.',
 				headline: 'Video people watch to the end',
 				description:
 					'Editing, color grading and motion graphics for content that holds attention from the first second.',
 				features: ['Story-driven editing', 'Color grading in DaVinci Resolve', 'Subtitles & animated graphics'],
 				ctaLabel: "Let's talk about the video →",
 				needValue: 'video',
-				sections: [
-					{
-						slug: 'editing',
-						title: 'Editing',
-						description: 'Story-driven cuts that keep viewers watching to the end.',
-					},
-					{
-						slug: 'color-grading',
-						title: 'Color grading',
-						description: 'Consistent, cinematic looks that set the right mood.',
-					},
-					{
-						slug: 'motion-graphics',
-						title: 'Motion graphics',
-						description: 'Titles, lower-thirds and animations that add polish.',
-					},
-				],
 			},
 		],
 		combo: {

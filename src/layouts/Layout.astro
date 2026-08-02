@@ -1,4 +1,12 @@
 ---
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import '@fontsource/ibm-plex-sans/400.css';
+import '@fontsource/ibm-plex-sans/500.css';
+import '@fontsource/ibm-plex-sans/600.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
 import '../styles/global.css';
 import { site } from '../data/site';
 import { defaultLang, getContent, languages, useTranslations } from '../i18n/utils';
@@ -72,12 +80,6 @@ if (breadcrumbs?.length) {
 <html lang={lang}>
 	<head>
 		<meta charset="utf-8" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
-			rel="stylesheet"
-		/>
 		<script is:inline define:vars={{ currentLocale: lang, supported: Object.keys(languages), alt: { it: itHref, en: enHref } }}>
 			// Render-blocking in <head>, before first paint: send visitors to this same
 			// page in their preferred language rather than painting the wrong one first.

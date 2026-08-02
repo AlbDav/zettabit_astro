@@ -2,8 +2,6 @@ export const it = {
 	ui: {
 		'nav.services': 'Servizi',
 		'nav.process': 'Come lavoro',
-		'nav.portfolio': 'Portfolio',
-		'nav.overview': 'Panoramica',
 		'nav.about': 'Chi sono',
 		'nav.contact': 'Contatti',
 		'nav.faq': 'Domande',
@@ -31,8 +29,6 @@ export const it = {
 		'about.certTitle': 'Certificazioni',
 		'about.techToggle': 'Stack tecnico',
 		'about.location': 'Roma — lavoro con clienti in tutta Italia e da remoto.',
-		'portfolio.title': 'Portfolio',
-		'portfolio.cta': 'Scopri di più',
 		'faq.title': 'Domande frequenti',
 		'contact.title': 'Parliamo del tuo progetto',
 		'contact.subtitle':
@@ -70,68 +66,22 @@ export const it = {
 		],
 		services: [
 			{
-				slug: 'sviluppo-web',
-				type: 'web',
-				metaTitle: 'Realizzazione siti web a Roma — landing page, siti vetrina e CMS',
-				metaDescription:
-					'Realizzo siti web a Roma: landing page, siti vetrina e siti con CMS che aggiorni in autonomia. Veloci, responsive e pensati per convertire i visitatori.',
 				title: 'Sviluppo Web',
-				tagline: 'Siti veloci, curati e pensati per trasformare i visitatori in clienti.',
 				headline: 'Siti che caricano veloci e portano richieste',
 				description:
 					'Landing page, siti vetrina e siti con CMS leggero (Sanity), responsive e pensati per convertire.',
 				features: ['Design responsive, mobile incluso', 'SEO on-page e performance', 'CMS opzionale per aggiornarlo da solo'],
 				ctaLabel: 'Parliamo del sito →',
 				needValue: 'website',
-				sections: [
-					{
-						slug: 'landing-pages',
-						title: 'Landing page',
-						description: 'Pagine singole e mirate, pensate per trasformare i visitatori in contatti.',
-					},
-					{
-						slug: 'showcase-sites',
-						title: 'Siti vetrina',
-						description: 'Siti multipagina che raccontano brand, servizi e storia.',
-					},
-					{
-						slug: 'cms-sites',
-						title: 'Siti con CMS',
-						description: 'Siti su Sanity che aggiorni in autonomia, senza toccare il codice.',
-					},
-				],
 			},
 			{
-				slug: 'video',
-				type: 'video',
-				metaTitle: 'Montaggio video, color grading e motion graphics — Roma',
-				metaDescription:
-					'Montaggio, color grading e motion graphics a Roma e da remoto: dal girato grezzo a contenuti che si guardano fino in fondo, per professionisti e imprese.',
 				title: 'Video Editing',
-				tagline: 'Montaggio che trasforma il girato in contenuti che si guardano fino in fondo.',
 				headline: 'Video che si guardano fino in fondo',
 				description:
 					"Montaggio, color grading e motion graphics per contenuti che tengono l'attenzione dal primo secondo.",
 				features: ['Montaggio narrativo', 'Color grading in DaVinci Resolve', 'Sottotitoli e grafiche animate'],
 				ctaLabel: 'Parliamo del video →',
 				needValue: 'video',
-				sections: [
-					{
-						slug: 'editing',
-						title: 'Montaggio',
-						description: 'Montaggi narrativi che tengono lo spettatore fino alla fine.',
-					},
-					{
-						slug: 'color-grading',
-						title: 'Color grading',
-						description: 'Look coerenti e cinematografici che danno il tono giusto.',
-					},
-					{
-						slug: 'motion-graphics',
-						title: 'Motion graphics',
-						description: 'Titoli, grafiche e animazioni che aggiungono qualità.',
-					},
-				],
 			},
 		],
 		combo: {

@@ -36,8 +36,3 @@ export function getContent(lang: string) {
 export function getLocalizedPath(lang: string): string {
 	return lang === defaultLang ? '/' : `/${lang}/`;
 }
-
-// Service detail pages live under /servizi/ (IT root) and /en/servizi/ (P5.2).
-export function getLocalizedServicePath(lang: string, slug: string): string {
-	return `${getLocalizedPath(lang)}servizi/${slug}/`;
-}

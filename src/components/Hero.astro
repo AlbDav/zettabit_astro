@@ -12,7 +12,7 @@ const stats = content.heroStats.map((stat) => ({
 }));
 ---
 
-<section id="home" class="relative min-h-screen flex flex-col justify-center overflow-hidden">
+<section id="home" class="relative min-h-screen flex flex-col justify-center overflow-hidden px-4 py-14 md:px-8 md:py-24 lg:py-28">
 	<div aria-hidden="true" class="pointer-events-none absolute inset-0">
 		<div
 			class="absolute inset-0 opacity-40"
@@ -31,7 +31,7 @@ const stats = content.heroStats.map((stat) => ({
 		</div>
 	</div>
 
-	<div class="relative mx-auto max-w-6xl px-4 py-14 md:px-8 md:py-24 lg:py-28">
+	<div class="relative mx-auto w-full max-w-6xl">
 		<p class="font-mono text-xs uppercase tracking-[0.14em] text-primary" data-animate style="--d: 0">{t('hero.eyebrow')}</p>
 		<h1
 			class="mt-5 max-w-[16ch] font-display text-[2.15rem] font-semibold leading-[1.04] tracking-tight text-balance md:text-6xl"

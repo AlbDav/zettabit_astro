@@ -1,17 +1,13 @@
 ---
 import { site } from '../data/site';
-import {
-	defaultLang,
-	getContent,
-	getLocalizedPath,
-	getLocalizedServicePath,
-	useTranslations,
-} from '../i18n/utils';
+import SocialLinks from './SocialLinks.astro';
+import { defaultLang, getContent, getLocalizedPath, useTranslations } from '../i18n/utils';
 
 const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
-const { services } = getContent(lang);
+const { services, combo } = getContent(lang);
 const homePath = getLocalizedPath(lang);
+const servicesHref = `${homePath}#services`;
 const year = new Date().getFullYear();
 const vat = site.vat;
 ---
@@ -30,24 +26,15 @@ const vat = site.vat;
 		<nav class="flex flex-col gap-2.5" aria-label={t('nav.services')}>
 			<p class="font-mono text-[11.5px] uppercase tracking-[0.12em] text-base-content/50 mb-1">{t('nav.services')}</p>
 			{services.map((service) => (
-				<a href={getLocalizedServicePath(lang, service.slug)} class="text-[14.5px] text-base-content/70 hover:text-primary w-fit">
-					{service.title}
-				</a>
+				<a href={servicesHref} class="text-[14.5px] text-base-content/70 hover:text-primary w-fit">{service.title}</a>
 			))}
+			<a href={servicesHref} class="text-[14.5px] text-base-content/70 hover:text-primary w-fit">{combo.label}</a>
 		</nav>
 
 		<div class="flex flex-col gap-2.5">
 			<p class="font-mono text-[11.5px] uppercase tracking-[0.12em] text-base-content/50 mb-1">{t('footer.connect')}</p>
 			<a href={`mailto:${site.email}`} class="font-mono text-[14.5px] text-base-content/70 hover:text-primary w-fit">{site.email}</a>
-			<a href={site.social.linkedin} target="_blank" rel="noopener noreferrer" class="text-[14.5px] text-base-content/70 hover:text-primary w-fit">
-				{t('contact.linkedin')}
-			</a>
-			<a href={site.social.instagram} target="_blank" rel="noopener noreferrer" class="text-[14.5px] text-base-content/70 hover:text-primary w-fit">
-				{t('contact.instagram')}
-			</a>
-			<a href={site.social.github} target="_blank" rel="noopener noreferrer" class="text-[14.5px] text-base-content/70 hover:text-primary w-fit">
-				{t('contact.github')}
-			</a>
+			<SocialLinks class="-ml-2" />
 		</div>
 	</div>
 

@@ -42,6 +42,7 @@ export const it = {
 		'footer.connect': 'Contatti',
 		'footer.privacy': 'Privacy Policy',
 		'footer.cookie': 'Cookie Policy',
+		'footer.cookiePrefs': 'Preferenze cookie',
 		'footer.location': 'Roma, Italia',
 		'legal.back': 'Torna alla home',
 	},

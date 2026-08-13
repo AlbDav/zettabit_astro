@@ -8,6 +8,8 @@ import '@fontsource/ibm-plex-sans/600.css';
 import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/500.css';
 import '../styles/global.css';
+import CookieConsent from '../components/CookieConsent.astro';
+import { analyticsEnabled } from '../data/analytics';
 import { site } from '../data/site';
 import { defaultLang, getContent, languages, useTranslations } from '../i18n/utils';
 
@@ -153,5 +155,6 @@ if (breadcrumbs?.length) {
 				els.forEach(function (el) { observer.observe(el); });
 			})();
 		</script>
+		{analyticsEnabled && <CookieConsent />}
 	</body>
 </html>

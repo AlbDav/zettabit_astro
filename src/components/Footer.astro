@@ -1,4 +1,5 @@
 ---
+import { analyticsEnabled } from '../data/analytics';
 import { site } from '../data/site';
 import SocialLinks from './SocialLinks.astro';
 import { defaultLang, getContent, getLocalizedPath, useTranslations } from '../i18n/utils';
@@ -44,6 +45,11 @@ const vat = site.vat;
 			<nav class="flex items-center gap-4" aria-label={t('footer.privacy')}>
 				<a href={`${homePath}privacy/`} class="link link-hover text-[13px] text-base-content/50">{t('footer.privacy')}</a>
 				<a href={`${homePath}cookie-policy/`} class="link link-hover text-[13px] text-base-content/50">{t('footer.cookie')}</a>
+				{analyticsEnabled && (
+					<button type="button" data-cc="show-preferencesModal" class="link link-hover text-[13px] text-base-content/50">
+						{t('footer.cookiePrefs')}
+					</button>
+				)}
 			</nav>
 		</div>
 	</div>

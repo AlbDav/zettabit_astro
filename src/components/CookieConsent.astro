@@ -1,0 +1,167 @@
+---
+// Cookie banner + GA4, wired in Google Consent Mode v2 "basic" mode: gtag.js is
+// never requested until the visitor accepts statistics. Nothing from Google is
+// contacted before that — which is what the Garante means by prior blocking.
+// Consent defaults are still declared up front, so Google sees a consent signal
+// on the very first hit rather than an unset state.
+import 'vanilla-cookieconsent/dist/cookieconsent.css';
+import { ga4Id } from '../data/analytics';
+import { getConsentStrings } from '../i18n/consent';
+import { defaultLang, getLocalizedPath } from '../i18n/utils';
+
+const lang = Astro.currentLocale ?? defaultLang;
+const base = getLocalizedPath(lang);
+
+// Strings + ids the client script needs, handed over as a JSON payload the same
+// way ContactForm does it.
+const cfg = JSON.stringify({
+	gaId: ga4Id,
+	lang,
+	translations: getConsentStrings(lang, {
+		privacyHref: `${base}privacy/`,
+		cookieHref: `${base}cookie-policy/`,
+	}),
+});
+---
+
+<script is:inline>
+	// Runs before any tag can load: declares everything denied, so the first
+	// gtag call after consent is an *update* to a known state, not a cold start.
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
+		window.dataLayer.push(arguments);
+	}
+	window.gtag = gtag;
+	gtag('consent', 'default', {
+		ad_storage: 'denied',
+		ad_user_data: 'denied',
+		ad_personalization: 'denied',
+		analytics_storage: 'denied',
+		functionality_storage: 'granted',
+		security_storage: 'granted',
+		wait_for_update: 500,
+	});
+</script>
+
+<div id="cc-config" data-cfg={cfg} hidden></div>
+
+<script>
+	import * as CookieConsent from 'vanilla-cookieconsent';
+
+	const holder = document.getElementById('cc-config');
+	const cfg = JSON.parse(holder?.dataset.cfg || '{}');
+	const gtag = (window as any).gtag as (...args: any[]) => void;
+
+	let tagRequested = false;
+
+	// Fetch gtag.js on first acceptance only; on later page views the tag is
+	// requested again (new document) but the consent state is already granted.
+	function loadGa4() {
+		if (tagRequested || !cfg.gaId) return;
+		tagRequested = true;
+		const s = document.createElement('script');
+		s.async = true;
+		s.src = `https://www.googletagmanager.com/gtag/js?id=${cfg.gaId}`;
+		document.head.appendChild(s);
+		gtag('js', new Date());
+		gtag('config', cfg.gaId);
+	}
+
+	CookieConsent.run({
+		// Bump when the categories change, to ask everyone again.
+		revision: 1,
+		guiOptions: {
+			consentModal: { layout: 'box', position: 'bottom left', equalWeightButtons: true },
+			preferencesModal: { layout: 'box', equalWeightButtons: true },
+		},
+		categories: {
+			necessary: { enabled: true, readOnly: true },
+			analytics: {
+				autoClear: {
+					cookies: [{ name: /^_ga/ }, { name: '_gid' }],
+					reloadPage: true,
+				},
+			},
+		},
+		language: {
+			default: cfg.lang || 'it',
+			translations: { [cfg.lang || 'it']: cfg.translations },
+		},
+		onConsent: applyConsent,
+		onChange: applyConsent,
+	});
+
+	function applyConsent() {
+		const granted = CookieConsent.acceptedCategory('analytics');
+		gtag('consent', 'update', { analytics_storage: granted ? 'granted' : 'denied' });
+		if (granted) loadGa4();
+	}
+</script>
+
+<style is:global>
+	/* `html` prefix so these win over the library sheet regardless of bundle
+	   order. Values follow the daisyUI tokens the rest of the site uses. */
+	html #cc-main {
+		--cc-font-family: var(--font-sans);
+		--cc-bg: var(--color-base-100, #2a303c);
+		--cc-primary-color: var(--color-base-content, #b2ccd6);
+		--cc-secondary-color: color-mix(in oklab, var(--color-base-content, #b2ccd6) 60%, transparent);
+
+		--cc-btn-primary-bg: var(--color-primary, #9fe88d);
+		--cc-btn-primary-color: var(--color-primary-content, #12160c);
+		--cc-btn-primary-border-color: var(--color-primary, #9fe88d);
+		--cc-btn-primary-hover-bg: color-mix(in oklab, var(--color-primary, #9fe88d) 88%, black);
+		--cc-btn-primary-hover-color: var(--color-primary-content, #12160c);
+		--cc-btn-primary-hover-border-color: color-mix(in oklab, var(--color-primary, #9fe88d) 88%, black);
+
+		--cc-btn-secondary-bg: transparent;
+		--cc-btn-secondary-color: var(--color-base-content, #b2ccd6);
+		--cc-btn-secondary-border-color: color-mix(in oklab, var(--color-base-content, #b2ccd6) 18%, transparent);
+		--cc-btn-secondary-hover-bg: color-mix(in oklab, var(--color-base-content, #b2ccd6) 8%, transparent);
+		--cc-btn-secondary-hover-color: var(--color-base-content, #b2ccd6);
+		--cc-btn-secondary-hover-border-color: var(--color-primary, #9fe88d);
+
+		--cc-separator-border-color: color-mix(in oklab, var(--color-base-content, #b2ccd6) 12%, transparent);
+		--cc-toggle-on-bg: var(--color-primary, #9fe88d);
+		--cc-toggle-off-bg: color-mix(in oklab, var(--color-base-content, #b2ccd6) 28%, transparent);
+		--cc-toggle-readonly-bg: color-mix(in oklab, var(--color-base-content, #b2ccd6) 14%, transparent);
+
+		--cc-cookie-category-block-bg: var(--color-base-200, #242933);
+		--cc-cookie-category-block-border: color-mix(in oklab, var(--color-base-content, #b2ccd6) 10%, transparent);
+		--cc-cookie-category-block-hover-bg: var(--color-base-300, #20252e);
+		--cc-cookie-category-block-hover-border: color-mix(in oklab, var(--color-base-content, #b2ccd6) 18%, transparent);
+		--cc-cookie-category-expanded-block-bg: var(--color-base-300, #20252e);
+
+		/* The library defaults this strip to a light grey, which reads as a
+		   rendering glitch on a dark page. */
+		--cc-footer-bg: var(--color-base-200, #242933);
+		--cc-footer-color: color-mix(in oklab, var(--color-base-content, #b2ccd6) 65%, transparent);
+		--cc-footer-border-color: color-mix(in oklab, var(--color-base-content, #b2ccd6) 12%, transparent);
+
+		--cc-overlay-bg: rgb(0 0 0 / 0.6);
+		--cc-modal-border-radius: 1rem;
+		--cc-btn-border-radius: 0.5rem;
+	}
+
+	/* Match the rounded corners the rest of the UI uses. */
+	html #cc-main .cm,
+	html #cc-main .pm {
+		border: 1px solid color-mix(in oklab, var(--color-base-content, #b2ccd6) 10%, transparent);
+	}
+
+	/* The library ships .pm__badge hidden; we use it to spell out that the
+	   technical category cannot be switched off. */
+	html #cc-main .pm__badge {
+		display: inline-block;
+		margin-left: 0.5rem;
+		padding: 0.1rem 0.5rem;
+		border: 1px solid color-mix(in oklab, var(--color-base-content, #b2ccd6) 18%, transparent);
+		border-radius: 999px;
+		background: color-mix(in oklab, var(--color-base-content, #b2ccd6) 8%, transparent);
+		color: color-mix(in oklab, var(--color-base-content, #b2ccd6) 70%, transparent);
+		font-size: 0.68rem;
+		font-weight: 500;
+		vertical-align: middle;
+		white-space: nowrap;
+	}
+</style>

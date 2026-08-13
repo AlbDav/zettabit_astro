@@ -38,7 +38,7 @@ export const legal: Record<'it' | 'en', LegalStrings> = {
 				},
 				{
 					heading: 'Strumenti e destinatari',
-					body: 'Il modulo è gestito tramite Netlify Forms; i dati transitano e sono conservati sui server del fornitore. [DA CONFERMARE eventuali altri strumenti, es. email provider, analytics].',
+					body: 'Il modulo è gestito tramite Netlify Forms; i dati transitano e sono conservati sui server del fornitore. Le statistiche di visita sono raccolte con Google Analytics 4 (Google Ireland Limited), solo previo tuo consenso: vedi la Cookie Policy. [DA CONFERMARE eventuali altri strumenti, es. email provider].',
 				},
 				{
 					heading: 'Conservazione',
@@ -57,15 +57,15 @@ export const legal: Record<'it' | 'en', LegalStrings> = {
 			sections: [
 				{
 					heading: 'Cookie tecnici',
-					body: 'Il sito salva nel browser una preferenza di lingua (localStorage) per non doverla richiedere ogni volta. Non serve consenso per questa finalità.',
+					body: 'Il sito salva nel browser una preferenza di lingua (localStorage) e la scelta che fai sul banner dei cookie (cookie “cc_cookie”, durata 6 mesi), per non doverle richiedere a ogni visita. Non serve consenso per questa finalità.',
 				},
 				{
-					heading: 'Cookie di terze parti / analytics',
-					body: 'Al momento [DA CONFERMARE]. Se verrà aggiunta analisi delle visite, l’intenzione è usare uno strumento senza cookie (es. Plausible o Umami) per evitare il banner di consenso. In caso contrario, questa sezione va aggiornata e va aggiunto un banner con blocco preventivo.',
+					heading: 'Cookie statistici (Google Analytics 4)',
+					body: 'Con il tuo consenso il sito usa Google Analytics 4 (Google Ireland Limited) per contare le visite e capire da quali canali arrivano. Installa cookie con prefisso “_ga” (durata fino a 2 anni). Questi cookie NON vengono caricati finché non li accetti dal banner: se rifiuti, nessuno script di Google viene contattato. I dati sono aggregati e non li uso per profilazione o pubblicità. [DA CONFERMARE eventuale trasferimento dati extra-UE nelle impostazioni della proprietà GA4].',
 				},
 				{
-					heading: 'Gestione dei cookie',
-					body: 'Puoi cancellare o bloccare i cookie dalle impostazioni del tuo browser. [DA COMPILARE eventuali istruzioni specifiche].',
+					heading: 'Revocare o cambiare il consenso',
+					body: 'Puoi cambiare la tua scelta in qualsiasi momento dal link “Preferenze cookie” in fondo a ogni pagina. Se disattivi i cookie statistici, quelli già presenti vengono cancellati. In alternativa puoi cancellare o bloccare i cookie dalle impostazioni del tuo browser.',
 				},
 			],
 		},
@@ -93,7 +93,7 @@ export const legal: Record<'it' | 'en', LegalStrings> = {
 				},
 				{
 					heading: 'Tools and recipients',
-					body: 'The form is handled through Netlify Forms; data passes through and is stored on the provider’s servers. [DA CONFERMARE any other tools, e.g. email provider, analytics].',
+					body: 'The form is handled through Netlify Forms; data passes through and is stored on the provider’s servers. Visit statistics are collected with Google Analytics 4 (Google Ireland Limited), only with your prior consent: see the Cookie Policy. [DA CONFERMARE any other tools, e.g. email provider].',
 				},
 				{
 					heading: 'Retention',
@@ -112,15 +112,15 @@ export const legal: Record<'it' | 'en', LegalStrings> = {
 			sections: [
 				{
 					heading: 'Technical cookies',
-					body: 'The site stores a language preference in the browser (localStorage) so it doesn’t have to ask every time. No consent is needed for this purpose.',
+					body: 'The site stores a language preference in the browser (localStorage) and the choice you make on the cookie banner (“cc_cookie” cookie, 6 months), so it doesn’t have to ask on every visit. No consent is needed for this purpose.',
 				},
 				{
-					heading: 'Third-party / analytics cookies',
-					body: 'None at the moment [DA CONFERMARE]. If visit analytics is added, the intention is to use a cookieless tool (e.g. Plausible or Umami) to avoid a consent banner. Otherwise this section must be updated and a banner with prior blocking added.',
+					heading: 'Statistics cookies (Google Analytics 4)',
+					body: 'With your consent the site uses Google Analytics 4 (Google Ireland Limited) to count visits and understand which channels they come from. It sets cookies prefixed “_ga” (up to 2 years). These cookies are NOT loaded until you accept them on the banner: if you reject, no Google script is contacted at all. The data is aggregated and is not used for profiling or advertising. [DA CONFERMARE any non-EU data transfer in the GA4 property settings].',
 				},
 				{
-					heading: 'Managing cookies',
-					body: 'You can delete or block cookies from your browser settings. [DA COMPILARE any specific instructions].',
+					heading: 'Withdrawing or changing consent',
+					body: 'You can change your choice at any time via the “Cookie preferences” link at the bottom of every page. Turning statistics cookies off also deletes the ones already set. Alternatively you can delete or block cookies from your browser settings.',
 				},
 			],
 		},

@@ -51,7 +51,7 @@ const cfg = JSON.stringify({
 
 	<div class="flex flex-col gap-4">
 		<div class="flex flex-col gap-1.5">
-			<label for="cf-name" class="text-[13.5px] text-base-content/60">{form.name}</label>
+			<label for="cf-name" class="text-[13.5px] text-base-content/70">{form.name}</label>
 			<input
 				id="cf-name"
 				name="name"
@@ -63,7 +63,7 @@ const cfg = JSON.stringify({
 			<p class="cf-error text-sm text-error" role="alert" data-error-for="name" hidden></p>
 		</div>
 		<div class="flex flex-col gap-1.5">
-			<label for="cf-email" class="text-[13.5px] text-base-content/60">{form.email}</label>
+			<label for="cf-email" class="text-[13.5px] text-base-content/70">{form.email}</label>
 			<input
 				id="cf-email"
 				name="email"
@@ -77,7 +77,7 @@ const cfg = JSON.stringify({
 	</div>
 
 	<div class="flex flex-col gap-1.5">
-		<label for="cf-message" class="text-[13.5px] text-base-content/60">{form.message}</label>
+		<label for="cf-message" class="text-[13.5px] text-base-content/70">{form.message}</label>
 		<textarea
 			id="cf-message"
 			name="message"
@@ -88,7 +88,7 @@ const cfg = JSON.stringify({
 	</div>
 
 	<div class="flex flex-col gap-1.5">
-		<label class="flex items-start gap-2.5 text-[13.5px] leading-relaxed text-base-content/60 cursor-pointer">
+		<label class="flex items-start gap-2.5 text-[13.5px] leading-relaxed text-base-content/70 cursor-pointer">
 			<input id="cf-consent" name="consent" type="checkbox" required class="checkbox checkbox-sm mt-0.5 shrink-0" />
 			<span>
 				{form.consentBefore}<a href={privacyPath} class="link link-primary">{form.consentLink}</a>{form.consentAfter}
@@ -104,7 +104,7 @@ const cfg = JSON.stringify({
 <div class="cf-result hidden w-full text-center" data-result hidden>
 	<div class="hidden flex-col items-center gap-3 rounded-2xl border border-primary/40 bg-[#2a323c] p-8" data-success hidden>
 		<p class="font-display text-2xl font-semibold">{form.successTitle}</p>
-		<p class="text-[15.5px] leading-relaxed text-base-content/60">{form.successBody}</p>
+		<p class="text-[15.5px] leading-relaxed text-base-content/70">{form.successBody}</p>
 		<button
 			type="button"
 			class="btn btn-ghost rounded-lg border border-base-content/[0.18] mt-2 hover:border-primary"

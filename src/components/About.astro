@@ -18,9 +18,9 @@ const hasCerts = certifications.length > 0;
 			<h2 class="mt-4 max-w-[22ch] font-display text-3xl font-semibold leading-[1.12] tracking-tight md:text-4xl">
 				{content.aboutHeadline}
 			</h2>
-			<p class="mt-4 max-w-[50ch] text-base-content/60 leading-relaxed text-pretty">{content.role}</p>
+			<p class="mt-4 max-w-[50ch] text-base-content/70 leading-relaxed text-pretty">{content.role}</p>
 			<p class="mt-3 max-w-[50ch] text-base-content/70 leading-relaxed text-pretty">{t('about.bio')}</p>
-			<p class="mt-3 text-sm text-base-content/50">{t('about.location')}</p>
+			<p class="mt-3 text-sm text-base-content/70">{t('about.location')}</p>
 
 			{hasCerts && (
 				<div class="mt-6 flex flex-col gap-3">
@@ -48,7 +48,7 @@ const hasCerts = certifications.length > 0;
 				</div>
 				<div>
 					<p class="font-display font-semibold text-[17px]">{site.name}</p>
-					<p class="text-sm text-base-content/50 mt-1">{content.role}</p>
+					<p class="text-sm text-base-content/70 mt-1">{content.role}</p>
 				</div>
 			</div>
 			<p class="font-mono text-[11.5px] uppercase tracking-[0.12em] text-primary mt-6 mb-3">{t('about.techToggle')}</p>

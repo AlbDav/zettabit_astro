@@ -105,7 +105,9 @@ const cfg = JSON.stringify({
 		--cc-font-family: var(--font-sans);
 		--cc-bg: var(--color-base-100, #2a303c);
 		--cc-primary-color: var(--color-base-content, #b2ccd6);
-		--cc-secondary-color: color-mix(in oklab, var(--color-base-content, #b2ccd6) 60%, transparent);
+		/* 75% and up: below ~70% the muted text drops under the 4.5:1 WCAG AA
+		   ratio on this background. */
+		--cc-secondary-color: color-mix(in oklab, var(--color-base-content, #b2ccd6) 75%, transparent);
 
 		--cc-btn-primary-bg: var(--color-primary, #9fe88d);
 		--cc-btn-primary-color: var(--color-primary-content, #12160c);
@@ -135,7 +137,7 @@ const cfg = JSON.stringify({
 		/* The library defaults this strip to a light grey, which reads as a
 		   rendering glitch on a dark page. */
 		--cc-footer-bg: var(--color-base-200, #242933);
-		--cc-footer-color: color-mix(in oklab, var(--color-base-content, #b2ccd6) 65%, transparent);
+		--cc-footer-color: color-mix(in oklab, var(--color-base-content, #b2ccd6) 75%, transparent);
 		--cc-footer-border-color: color-mix(in oklab, var(--color-base-content, #b2ccd6) 12%, transparent);
 
 		--cc-overlay-bg: rgb(0 0 0 / 0.6);

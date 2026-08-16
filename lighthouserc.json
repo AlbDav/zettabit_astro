@@ -5,8 +5,7 @@
       "url": [
         "http://localhost/index.html",
         "http://localhost/en/index.html",
-        "http://localhost/servizi/sviluppo-web/index.html",
-        "http://localhost/servizi/video/index.html"
+        "http://localhost/privacy/index.html"
       ],
       "numberOfRuns": 3
     },

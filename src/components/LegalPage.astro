@@ -25,9 +25,6 @@ const homePath = getLocalizedPath(lang);
 			<header class="flex flex-col gap-4">
 				<a href={`${homePath}#home`} class="text-sm text-accent link link-hover w-fit">← {t('legal.back')}</a>
 				<h1 class="text-4xl md:text-5xl font-bold">{doc.title}</h1>
-				<div role="note" class="rounded-box border border-warning/40 bg-warning/10 px-4 py-3 text-sm text-base-content/80">
-					{strings.draftNotice}
-				</div>
 				<p class="text-base-content/70">{doc.intro}</p>
 			</header>
 

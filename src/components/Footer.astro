@@ -20,12 +20,12 @@ const vat = site.vat;
 				<img src="/favicon.svg" alt="" width="28" height="28" class="h-7 w-7 rounded-md" />
 				{site.siteName}
 			</a>
-			<p class="text-[14.5px] text-base-content/50 max-w-[30ch] leading-relaxed">{t('footer.tagline')}</p>
-			<p class="text-[14.5px] text-base-content/50">{t('footer.location')}</p>
+			<p class="text-[14.5px] text-base-content/70 max-w-[30ch] leading-relaxed">{t('footer.tagline')}</p>
+			<p class="text-[14.5px] text-base-content/70">{t('footer.location')}</p>
 		</div>
 
 		<nav class="flex flex-col gap-2.5" aria-label={t('nav.services')}>
-			<p class="font-mono text-[11.5px] uppercase tracking-[0.12em] text-base-content/50 mb-1">{t('nav.services')}</p>
+			<p class="font-mono text-[11.5px] uppercase tracking-[0.12em] text-base-content/70 mb-1">{t('nav.services')}</p>
 			{services.map((service) => (
 				<a href={servicesHref} class="text-[14.5px] text-base-content/70 hover:text-primary w-fit">{service.title}</a>
 			))}
@@ -33,7 +33,7 @@ const vat = site.vat;
 		</nav>
 
 		<div class="flex flex-col gap-2.5">
-			<p class="font-mono text-[11.5px] uppercase tracking-[0.12em] text-base-content/50 mb-1">{t('footer.connect')}</p>
+			<p class="font-mono text-[11.5px] uppercase tracking-[0.12em] text-base-content/70 mb-1">{t('footer.connect')}</p>
 			<a href={`mailto:${site.email}`} class="font-mono text-[14.5px] text-base-content/70 hover:text-primary w-fit">{site.email}</a>
 			<SocialLinks class="-ml-2" />
 		</div>
@@ -41,12 +41,12 @@ const vat = site.vat;
 
 	<div class="border-t border-base-content/10">
 		<div class="max-w-6xl mx-auto px-4 md:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-center">
-			<p class="text-[13px] text-base-content/50">© {year} {site.siteName} · P.IVA {vat}</p>
+			<p class="text-[13px] text-base-content/70">© {year} {site.siteName} · P.IVA {vat}</p>
 			<nav class="flex items-center gap-4" aria-label={t('footer.privacy')}>
-				<a href={`${homePath}privacy/`} class="link link-hover text-[13px] text-base-content/50">{t('footer.privacy')}</a>
-				<a href={`${homePath}cookie-policy/`} class="link link-hover text-[13px] text-base-content/50">{t('footer.cookie')}</a>
+				<a href={`${homePath}privacy/`} class="link link-hover text-[13px] text-base-content/70">{t('footer.privacy')}</a>
+				<a href={`${homePath}cookie-policy/`} class="link link-hover text-[13px] text-base-content/70">{t('footer.cookie')}</a>
 				{analyticsEnabled && (
-					<button type="button" data-cc="show-preferencesModal" class="link link-hover text-[13px] text-base-content/50">
+					<button type="button" data-cc="show-preferencesModal" class="link link-hover text-[13px] text-base-content/70">
 						{t('footer.cookiePrefs')}
 					</button>
 				)}

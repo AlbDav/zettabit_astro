@@ -28,6 +28,7 @@ export const it = {
 			"Sono Davide, un freelance che unisce sviluppo web e video editing per aiutare persone e aziende a comunicare online in modo chiaro. Seguo l'intero percorso, dalla progettazione del sito alla realizzazione del video, con attenzione ai dettagli e ai risultati concreti.",
 		'about.certTitle': 'Certificazioni',
 		'about.techToggle': 'Stack tecnico',
+		'about.photoAlt': 'Davide Albano, sviluppatore web e video editor a Roma',
 		'about.location': 'Roma — lavoro con clienti in tutta Italia e da remoto.',
 		'faq.title': 'Domande frequenti',
 		'contact.title': 'Parliamo del tuo progetto',
@@ -45,6 +46,8 @@ export const it = {
 		'footer.cookiePrefs': 'Preferenze cookie',
 		'footer.location': 'Roma, Italia',
 		'legal.back': 'Torna alla home',
+		'notfound.title': 'Pagina non trovata',
+		'notfound.body': 'Il link che hai seguito non porta più da nessuna parte. Dalla home trovi i servizi, il processo e i contatti.',
 	},
 	content: {
 		// SEO per pagina (P5.3) — Roma nel title della home (P5.4); description 140–160
@@ -53,6 +56,14 @@ export const it = {
 			title: 'Davide Albano — Sviluppatore web e video editor a Roma',
 			description:
 				'Sviluppo web e video editing a Roma, una persona sola. Siti che caricano veloci e video che si guardano fino in fondo, per professionisti e piccole imprese.',
+		},
+		// Copy della card OG 1200×630 (open-graph/Twitter). Vive qui, non nello
+		// script, perché è copy — e come tutto il copy esiste nelle due lingue.
+		og: {
+			eyebrow: 'Davide Albano · Roma',
+			title: 'Sviluppo web e video editing',
+			subtitle: 'Un solo interlocutore, dalla prima riga di codice all’ultimo taglio.',
+			footer: 'Roma · da remoto',
 		},
 		role: 'Sviluppatore Web & Video Editor',
 		aboutHeadline: 'Una persona sola, e si vede in bene.',

@@ -5,9 +5,9 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  // Single source of truth for the canonical origin (P4). Change here at migration
-  // time (zettabit.it) and canonical / hreflang / OG / sitemap all follow.
-  site: 'https://zettabit.netlify.app',
+  // Single source of truth for the canonical origin (P4). Canonical, hreflang, OG,
+  // robots.txt and sitemap all derive from this — never hardcode the origin again.
+  site: 'https://zettabit.it',
   i18n: {
     // Italian is the primary market (P5.1): IT in root, EN under /en/.
     defaultLocale: 'it',

@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from './Navbar.astro';
 import Footer from './Footer.astro';
 import { legal } from '../data/legal';
+import { site } from '../data/site';
 import { defaultLang, getLocalizedPath, useTranslations } from '../i18n/utils';
 
 interface Props {
@@ -15,9 +16,16 @@ const t = useTranslations(lang);
 const strings = legal[lang === 'it' ? 'it' : 'en'];
 const doc = strings[type];
 const homePath = getLocalizedPath(lang);
+
+// Two-level trail so the legal pages emit a BreadcrumbList and Google can render
+// "zettabit.it › Privacy Policy" under the result instead of the raw URL.
+const breadcrumbs = [
+	{ name: site.siteName, url: homePath },
+	{ name: doc.title, url: `${homePath}${type === 'privacy' ? 'privacy' : 'cookie-policy'}/` },
+];
 ---
 
-<Layout title={`${doc.title} — Zettabit`} description={doc.intro}>
+<Layout title={`${doc.title} — ${site.siteName}`} description={doc.intro} breadcrumbs={breadcrumbs}>
 	<Navbar />
 
 	<main id="main-content" tabindex="-1" class="min-h-screen py-20 md:py-28 px-4 md:px-8">

@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { defaultLang, useTranslations } from '../i18n/utils';
+
+// Netlify serves dist/404.html for any unmatched path. Without this the visitor
+// got Netlify's own generic page: a dead end with no way back into the site and
+// nothing for a crawler to follow. `noindex` keeps the error page itself out of
+// the index while leaving its links crawlable.
+const lang = Astro.currentLocale ?? defaultLang;
+const t = useTranslations(lang);
+---
+
+<Layout title={`${t('notfound.title')} — Zettabit`} description={t('notfound.body')} noindex>
+	<Navbar />
+
+	<main id="main-content" tabindex="-1" class="min-h-[70vh] flex flex-col justify-center px-4 md:px-8 py-20">
+		<div class="mx-auto w-full max-w-2xl flex flex-col gap-5">
+			<p class="font-mono text-xs uppercase tracking-[0.14em] text-primary">404</p>
+			<h1 class="font-display text-3xl font-semibold leading-[1.12] tracking-tight md:text-5xl">{t('notfound.title')}</h1>
+			<p class="max-w-[52ch] text-base-content/70 leading-relaxed text-pretty">{t('notfound.body')}</p>
+			<div class="mt-2 flex flex-wrap gap-3">
+				<a href="/" class="btn btn-primary rounded-lg">{t('legal.back')}</a>
+				<a
+					href="/#services"
+					class="btn btn-ghost rounded-lg border border-base-content/[0.18] font-medium text-base-content hover:border-primary hover:bg-primary/[0.07]"
+				>
+					{t('nav.services')}
+				</a>
+				<a
+					href="/#contact"
+					class="btn btn-ghost rounded-lg border border-base-content/[0.18] font-medium text-base-content hover:border-primary hover:bg-primary/[0.07]"
+				>
+					{t('nav.contact')}
+				</a>
+			</div>
+		</div>
+	</main>
+
+	<Footer />
+</Layout>

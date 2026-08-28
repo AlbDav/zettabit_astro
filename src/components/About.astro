@@ -43,7 +43,7 @@ const hasCerts = certifications.length > 0;
 			<div class="flex items-center gap-4">
 				<div class="avatar shrink-0">
 					<div class="w-16 rounded-full">
-						<Picture src={profilePhoto} formats={['avif', 'webp']} alt={site.name} width={128} height={128} class="object-cover" />
+						<Picture src={profilePhoto} formats={['avif', 'webp']} alt={t('about.photoAlt')} width={128} height={128} loading="lazy" decoding="async" class="object-cover" />
 					</div>
 				</div>
 				<div>

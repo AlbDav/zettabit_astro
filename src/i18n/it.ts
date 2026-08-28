@@ -16,7 +16,7 @@ export const it = {
 		'sticky.title': 'Call di 20 minuti',
 		'sticky.subtitle': 'Senza impegno, da {price} €',
 		'services.title': 'Cosa faccio',
-		'services.subtitle': 'Due mestieri, un obiettivo: far crescere il tuo progetto e farlo notare.',
+		'services.subtitle': 'Sviluppo web e video editing: due mestieri, un obiettivo.',
 		'why.title': 'Web e video, gestiti insieme',
 		'why.p1':
 			'Il sito e i video di un’attività raccontano la stessa storia, e quando li seguono due fornitori diversi si vede: colori che non combaciano, tono che cambia, tempi che si allungano perché ognuno aspetta l’altro.',

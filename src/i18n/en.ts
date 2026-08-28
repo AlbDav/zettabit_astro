@@ -16,7 +16,7 @@ export const en = {
 		'sticky.title': '20-minute call',
 		'sticky.subtitle': 'No obligation, from €{price}',
 		'services.title': 'What I do',
-		'services.subtitle': 'Two crafts, one goal: help your project grow and get noticed.',
+		'services.subtitle': 'Web development and video editing: two crafts, one goal.',
 		'why.title': 'Web and video, handled together',
 		'why.p1':
 			"A business's site and its videos tell the same story, and when two different suppliers handle them you can tell: colours that don't match, a tone that shifts, timelines that stretch because each is waiting on the other.",

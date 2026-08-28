@@ -28,6 +28,7 @@ export const en = {
 			"I'm Davide, a freelancer who blends web development and video editing to help people and businesses communicate online with clarity. I handle the whole journey — from designing the site to producing the video — with an eye for detail and real results.",
 		'about.certTitle': 'Certifications',
 		'about.techToggle': 'Tech stack',
+		'about.photoAlt': 'Davide Albano, web developer and video editor based in Rome',
 		'about.location': 'Based in Rome — working with clients across Italy and remotely.',
 		'faq.title': 'Frequently asked questions',
 		'contact.title': "Let's talk about your project",
@@ -45,6 +46,8 @@ export const en = {
 		'footer.cookiePrefs': 'Cookie preferences',
 		'footer.location': 'Rome, Italy',
 		'legal.back': 'Back to home',
+		'notfound.title': 'Page not found',
+		'notfound.body': 'The link you followed no longer leads anywhere. The home page has the services, the process and the contact form.',
 	},
 	content: {
 		// Per-page SEO (P5.3) — Rome in the home title (P5.4); descriptions 140–160 chars,
@@ -53,6 +56,13 @@ export const en = {
 			title: 'Davide Albano — Web Developer & Video Editor, Rome',
 			description:
 				'Web development and video editing by one person in Rome. Fast sites and video people actually finish — for professionals and small businesses across Italy.',
+		},
+		// Copy for the 1200×630 OG/Twitter card — see it.ts for why it lives here.
+		og: {
+			eyebrow: 'Davide Albano · Rome',
+			title: 'Web development & video editing',
+			subtitle: 'One point of contact, from the first line of code to the final cut.',
+			footer: 'Rome · remote',
 		},
 		role: 'Web Developer & Video Editor',
 		aboutHeadline: 'One person, and it shows — in a good way.',

@@ -1,15 +1,32 @@
-# 301 redirects (P5.1 / P5.2). First matching rule wins — specific before wildcards.
+# 301 redirects. First matching rule wins — specific before wildcards.
+# The `!` force flag is required whenever a real file would otherwise be served
+# at the source path (which is the case for every path on a static build).
 
-# Italian pages moved from /it/ to the root (P5.1)
-/it/portfolio/web-development/   /servizi/sviluppo-web/   301
-/it/portfolio/video-editing/     /servizi/video/          301
-/it/portfolio/                   /                        301
-/it/privacy/                     /privacy/                301
-/it/cookie-policy/               /cookie-policy/           301
-/it/                             /                        301
-/it/*                            /:splat                  301
+# ── Canonical host ────────────────────────────────────────────────────────────
+# zettabit.netlify.app serves the identical build, so without this every page
+# exists at two indexable origins. Netlify's "primary domain" setting normally
+# handles this; the rule stays as a belt-and-braces guard in case that setting is
+# ever changed or the site is redeployed elsewhere.
+https://zettabit.netlify.app/*   https://zettabit.it/:splat   301!
+http://zettabit.netlify.app/*    https://zettabit.it/:splat   301!
+https://www.zettabit.it/*        https://zettabit.it/:splat   301!
+http://www.zettabit.it/*         https://zettabit.it/:splat   301!
 
-# English category pages moved to /en/servizi/ (they used to live at the root, P5.2)
-/portfolio/web-development/       /en/servizi/sviluppo-web/   301
-/portfolio/video-editing/         /en/servizi/video/          301
-/portfolio/                       /en/                        301
+# ── Italian pages moved from /it/ to the root (P5.1) ──────────────────────────
+/it/privacy/         /privacy/         301
+/it/cookie-policy/   /cookie-policy/   301
+/it/                 /                 301
+/it/*                /:splat           301
+
+# ── Retired portfolio / service URLs ──────────────────────────────────────────
+# The dedicated /servizi/{slug}/ pages were folded back into the home page's
+# #services section in the redesign. These must land on a live URL: a 301 into a
+# 404 burns crawl budget and drops whatever link equity the old URLs still carry.
+/it/portfolio/web-development/   /#services      301
+/it/portfolio/video-editing/     /#services      301
+/it/portfolio/*                  /               301
+/servizi/*                       /#services      301
+/en/servizi/*                    /en/#services   301
+/portfolio/web-development/      /en/#services   301
+/portfolio/video-editing/        /en/#services   301
+/portfolio/*                     /en/            301

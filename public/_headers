@@ -1,0 +1,25 @@
+# Netlify serves everything with `max-age=0, must-revalidate` by default, which
+# means a returning visitor re-validates every font, stylesheet and image on each
+# page view. Everything under /_astro/ is content-hashed, so it can be cached
+# forever — this is the single cheapest Core Web Vitals win on repeat visits.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/og/*
+  Cache-Control: public, max-age=604800
+
+/favicon.svg
+  Cache-Control: public, max-age=604800
+/favicon.ico
+  Cache-Control: public, max-age=604800
+
+# Sitemap and robots must stay fresh for crawlers.
+/sitemap.xml
+  Cache-Control: public, max-age=0, must-revalidate
+/robots.txt
+  Cache-Control: public, max-age=0, must-revalidate
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN

@@ -1,0 +1,29 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Navbar from '../../../components/Navbar.astro';
+import Pricing from '../../../components/Pricing.astro';
+import Contact from '../../../components/Contact.astro';
+import Footer from '../../../components/Footer.astro';
+import { defaultLang, getContent, getPricingPath } from '../../../i18n/utils';
+
+const lang = Astro.currentLocale ?? defaultLang;
+const { pricing } = getContent(lang);
+---
+
+<Layout
+	title={pricing.seo.title}
+	description={pricing.seo.description}
+	breadcrumbs={[
+		{ name: 'Home', url: '/' },
+		{ name: pricing.eyebrow, url: getPricingPath(lang) },
+	]}
+>
+	<Navbar />
+	<main id="main-content" tabindex="-1">
+		<Pricing />
+		{/* Stesso form della home, senza numero di sezione: così "Chiedi un
+		    preventivo" (#contact) resta dentro questa pagina. */}
+		<Contact index="" />
+	</main>
+	<Footer />
+</Layout>

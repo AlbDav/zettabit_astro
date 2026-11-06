@@ -1,17 +1,21 @@
 ---
+// Sezione prezzi della home (handoff "prezzi su zettabit.it", punto 4).
+// Il dettaglio dei pacchetti sta solo in /prezzi: qui restano i "da X €" e un
+// link, così un cambio di listino si fa in un punto solo.
 import { pricing } from '../data/site';
-import { defaultLang, getContent, useTranslations } from '../i18n/utils';
+import { defaultLang, formatPrice, getContent, getPricingPath, useTranslations } from '../i18n/utils';
 
 const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
-const { services, combo } = getContent(lang);
+const { services, combo, pricing: copy } = getContent(lang);
 const [web, video] = services;
+const pricesHref = getPricingPath(lang);
 
 const cards = [
-	{ ...web, label: web.title, price: pricing.web, highlighted: false },
-	{ ...video, label: video.title, price: pricing.video, highlighted: false },
-	{ ...combo, price: pricing.combo, highlighted: true },
+	{ ...web, label: web.title, price: pricing.web },
+	{ ...video, label: video.title, price: pricing.video },
 ];
+const amount = (value: number) => `${formatPrice(lang, value)} €`;
 ---
 
 <section id="services" class="min-h-screen flex flex-col justify-center bg-base-200 py-16 px-4 md:px-8 md:py-24">
@@ -21,15 +25,13 @@ const cards = [
 			{t('services.subtitle')}
 		</h2>
 
-		<div class="mt-10 grid gap-[18px] md:grid-cols-3 md:mt-12">
+		{/* Web e video affiancati, Web + video sotto a tutta larghezza: è il
+		    pacchetto in evidenza, come nella pagina prezzi. */}
+		<div class="mt-10 grid gap-[18px] md:grid-cols-2 md:mt-12">
 			{
 				cards.map((card, i) => (
 					<article
-						class={`relative flex flex-col rounded-2xl border p-6 md:p-8 transition-colors ${
-							card.highlighted
-								? 'border-primary/30 bg-primary/[0.07] hover:border-primary/60'
-								: 'border-base-content/10 bg-[#2a323c] hover:border-primary/45'
-						}`}
+						class="relative flex flex-col rounded-2xl border border-base-content/10 bg-[#2a323c] p-6 transition-colors hover:border-primary/45 md:p-8"
 						data-animate
 						style={`--d: ${i + 1}`}
 					>
@@ -37,19 +39,16 @@ const cards = [
 						<h3 class="mt-3.5 font-display text-[1.35rem] font-semibold leading-tight tracking-tight md:text-[1.55rem]">
 							{card.headline}
 						</h3>
-						<p class="mt-4 font-display text-[1.75rem] font-semibold tracking-tight">
-							<span class="mr-2 font-mono text-xs font-normal uppercase tracking-[0.1em] text-base-content/70">{t('price.from')}</span>
-							{card.price} €
-						</p>
-						<p class="mt-3.5 text-[15.5px] leading-relaxed text-base-content/70 text-pretty">{card.description}</p>
-						<ul class="mt-5 flex flex-col gap-2.5">
-							{card.features.map((feature) => (
-								<li class="flex gap-2.5 text-[15px] text-base-content/70">
-									<span class="text-primary">→</span>
-									{feature}
-								</li>
-							))}
-						</ul>
+						<div class="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1.5">
+							<p class="font-display text-[1.75rem] font-semibold tracking-tight">
+								<span class="mr-2 font-mono text-xs font-normal uppercase tracking-[0.1em] text-base-content/70">{t('price.from')}</span>
+								{amount(card.price)}
+							</p>
+							<a href={pricesHref} class="relative z-10 text-[15px] font-bold text-primary hover:text-primary/80">
+								<span class="border-b border-primary/45 pb-0.5">{copy.seeAll}</span>
+							</a>
+						</div>
+						<p class="mt-3.5 text-[15.5px] leading-relaxed text-base-content/70 text-pretty">{card.tagline}</p>
 						<a
 							href="#contact"
 							data-preselect-need={card.needValue}
@@ -61,6 +60,37 @@ const cards = [
 					</article>
 				))
 			}
+
+			<article
+				class="relative flex flex-col rounded-3xl bg-primary p-6 text-primary-content md:col-span-2 md:rounded-[28px] md:p-10"
+				data-animate
+				style="--d: 3"
+			>
+				<p class="inline-block self-start rounded-full bg-base-100 px-3 py-1 font-mono text-[13px] font-bold uppercase tracking-[0.1em] text-primary">
+					{combo.label}
+				</p>
+				<h3 class="mt-5 max-w-[20ch] font-display text-[1.75rem] font-bold leading-[1.15] tracking-tight md:text-[2.25rem]">
+					{combo.headline}
+				</h3>
+				<div class="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1.5">
+					<p class="font-display text-[2.5rem] font-bold tracking-tight md:text-[3.5rem]">
+						<span class="mr-2 align-middle font-mono text-sm font-normal uppercase tracking-[0.1em] text-primary-content/80">{t('price.from')}</span>
+						{amount(pricing.combo)}
+					</p>
+					<a href={pricesHref} class="relative z-10 text-[15px] font-bold text-primary-content hover:text-primary-content/80">
+						<span class="border-b border-primary-content/45 pb-0.5">{copy.seeAll}</span>
+					</a>
+				</div>
+				<p class="mt-3.5 text-[17px] leading-relaxed text-primary-content/80 text-pretty">{combo.tagline}</p>
+				<a
+					href="#contact"
+					data-preselect-need={combo.needValue}
+					class="relative mt-auto self-start pt-7 text-[15px] font-semibold text-primary-content hover:text-primary-content/80"
+				>
+					<span class="border-b border-primary-content/45 pb-0.5">{combo.ctaLabel}</span>
+					<span aria-hidden="true" class="absolute inset-0 rounded-3xl"></span>
+				</a>
+			</article>
 		</div>
 	</div>
 </section>

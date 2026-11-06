@@ -1,0 +1,162 @@
+---
+// Sezione prezzi (handoff "prezzi su zettabit.it", alta fedeltà).
+// Usata dalla pagina /prezzi; `as` permette di montarla in home come h2.
+import { LANCIO_ATTIVO, packages, sitePackages, videoPackages, type PackageId } from '../data/site';
+import { defaultLang, formatPrice, getContent, useTranslations } from '../i18n/utils';
+
+interface Props {
+	/** `h1` sulla pagina dedicata, `h2` se un giorno finisse in home. */
+	as?: 'h1' | 'h2';
+	/** Numero di sezione, solo quando vive dentro una pagina numerata. */
+	index?: string;
+}
+
+const { as: Heading = 'h1', index } = Astro.props;
+
+const lang = Astro.currentLocale ?? defaultLang;
+const t = useTranslations(lang);
+const { pricing: copy, packages: names } = getContent(lang);
+
+// Prezzo (src/data/site.ts) + testi (src/i18n) nello stesso oggetto.
+const pkg = (id: PackageId) => ({ ...packages[id], ...names[id] });
+const combo = pkg('combo');
+const sites = sitePackages.map(pkg);
+const videos = videoPackages.map(pkg);
+
+const amount = (value: number) => `${formatPrice(lang, value)} €`;
+---
+
+<section id="pricing" class="bg-base-200 py-16 px-4 md:px-8 md:py-24">
+	<div class="mx-auto flex w-full max-w-6xl flex-col gap-12 md:gap-[72px]">
+		<header>
+			<p class="font-mono text-xs uppercase tracking-[0.14em] text-primary" data-animate style="--d: 0">
+				{index ? `${index} — ${copy.eyebrow}` : copy.eyebrow}
+			</p>
+			<Heading
+				class="mt-4 max-w-[18ch] font-display text-[2.25rem] font-bold leading-[1.1] tracking-[-0.02em] text-balance md:text-5xl lg:text-6xl"
+				data-animate
+				style="--d: 0"
+			>
+				{copy.title}
+			</Heading>
+		</header>
+
+		{/* Sito + video, più la riga del prezzo di lancio: stesso contenitore, così
+		    togliendo l'alert il layout si richiude senza margini da correggere. */}
+		<div class="flex flex-col gap-5">
+			<article
+				class="grid gap-6 rounded-3xl bg-primary p-6 text-primary-content md:grid-cols-2 md:gap-10 md:rounded-[28px] md:p-10"
+				data-animate
+				style="--d: 1"
+			>
+				<div>
+					<p class="inline-block rounded-full bg-base-100 px-3 py-1 font-mono text-[13px] font-bold uppercase tracking-[0.1em] text-primary">
+						{combo.badge}
+					</p>
+					<h3 class="mt-5 max-w-[16ch] font-display text-[1.75rem] font-bold leading-[1.15] tracking-tight md:text-[2.5rem]">
+						{combo.name}
+					</h3>
+					<p class="mt-4 text-[17px] leading-relaxed text-primary-content/80">{combo.description}</p>
+				</div>
+
+				<div class="flex flex-col">
+					<p class="flex items-baseline gap-2">
+						<span class="text-[18px] font-medium text-primary-content/80">{t('price.from')}</span>
+						<span class="font-display text-[2.75rem] font-bold tracking-tight md:text-[3.75rem]">{amount(combo.price)}</span>
+					</p>
+					<ul class="mt-6 flex flex-col gap-3 border-t-2 border-primary-content/30 pt-6">
+						{combo.features.map((feature) => (
+							<li class="flex gap-3 text-[16px] leading-[1.45]">
+								<svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+								{feature}
+							</li>
+						))}
+					</ul>
+					{/* Invito ripetuto: da telefono la pagina è lunga, e questo tiene
+					    "Chiedi un preventivo" sempre a portata di pollice. */}
+					<a href="#contact" class="btn btn-block mt-6 h-12 min-h-12 rounded-xl border-none bg-base-100 text-primary hover:bg-base-100/90 md:hidden">
+						{copy.cta.button}
+						<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14" /><path d="m19 12-7 7-7-7" /></svg>
+					</a>
+				</div>
+			</article>
+
+			{
+				LANCIO_ATTIVO && (
+					<p
+						role="status"
+						class="flex flex-col gap-2 rounded-2xl border-2 border-base-300 px-6 py-[18px] sm:flex-row sm:items-center sm:gap-4"
+						data-animate
+						style="--d: 2"
+					>
+						<span class="flex shrink-0 items-center gap-2.5">
+							<svg class="h-[22px] w-[22px] text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" /><path d="M4 22v-7" /></svg>
+							<span class="font-mono text-[13px] font-bold uppercase tracking-[0.14em] text-primary">{copy.lancio.label}</span>
+						</span>
+						<span class="text-[17px] font-medium leading-relaxed text-pretty">{copy.lancio.text}</span>
+					</p>
+				)
+			}
+		</div>
+
+		{
+			[
+				{ title: copy.sitesTitle, items: sites, repeatCta: true },
+				{ title: copy.videoTitle, items: videos, repeatCta: false },
+			].map((group) => (
+				<div class="flex flex-col gap-5">
+					<h2 class="font-display text-[22px] font-bold tracking-tight" data-animate style="--d: 0">
+						{group.title}
+					</h2>
+					<div class="grid gap-3 md:grid-cols-3 md:gap-5">
+						{group.items.map((card, i) => (
+							<article
+								class="flex flex-col gap-3.5 rounded-2xl border-2 border-base-300 px-5 py-[18px] md:gap-5 md:rounded-[20px] md:p-7"
+								data-animate
+								style={`--d: ${i + 1}`}
+							>
+								{/* Da telefono nome e prezzo stanno sulla stessa riga: è ciò
+								    che tiene la sezione corta senza nascondere nulla. */}
+								<div class="flex items-baseline justify-between gap-3 md:block">
+									<h3 class="font-display text-[18px] font-bold tracking-tight md:text-[20px]">{card.name}</h3>
+									<p class="flex shrink-0 items-baseline gap-1.5 md:mt-5">
+										<span class="text-[14px] font-medium text-base-content/70 md:text-[16px]">{t('price.from')}</span>
+										<span class="font-display text-[28px] font-bold tracking-tight md:text-[44px]">{amount(card.price)}</span>
+										{'perMonth' in card && card.perMonth && (
+											<span class="text-[14px] font-medium text-base-content/70 md:text-[16px]">{copy.perMonth}</span>
+										)}
+									</p>
+								</div>
+								<ul class="flex flex-col gap-2 border-t-2 border-base-300 pt-3.5 md:gap-3 md:pt-5">
+									{card.features.map((feature) => (
+										<li class="flex gap-2.5 text-[15px] leading-[1.4] text-base-content/80 md:gap-3 md:text-[16px] md:leading-[1.45]">
+											<svg class="mt-0.5 h-[18px] w-[18px] shrink-0 text-primary md:h-5 md:w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+											{feature}
+										</li>
+									))}
+								</ul>
+							</article>
+						))}
+					</div>
+					{group.repeatCta && (
+						<a href="#contact" class="btn btn-primary btn-block h-12 min-h-12 rounded-xl md:hidden">
+							{copy.cta.button}
+							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14" /><path d="m19 12-7 7-7-7" /></svg>
+						</a>
+					)}
+				</div>
+			))
+		}
+
+		<div class="flex flex-col gap-6 border-t-2 border-base-300 pt-8 md:flex-row md:items-center md:justify-between md:gap-8" data-animate style="--d: 0">
+			<div>
+				<p class="font-display text-[22px] font-bold leading-tight tracking-tight md:text-[28px]">{copy.cta.title}</p>
+				<p class="mt-2 text-[16px] text-base-content/70">{copy.cta.note}</p>
+			</div>
+			<a href="#contact" class="btn btn-primary btn-block h-12 min-h-12 shrink-0 rounded-xl md:btn-wide md:h-auto">
+				{copy.cta.button}
+				<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14" /><path d="m19 12-7 7-7-7" /></svg>
+			</a>
+		</div>
+	</div>
+</section>

@@ -20,7 +20,7 @@ import bodyFont from '@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-no
 import CookieConsent from '../components/CookieConsent.astro';
 import { analyticsEnabled } from '../data/analytics';
 import { pricing, site, skills } from '../data/site';
-import { defaultLang, getContent, languages, useTranslations } from '../i18n/utils';
+import { altPaths, defaultLang, getContent, languages, useTranslations } from '../i18n/utils';
 
 interface Props {
 	title?: string;
@@ -40,11 +40,11 @@ const {
 	noindex = false,
 } = Astro.props;
 
-// Same page in the other language (P5.1): strip/add the /en prefix off the current path.
-const path = Astro.url.pathname;
-const basePath = lang === 'en' ? path.replace(/^\/en(?=\/|$)/, '') || '/' : path;
-const itHref = basePath;
-const enHref = basePath === '/' ? '/en/' : `/en${basePath}`;
+// Same page in the other language (P5.1). Most paths are just /en + path, but
+// some pages have a different slug per language (/prezzi/ ↔ /en/prices/), so the
+// mapping lives in one place next to the dictionaries.
+const { it: itHref, en: enHref } = altPaths(Astro.url.pathname);
+const basePath = itHref;
 const selfHref = lang === 'en' ? enHref : itHref;
 
 const abs = (href: string) => new URL(href, Astro.site).href;

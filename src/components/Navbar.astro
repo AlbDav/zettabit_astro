@@ -1,24 +1,28 @@
 ---
 import { site } from '../data/site';
-import { defaultLang, getLocalizedPath, languages, useTranslations } from '../i18n/utils';
+import { altPaths, defaultLang, getLocalizedPath, getPricingPath, languages, useTranslations } from '../i18n/utils';
 
 const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
 const homePath = getLocalizedPath(lang);
 
+// Prezzi è l'unica voce che punta a una pagina e non a un'ancora della home,
+// quindi la voce porta la href completa e può risultare "corrente".
+const pricesHref = getPricingPath(lang);
+const onPricesPage = (Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`) === pricesHref;
+
 const navLinks = [
-	{ href: 'services', label: t('nav.services') },
-	{ href: 'process', label: t('nav.process') },
-	{ href: 'faq', label: t('nav.faq') },
-	{ href: 'about', label: t('nav.about') },
+	{ href: `${homePath}#services`, label: t('nav.services') },
+	{ href: pricesHref, label: t('nav.prices'), current: onPricesPage },
+	{ href: `${homePath}#process`, label: t('nav.process') },
+	{ href: `${homePath}#faq`, label: t('nav.faq') },
+	{ href: `${homePath}#about`, label: t('nav.about') },
 ];
 
 // Equivalent of the current page in a given language (P5.1), so the language
 // switcher and lang links stay on the same page instead of jumping home.
-const path = Astro.url.pathname;
-const basePath = lang === 'en' ? path.replace(/^\/en(?=\/|$)/, '') || '/' : path;
-const localeHref = (code: string) =>
-	code === 'it' ? basePath : basePath === '/' ? '/en/' : `/en${basePath}`;
+const alt = altPaths(Astro.url.pathname);
+const localeHref = (code: string) => (code === 'it' ? alt.it : alt.en);
 ---
 
 <header class="navbar bg-base-100/85 backdrop-blur-md sticky top-0 z-50 border-b border-base-content/10 px-4 md:px-8 h-[66px] min-h-[66px]">
@@ -31,7 +35,15 @@ const localeHref = (code: string) =>
 	<div class="navbar-center hidden lg:flex">
 		<ul class="menu menu-horizontal items-center gap-1">
 			{navLinks.map((link) => (
-				<li><a href={`${homePath}#${link.href}`} class="text-[14.5px] hover:text-primary">{link.label}</a></li>
+				<li>
+					<a
+						href={link.href}
+						class={`text-[14.5px] hover:text-primary ${link.current ? 'text-primary font-semibold' : ''}`}
+						aria-current={link.current ? 'page' : undefined}
+					>
+						{link.label}
+					</a>
+				</li>
 			))}
 		</ul>
 	</div>
@@ -60,7 +72,15 @@ const localeHref = (code: string) =>
 			</div>
 			<ul tabindex="0" class="menu dropdown-content bg-base-100 rounded-box z-50 mt-3 w-56 p-2 shadow-lg border border-base-content/10">
 				{navLinks.map((link) => (
-					<li><a href={`${homePath}#${link.href}`} class="text-[15px]">{link.label}</a></li>
+					<li>
+					<a
+						href={link.href}
+						class={`text-[15px] ${link.current ? 'text-primary font-semibold' : ''}`}
+						aria-current={link.current ? 'page' : undefined}
+					>
+						{link.label}
+					</a>
+				</li>
 				))}
 				<li>
 					<a href={`${homePath}#contact`} class="btn btn-primary btn-sm rounded-lg mt-2 justify-center">{t('nav.cta')}</a>

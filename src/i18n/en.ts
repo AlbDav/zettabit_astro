@@ -1,6 +1,7 @@
 export const en = {
 	ui: {
 		'nav.services': 'Services',
+		'nav.prices': 'Prices',
 		'nav.process': 'How I work',
 		'nav.about': 'About',
 		'nav.contact': 'Contact',
@@ -70,14 +71,15 @@ export const en = {
 		subheadline:
 			'Web development and video editing for professionals and small businesses. One point of contact, one quote, one visual language — from the first line of code to the final cut.',
 		heroStats: [
-			{ label: 'Website', price: 'web', caption: 'base rate, tailored quote' },
-			{ label: 'Video', price: 'video', caption: 'editing, based on length & footage' },
+			{ label: 'Website', price: 'web', caption: 'Starter Site, up to 3 pages' },
+			{ label: 'Video', price: 'video', caption: 'editing, based on your footage' },
 			{ label: 'Before we start', value: 'Written quote', caption: 'scope and cost, no obligation' },
 			{ label: 'After delivery', value: '1 month', caption: 'of support included' },
 		],
 		services: [
 			{
 				title: 'Web Development',
+				tagline: 'From a three-page site to one you update yourself.',
 				headline: 'Sites that load fast and bring in leads',
 				description:
 					'Landing pages, brochure sites and sites you can update yourself (Sanity) — fast, responsive and built to convert.',
@@ -87,6 +89,7 @@ export const en = {
 			},
 			{
 				title: 'Video Editing',
+				tagline: 'One-off videos or monthly reels, from your own footage.',
 				headline: 'Video people watch to the end',
 				description:
 					'Editing, color grading and motion graphics for content that holds attention from the first second.',
@@ -97,7 +100,8 @@ export const en = {
 		],
 		combo: {
 			label: 'Web + video',
-			headline: 'Handled together, no handoffs',
+			headline: 'Site and video, handled by the same person.',
+			tagline: 'Includes the Starter Site and the Starter Video.',
 			description:
 				"Your site and your videos tell the same story. With two different suppliers it shows: colours that don't match, a tone that shifts, timelines that stretch because each is waiting on the other.",
 			features: ['One point of contact', 'One quote, not two', 'One visual language'],
@@ -154,10 +158,52 @@ export const en = {
 			sendErrorAfter: '.',
 		},
 		// Mirrors it.ts faq 1:1 (same questions, translated) so both languages stay in sync.
+		// ── Pricing (/en/prices) ─────────────────────────────────────────────
+		// BOZZA: traduzioni da rivedere e approvare prima del deploy.
+		// Le cifre stanno in src/data/site.ts, non qui.
+		pricing: {
+			eyebrow: 'Pricing',
+			title: 'What it costs, before you start.',
+			sitesTitle: 'Websites',
+			videoTitle: 'Video',
+			perMonth: '/month',
+			seeAll: 'See all prices',
+			lancio: {
+				label: 'Launch price',
+				text: 'For the first 3 projects I apply a launch price, in exchange for being able to write them up as a case study.',
+			},
+			cta: {
+				title: 'A written quote, no strings.',
+				note: 'I reply within one business day.',
+				button: 'Ask for a quote',
+			},
+			seo: {
+				title: 'Pricing — Zettabit',
+				description:
+					'Website and video pricing for professionals and small businesses in Rome: from a three-page site to monthly reels, with a written quote and no obligation.',
+			},
+		},
+		packages: {
+			combo: {
+				badge: 'Site + video',
+				name: 'Site and video, handled by the same person.',
+				description: 'Includes the Starter Site and the Starter Video.',
+				features: ['Starter Site: up to 3 pages', 'Starter Video: one video, from up to 1 hour of footage'],
+			},
+			sitoBase: { name: 'Starter Site', features: ['Up to 3 pages'] },
+			sitoCompleto: { name: 'Full Site', features: ['Up to 8 pages', 'Help setting up your hosting'] },
+			sitoGestibile: {
+				name: 'Editable Site',
+				features: ['Everything in the Full Site', 'Contact form', 'A panel to edit text and images yourself'],
+			},
+			videoBase: { name: 'Starter Video', features: ['One video, landscape or vertical', 'Up to 1 hour of your footage'] },
+			videoEsteso: { name: 'Extended Video', features: ['More than 1 hour of footage', 'Landscape and vertical export'] },
+			reelMensili: { name: 'Monthly reels', features: ['4 reels a month', 'From your own footage'] },
+		},
 		faq: [
 			{
 				q: 'How much does a website cost?',
-				a: 'The price of a website depends on your needs, with a base rate starting from €{price}.',
+				a: 'From €{price} for the Starter Site, up to 3 pages. Every package, video included, is on the {prezzi} page.',
 			},
 			{
 				q: 'How long does it take to build?',

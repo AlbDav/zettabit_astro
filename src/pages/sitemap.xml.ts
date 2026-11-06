@@ -5,10 +5,22 @@ import type { APIRoute } from 'astro';
 // `sources` are the files whose last commit dates that URL's content, so each
 // entry gets a real <lastmod> instead of the build timestamp. A sitemap where
 // every lastmod is "now" on every deploy is one Google learns to ignore.
-const pages: { path: string; sources: string[] }[] = [
+// `en` solo per le pagine il cui slug cambia tra lingue; altrimenti /en + path.
+const pages: { path: string; en?: string; sources: string[] }[] = [
 	{
 		path: '/',
 		sources: ['src/pages/index.astro', 'src/pages/en/index.astro', 'src/components', 'src/i18n', 'src/data/site.ts'],
+	},
+	{
+		path: '/prezzi/',
+		en: '/en/prices/',
+		sources: [
+			'src/pages/prezzi',
+			'src/pages/en/prices',
+			'src/components/Pricing.astro',
+			'src/i18n',
+			'src/data/site.ts',
+		],
 	},
 	{
 		path: '/privacy/',
@@ -20,7 +32,7 @@ const pages: { path: string; sources: string[] }[] = [
 	},
 ];
 
-const enOf = (p: string) => (p === '/' ? '/en/' : `/en${p}`);
+const enOf = (p: string, en?: string) => en ?? (p === '/' ? '/en/' : `/en${p}`);
 
 const buildDate = new Date().toISOString().slice(0, 10);
 
@@ -42,14 +54,15 @@ function lastModified(sources: string[]): string {
 export const GET: APIRoute = ({ site }) => {
 	const origin = (site ?? new URL('https://zettabit.it')).origin;
 
-	const entries = pages.flatMap(({ path, sources }) => {
+	const entries = pages.flatMap(({ path, en, sources }) => {
 		const lastmod = lastModified(sources);
-		return [path, enOf(path)].map(
+		const enPath = enOf(path, en);
+		return [path, enPath].map(
 			(loc) => `  <url>
     <loc>${origin}${loc}</loc>
     <lastmod>${lastmod}</lastmod>
     <xhtml:link rel="alternate" hreflang="it" href="${origin}${path}"/>
-    <xhtml:link rel="alternate" hreflang="en" href="${origin}${enOf(path)}"/>
+    <xhtml:link rel="alternate" hreflang="en" href="${origin}${enPath}"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="${origin}${path}"/>
   </url>`
 		);

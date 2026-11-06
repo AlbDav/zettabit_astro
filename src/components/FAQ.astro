@@ -1,17 +1,26 @@
 ---
 import { pricing } from '../data/site';
-import { defaultLang, getContent, useTranslations } from '../i18n/utils';
+import { defaultLang, formatPrice, getContent, getPricingPath, useTranslations } from '../i18n/utils';
 
 const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
 const { faq } = getContent(lang);
 
-const items = faq.map((item) => ({ ...item, a: item.a.replace('{price}', String(pricing.web)) }));
+const pricesHref = getPricingPath(lang);
+const pricesLabel = t('nav.prices');
+
+// `{prezzi}` diventa un link a vista e testo normale nel JSON-LD: schema.org
+// vuole la risposta in chiaro, non il markup.
+const items = faq.map((item) => {
+	const a = item.a.replace('{price}', formatPrice(lang, pricing.web));
+	const [before, after] = a.split('{prezzi}');
+	return { ...item, text: a.replace('{prezzi}', pricesLabel), before, after };
+});
 
 // FAQPage structured data — only emitted once every answer is real (not a
 // placeholder). This is data correctness, not a display flag: emitting
 // "[DA COMPILARE]" into schema.org would poison search results.
-const answersReady = items.every((item) => !item.a.startsWith('['));
+const answersReady = items.every((item) => !item.text.startsWith('['));
 const jsonLd = answersReady
 	? {
 			'@context': 'https://schema.org',
@@ -19,7 +28,7 @@ const jsonLd = answersReady
 			mainEntity: items.map((item) => ({
 				'@type': 'Question',
 				name: item.q,
-				acceptedAnswer: { '@type': 'Answer', text: item.a },
+				acceptedAnswer: { '@type': 'Answer', text: item.text },
 			})),
 		}
 	: null;
@@ -40,7 +49,17 @@ const jsonLd = answersReady
 								{item.q}
 								<span class="shrink-0 font-mono text-lg leading-none text-primary transition-transform group-open:rotate-45">+</span>
 							</summary>
-							<p class="pb-6 pr-11 text-[15.5px] leading-relaxed text-base-content/70 text-pretty">{item.a}</p>
+							<p class="pb-6 pr-11 text-[15.5px] leading-relaxed text-base-content/70 text-pretty">
+								{item.before}
+								{item.after !== undefined && (
+									<Fragment>
+										<a href={pricesHref} class="text-primary border-b border-primary/45 pb-0.5 hover:text-primary/80">
+											{pricesLabel}
+										</a>
+										{item.after}
+									</Fragment>
+								)}
+							</p>
 						</details>
 					))}
 				</div>

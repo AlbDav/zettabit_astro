@@ -1,6 +1,7 @@
 export const it = {
 	ui: {
 		'nav.services': 'Servizi',
+		'nav.prices': 'Prezzi',
 		'nav.process': 'Come lavoro',
 		'nav.about': 'Chi sono',
 		'nav.contact': 'Contatti',
@@ -71,14 +72,15 @@ export const it = {
 		subheadline:
 			'Sviluppo web e video editing per professionisti e piccole imprese. Un solo interlocutore, un preventivo, una linea visiva sola — dalla prima riga di codice all’ultimo taglio.',
 		heroStats: [
-			{ label: 'Sito', price: 'web', caption: 'tariffa base, preventivo su misura' },
-			{ label: 'Video', price: 'video', caption: 'montaggio, in base a durata e girato' },
+			{ label: 'Sito', price: 'web', caption: 'Sito Base, fino a 3 pagine' },
+			{ label: 'Video', price: 'video', caption: 'montaggio, in base al materiale' },
 			{ label: 'Prima di iniziare', value: 'Preventivo scritto', caption: 'ambito e costo, senza impegno' },
 			{ label: 'Dopo la consegna', value: '1 mese', caption: 'di supporto incluso' },
 		],
 		services: [
 			{
 				title: 'Sviluppo Web',
+				tagline: 'Dal sito di 3 pagine a quello che aggiorni da solo.',
 				headline: 'Siti che caricano veloci e portano richieste',
 				description:
 					'Landing page, siti vetrina e siti con CMS leggero (Sanity), responsive e pensati per convertire.',
@@ -88,6 +90,7 @@ export const it = {
 			},
 			{
 				title: 'Video Editing',
+				tagline: 'Video singoli o reel ogni mese, dal tuo materiale.',
 				headline: 'Video che si guardano fino in fondo',
 				description:
 					"Montaggio, color grading e motion graphics per contenuti che tengono l'attenzione dal primo secondo.",
@@ -98,7 +101,8 @@ export const it = {
 		],
 		combo: {
 			label: 'Web + video',
-			headline: 'Gestiti insieme, senza passaggi di mano',
+			headline: 'Sito e video, curati dalla stessa persona.',
+			tagline: 'Comprende il Sito Base e il Video Base.',
 			description:
 				'Sito e video raccontano la stessa storia. Con due fornitori diversi si vede: colori che non combaciano, tono che cambia, tempi che si allungano perché ognuno aspetta l’altro.',
 			features: ['Un solo interlocutore', 'Un preventivo, non due', 'Una linea visiva sola'],
@@ -154,8 +158,53 @@ export const it = {
 			sendErrorBefore: 'Qualcosa è andato storto. Puoi scrivermi direttamente a ',
 			sendErrorAfter: '.',
 		},
+		// ── Listino (pagina /prezzi) ─────────────────────────────────────────
+		// Le cifre NON stanno qui: vivono in src/data/site.ts, così una modifica
+		// di prezzo non va inseguita in due lingue.
+		pricing: {
+			eyebrow: 'Prezzi',
+			title: 'Quanto costa, prima di iniziare.',
+			sitesTitle: 'Siti',
+			videoTitle: 'Video',
+			perMonth: '/mese',
+			seeAll: 'Vedi tutti i prezzi',
+			lancio: {
+				label: 'Prezzo di lancio',
+				text: 'Per i primi 3 progetti applico un prezzo di lancio, in cambio della possibilità di raccontarli come caso studio.',
+			},
+			cta: {
+				title: 'Preventivo scritto, senza impegno.',
+				note: 'Rispondo entro un giorno lavorativo.',
+				button: 'Chiedi un preventivo',
+			},
+			seo: {
+				title: 'Prezzi — Zettabit',
+				description:
+					'Prezzi di siti e video per professionisti e piccole attività a Roma: dal sito di tre pagine ai reel mensili, con preventivo scritto e senza impegno.',
+			},
+		},
+		packages: {
+			combo: {
+				badge: 'Sito + video',
+				name: 'Sito e video, curati dalla stessa persona.',
+				description: 'Comprende il Sito Base e il Video Base.',
+				features: ['Sito Base: fino a 3 pagine', 'Video Base: un video, da massimo 1 ora di materiale'],
+			},
+			sitoBase: { name: 'Sito Base', features: ['Fino a 3 pagine'] },
+			sitoCompleto: { name: 'Sito Completo', features: ['Fino a 8 pagine', "Assistenza per configurare l'hosting"] },
+			sitoGestibile: {
+				name: 'Sito Gestibile',
+				features: ['Tutto il Sito Completo', 'Form contatti', 'Pannello per modificare testi e immagini in autonomia'],
+			},
+			videoBase: { name: 'Video Base', features: ['Un video, orizzontale o verticale', 'Fino a 1 ora di materiale tuo'] },
+			videoEsteso: { name: 'Video Esteso', features: ['Più di 1 ora di materiale', 'Export orizzontale e verticale'] },
+			reelMensili: { name: 'Reel mensili', features: ['4 reel al mese', 'Dal tuo materiale'] },
+		},
 		faq: [
-			{ q: 'Quanto costa un sito?', a: 'Il prezzo di un sito dipende dalle tue necessità, con una tariffa base che parte da {price}€.' },
+			{
+				q: 'Quanto costa un sito?',
+				a: 'Da {price} € per il Sito Base, fino a 3 pagine. Trovi tutti i pacchetti, anche per i video, nella pagina {prezzi}.',
+			},
 			{ q: 'Quanto tempo serve per realizzarlo?', a: 'Le tempistiche per il rilascio di un sito dipendono dalla complessità del sito stesso e possono variare da qualche giorno a un mese. Se sceglierai di lavorare con me, ci accorderemo su questo dettaglio prima di iniziare.' },
 			{ q: 'Giri anche i video o fai solo montaggio?', a: 'Per il momento monto soltanto, ma sto valutando anche l\'opzione di girare (inizialmente solo nella zona di Roma e dintorni).' },
 			{ q: 'Posso aggiornare il sito in autonomia?', a: 'C\'è la possibilità di avere l\'integrazione di Sanity, che ti permetterebbe di aggiornare il contenuto del tuo sito dopo il lancio.' },

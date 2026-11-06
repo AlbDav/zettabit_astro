@@ -2,13 +2,14 @@
 import { analyticsEnabled } from '../data/analytics';
 import { site } from '../data/site';
 import SocialLinks from './SocialLinks.astro';
-import { defaultLang, getContent, getLocalizedPath, useTranslations } from '../i18n/utils';
+import { defaultLang, getContent, getLocalizedPath, getPricingPath, useTranslations } from '../i18n/utils';
 
 const lang = Astro.currentLocale ?? defaultLang;
 const t = useTranslations(lang);
 const { services, combo } = getContent(lang);
 const homePath = getLocalizedPath(lang);
 const servicesHref = `${homePath}#services`;
+const pricesHref = getPricingPath(lang);
 const year = new Date().getFullYear();
 const vat = site.vat;
 ---
@@ -30,6 +31,7 @@ const vat = site.vat;
 				<a href={servicesHref} class="text-[14.5px] text-base-content/70 hover:text-primary w-fit">{service.title}</a>
 			))}
 			<a href={servicesHref} class="text-[14.5px] text-base-content/70 hover:text-primary w-fit">{combo.label}</a>
+			<a href={pricesHref} class="text-[14.5px] text-base-content/70 hover:text-primary w-fit">{t('nav.prices')}</a>
 		</nav>
 
 		<div class="flex flex-col gap-2.5">
